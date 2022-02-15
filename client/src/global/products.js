@@ -1,0 +1,117 @@
+export const products = [
+      {
+        id:"0",
+        name: "Youghurt",
+        slug: "youghurt",
+        category: "Milk Products",
+        image:require("../products/p1.jpg"), //679 x 829
+        price: 0.74,
+        countInStock: 10,
+        brand: "Kothmale",
+        rating: 4,
+        numReviews: 10,
+        description:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        id:"1",
+        name: "Ice cream",
+        slug: "ice-cream",
+        category: "Milk Products",
+        image:require("../products/p2.jpg"),
+        price: 0.54,
+        countInStock: 20,
+        brand: "Elephant House",
+        rating: 3.5,
+        numReviews: 10,
+        description:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        id:"2",
+        name: "Cabbage",
+        slug: "cabbage",
+        category: "Vegetables",
+        image:require("../products/p3.jpg"),
+        price: 1.97,
+        countInStock: 300,
+        brand: "NuwaraEliya-Fresh",
+        rating: 4.5,
+        numReviews: 9,
+        description:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        id:"3",
+        name: "Carrot",
+        slug: "carrot",
+        category: "Vegetables",
+        image:require("../products/p4.jpg"),
+        price: 1.92,
+        countInStock: 200,
+        brand: "NuwaraEliya-Fresh",
+        rating: 4.2,
+        numReviews: 11,
+        description:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        id:"4",
+        name: "Avocado",
+        slug: "avocado",
+        category: "Fruits",
+        image:require("../products/p5.jpg"),
+        price: 0.99,
+        countInStock: 150,
+        brand: "Kandy-Fresh",
+        rating: 3.5,
+        numReviews: 14,
+        description:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        id:"5",
+        name: "Papaya",
+        slug: "papaya",
+        category: "Fruits",
+        image:require("../products/p6.jpg"),
+        price: 0.25,
+        countInStock: 0,
+        brand: "Kandy-Fresh",
+        rating: 4.5,
+        numReviews: 12,
+        description:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        id:"6",
+        name: "Tomatoes",
+        slug: "tomatoes",
+        category: "Vegetables",
+        image:require("../products/p7.jpg"),
+        price: 2.07,
+        countInStock: 500,
+        brand: "NuwaraEliya-Fresh",
+        rating: 4.0,
+        numReviews: 15,
+        description:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        id:"7",
+        name: "Pineapple",
+        slug: "pineapple",
+        category: "Fruits",
+        image:require("../products/p8.jpg"),
+        price: 2.96,
+        countInStock: 150,
+        brand: "Gampaha-Fresh-Fruits",
+        rating: 3.9,
+        numReviews: 10,
+        description:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+    ]
+  ;
+  
+ 
