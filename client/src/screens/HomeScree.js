@@ -282,6 +282,7 @@ const styles = StyleSheet.create({
     padding:-1,
     justifyContent:"center",
     margin:10,
+    elevation:3
 
     
 
