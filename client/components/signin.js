@@ -1,8 +1,30 @@
 import React from "react";
-import {View, Text, StyleSheet, TextInput, Button, Alert} from "react-native";
+import { useState } from "react";
+import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
 
 
 function SignIn() {
+    
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    fetch('http://localhost:3006/signin', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email,
+            password,
+        })
+            .then(res=>res.json())
+            .then(data=>{
+                console.log("Data passed")
+            })
+    });
+
+    
     return (
         <View style={[styles.container, {
             flexDirection: "column"
@@ -19,22 +41,26 @@ function SignIn() {
                     <View >
                         <Text>Email</Text>
                         <TextInput
+                            onChangeText={setEmail}
                             style={{height: 40}}
+                            value={email}
                             placeholder="Type your email address!"
                         />
                     </View>
                     <View>
                         <Text>Password</Text>
                         <TextInput
+                            onChangeText={setPassword}
+                            value={password}
                             style={{height: 40}}
-                            placeholder="Type your password!"
+                            placeholder="Type your passwordsi!"
                         />
                     </View>
                 </View>
                 <View style={styles.signinbutton}>
                     <Button
                         title="Sign In"
-                        onPress={() => Alert.alert('Simple Button pressed')}
+                        onPress={addUser()}
                     />
                 </View>
                 <View style={{flex: 1}}>
