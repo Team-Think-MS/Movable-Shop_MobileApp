@@ -9,7 +9,7 @@ function SignIn() {
     const [password, setPassword] = useState("");
 
     const submitData = () => {
-        fetch('http://10.0.0.2:3006/signin', {
+        fetch('http://10.0.2.2:3006/signin', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -23,9 +23,9 @@ function SignIn() {
         .then(res=>res.json())    
         .then(data=>{
             console.log(data);
-            console.log('data passed');
+            console.log('data passed1');
         })   
-        console.log('data passed');
+        console.log('data passed2');
     }
   
     return (
@@ -63,7 +63,7 @@ function SignIn() {
                 <View style={styles.signinbutton}>
                     <Button
                         title="Sign In"
-                        onPress={submitData}
+                        onPress={submitData()}
                     />
                 </View>
                 <View style={{flex: 1}}>
