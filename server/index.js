@@ -1,8 +1,11 @@
 const express = require("express");
 const app = express();
 const mariadb = require("mariadb");
-const cors = require("cors");
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 const pool = mariadb.createPool({
     host: "localhost",
@@ -11,22 +14,38 @@ const pool = mariadb.createPool({
     database: "movableShopDB"
 })
 
-app.post("/signin", (req, res) => {
+app.post('/task', async (req, res) => {
+    console.log("ccgcn");
+    const email = req.body.email;
+    console.log(email);
+});
+
+app.post("/signin", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    pool.query("INSERT INTO users (email, password) VALUES(?,?);",
-        [email, password],
-        (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.send("Values Inserted");
-            }
-        }
-    );
+    try {
+        const result = await pool.query("INSERT INTO users (email, password) VALUES(?,?);",[email, password])
+    res.send(result);
+} catch (err) {
+    throw err;
+}
+    
 });
 
+
+// GET
+app.get('/tasks', async (req, res) => {
+    try {
+        const result = await pool.query("select * from users");
+        res.send(result);
+    } catch (err) {
+        throw err;
+    }
+});
+
+
+
 app.listen(3006, () => {
-    console.log("runing on port 3001")
+    console.log("runing on port 3006")
 });

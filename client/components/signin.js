@@ -8,23 +8,26 @@ function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    fetch('http://localhost:3006/signin', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            email,
-            password,
-        })
-            .then(res=>res.json())
-            .then(data=>{
-                console.log("Data passed")
+    const submitData = () => {
+        fetch('http://10.0.0.2:3006/signin', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email,
+                password,
             })
-    });
-
-    
+        })
+        .then(res=>res.json())    
+        .then(data=>{
+            console.log(data);
+            console.log('data passed');
+        })   
+        console.log('data passed');
+    }
+  
     return (
         <View style={[styles.container, {
             flexDirection: "column"
@@ -41,17 +44,17 @@ function SignIn() {
                     <View >
                         <Text>Email</Text>
                         <TextInput
-                            onChangeText={setEmail}
+                            Value={email}
+                            onChangeText={text =>setEmail(text)}
                             style={{height: 40}}
-                            value={email}
                             placeholder="Type your email address!"
                         />
                     </View>
                     <View>
                         <Text>Password</Text>
                         <TextInput
-                            onChangeText={setPassword}
-                            value={password}
+                            Value={password}
+                            onChangeText={text =>setPassword(text)}
                             style={{height: 40}}
                             placeholder="Type your passwordsi!"
                         />
@@ -60,7 +63,7 @@ function SignIn() {
                 <View style={styles.signinbutton}>
                     <Button
                         title="Sign In"
-                        onPress={addUser()}
+                        onPress={submitData}
                     />
                 </View>
                 <View style={{flex: 1}}>
