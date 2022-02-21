@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
+import axios from "axios";
 
 
 function SignIn() {
@@ -9,7 +10,8 @@ function SignIn() {
     const [password, setPassword] = useState("");
 
     const submitData = () => {
-        fetch('http://10.0.2.2:3006/signin', {
+        
+        fetch('http://localhost:3006/signin', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -26,6 +28,7 @@ function SignIn() {
             console.log('data passed1');
         })   
         console.log('data passed2');
+
     }
   
     return (
@@ -44,8 +47,8 @@ function SignIn() {
                     <View >
                         <Text>Email</Text>
                         <TextInput
-                            Value={email}
-                            onChangeText={text =>setEmail(text)}
+                            onChangeText={text => setEmail(text)}
+                            value={email}
                             style={{height: 40}}
                             placeholder="Type your email address!"
                         />
@@ -53,8 +56,8 @@ function SignIn() {
                     <View>
                         <Text>Password</Text>
                         <TextInput
-                            Value={password}
-                            onChangeText={text =>setPassword(text)}
+                            onChangeText={text => setPassword(text)}
+                            value={password}
                             style={{height: 40}}
                             placeholder="Type your passwordsi!"
                         />
@@ -63,9 +66,10 @@ function SignIn() {
                 <View style={styles.signinbutton}>
                     <Button
                         title="Sign In"
-                        onPress={submitData()}
+                        onPress={submitData}
                     />
                 </View>
+
                 <View style={{flex: 1}}>
                     <Text>Forgot the password?</Text>
                     <Text>or continue with</Text>
