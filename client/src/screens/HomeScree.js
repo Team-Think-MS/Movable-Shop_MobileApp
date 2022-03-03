@@ -8,7 +8,7 @@ import {
   Image,
   Dimensions,
   Alert,
-  TouchableHighlight
+  TouchableHighlight,
 } from "react-native";
 import React, { Component, useState } from "react";
 import { Icon, withTheme } from "react-native-elements";
@@ -18,28 +18,28 @@ import { data } from "../global/data";
 import { products } from "../global/products";
 import { Button } from "react-native-elements/dist/buttons/Button";
 
-
-class Btn extends Component{
-  render(){
-    return(
-      <TouchableHighlight onPress={()=>Alert.alert('button clicked!')} underlayColor="white" activeOpacity={0.7}>
+class Btn extends Component {
+  render() {
+    return (
+      <TouchableHighlight
+        onPress={() => Alert.alert("button clicked!")}
+        underlayColor="white"
+        activeOpacity={0.7}
+      >
         <View style={styles.btn}>
-        <Text style={styles.btnText}>Add to Cart</Text>
-      </View>
+          <Text style={styles.btnText}>Add to Cart</Text>
+        </View>
       </TouchableHighlight>
-      
     );
   }
 }
 
-const WIDTH= Dimensions.get('window').width;
+const WIDTH = Dimensions.get("window").width;
 
 export default function HomeScree() {
-
-
-const numColums =2;
+  const numColums = 2;
   const [indexCheck, setIndexCheck] = useState("0");
-  const [idCheck,setIdCheck] =useState("0");
+  const [idCheck, setIdCheck] = useState("0");
   return (
     <View style={styles.container}>
       <HomeHeader />
@@ -92,7 +92,7 @@ const numColums =2;
         </View>
         <View>
           <FlatList
-          numColumns={2}
+            numColumns={2}
             data={products}
             keyExtractor={(item) => item.id}
             extraData={idCheck}
@@ -107,52 +107,53 @@ const numColums =2;
                     /*idCheck === item.id
                       ? { ...styles.productCardSelected }
                       : { ...styles.productCard }*/
-                      styles.productCard
+                    styles.productCard
                   }
                 >
-                  <View style={{alignItems:"center", top:-40}}>
-                  <Image
-                    style={{height:100,width:150,borderRadius:10,}}
-                    source={item.image}
-                  />
+                  <View style={{ alignItems: "center", top: -40 }}>
+                    <Image
+                      style={{ height: 100, width: 150, borderRadius: 10 }}
+                      source={item.image}
+                    />
                   </View>
-                <View style={{marginHorizontal:20}
-                  }>
+                  <View style={{ marginHorizontal: 20 }}>
                     <Text
                       style={
                         /*idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
                         styles.productCardText
                       }
-                      >
-                        {item.name}
-
+                    >
+                      {item.name}
                     </Text>
                     <Text
                       style={
                         /*idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
-                        {fontSize:12, color:"#e2e1e1"}
+                        { fontSize: 12, color: "#e2e1e1" }
                       }
-                      >
-                        {item.name}
-
+                    >
+                      {item.name}
                     </Text>
-                    </View>
-                    <View style={{marginTop:10, marginHorizontal:20, flexDirection:"row",justifyContent:"space-between"}}>
-                      <Text style={
-                      styles.productCardText
-                     /* idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
-                    }>
-                     ${item.price}
+                  </View>
+                  <View
+                    style={{
+                      marginTop: 10,
+                      marginHorizontal: 20,
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text
+                      style={
+                        styles.productCardText
+                        /* idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
+                      }
+                    >
+                      ${item.price}
                     </Text>
-                    </View>
-                    
-                    <Btn/>
-               
-                 
-                   </View>
-                  
+                  </View>
 
-               
+                  <Btn />
+                </View>
               </Pressable>
             )}
           />
@@ -165,6 +166,7 @@ const numColums =2;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   headerText: {
     color: colors.gray01,
@@ -188,7 +190,7 @@ const styles = StyleSheet.create({
   },
   smallCardSelected: {
     borderRadius: 30,
-    backgroundColor: colors.buttons,
+    backgroundColor: "black",
     justifyContent: "center",
     alignItems: "center",
     padding: 5,
@@ -218,7 +220,7 @@ const styles = StyleSheet.create({
     borderColor:colors.gray01,
     borderWidth:0.5*/
     //------------------------
-   /* height:220,
+    /* height:220,
    margin:5,
    width:(WIDTH-20)/2,
    marginHorizontal:10,
@@ -227,9 +229,8 @@ const styles = StyleSheet.create({
    borderRadius:15,
    elevation:13,
    backgroundColor:colors.buttons*/
-
   },
-  productCard:{
+  productCard: {
     /*borderRadius:20,
     backgroundColor:"white",
     justifyContent:"center",
@@ -242,20 +243,17 @@ const styles = StyleSheet.create({
     paddingRight:20,
     borderColor:colors.gray01,
    borderWidth:0.5*/
-   height:240,
-   margin:5, 
-   width:(WIDTH-40)/2,
-   marginHorizontal:10,
-   marginBottom:20,
-   marginTop:50,
-   borderRadius:20,
-   elevation:13,
-   backgroundColor:"white"
-
-    
-    
+    height: 240,
+    margin: 5,
+    width: (WIDTH - 40) / 2,
+    marginHorizontal: 10,
+    marginBottom: 20,
+    marginTop: 50,
+    borderRadius: 20,
+    elevation: 13,
+    backgroundColor: "white",
   },
- /* productCardSelectedText:{
+  /* productCardSelectedText:{
     fontWeight:"bold",
     color:"white",
     fontSize:18,
@@ -264,35 +262,31 @@ const styles = StyleSheet.create({
   
   
   },*/
-  productCardText:{
-   /* fontWeight: "bold",
+  productCardText: {
+    /* fontWeight: "bold",
     color: colors.gray01,
     fontSize:18,
     textAlign:"left",*/
-    fontSize:18,
-    fontWeight:"bold",
-    color:"black",
-    marginTop:2
-  
-  },btn:{
-    backgroundColor:colors.buttons,
-    borderWidth:10,
-    borderRadius:10,
-    borderColor:colors.buttons,
-    padding:-1,
-    justifyContent:"center",
-    margin:10,
-    elevation:3
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "black",
+    marginTop: 2,
+  },
+  btn: {
+    backgroundColor: "black",
+    borderWidth: 10,
+    borderRadius: 10,
+    borderColor: "black",
+    padding: -1,
+    justifyContent: "center",
+    margin: 10,
 
-    
-
-
-  },btnText:{
-    color:"white",
-    fontSize:15,
-    fontWeight:"bold",
-    textAlign:"center"
-
-  }
-
+    elevation: 3,
+  },
+  btnText: {
+    color: "white",
+    fontSize: 15,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
 });
