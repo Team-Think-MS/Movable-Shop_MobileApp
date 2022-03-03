@@ -42,7 +42,6 @@ export default function HomeScree() {
   const [idCheck, setIdCheck] = useState("0");
   return (
     <View style={styles.container}>
-      <HomeHeader />
       <ScrollView ScrollView showsHorizontalScrollIndicator={true}>
         <View style={styles.headerTextView}>
           <Text style={styles.headerText}>Categories</Text>
@@ -170,7 +169,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: colors.gray01,
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "bold",
     paddingLeft: 10,
   },

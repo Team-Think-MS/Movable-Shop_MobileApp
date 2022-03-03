@@ -15,9 +15,7 @@ import { products } from "../global/products";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SearchScreen = () => {
   return (
-    <View style={{ flex: 1, marginBottom: 10 }}>
-      <HomeHeader />
-
+    <View style={{ backgroundColor: "white" }}>
       <SearchComponent />
 
       <View>

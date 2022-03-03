@@ -157,10 +157,10 @@ const styles = StyleSheet.create({
   },
   SearchArea: {
     marginTop: 10,
-    height: 50,
+    height: 45,
     width: "94%",
     backgroundColor: "#f3f2f2",
-    borderRadius: 12,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: "#f3f2f2",
     flexDirection: "row",

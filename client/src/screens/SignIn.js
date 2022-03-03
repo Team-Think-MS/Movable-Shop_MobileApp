@@ -25,17 +25,17 @@ function SignIn({ navigation }) {
 
       <TouchableOpacity
         style={{
-          backgroundColor: "blue",
+          backgroundColor: "black",
           borderWidth: 20,
           borderRadius: 10,
-          borderColor: "blue",
+          borderColor: "black",
           padding: -1,
           justifyContent: "center",
           margin: 10,
           elevation: 3,
           width: "50%",
         }}
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.navigate("ClientTabs")}
       >
         <Text
           style={{

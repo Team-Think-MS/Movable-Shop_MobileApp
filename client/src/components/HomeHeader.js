@@ -52,6 +52,6 @@ const styles = StyleSheet.create({
     height: parameters.headerHeight,
     justifyContent: "space-between",
     width: parameters.width,
-    marginTop: 5.5,
+    marginTop: 10,
   },
 });

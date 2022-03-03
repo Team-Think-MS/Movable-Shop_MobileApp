@@ -12,10 +12,11 @@ import HomeHeader from "./src/components/HomeHeader";
 export default function App() {
   return (
     <NavigationContainer>
+      <HomeHeader />
       {/* <AuthStack /> */}
       {/*<AppStack />*/}
       {/*}  <HomeScree />*/}
-      <SearchScreen />
+      <AuthStack />
     </NavigationContainer>
   );
 }
