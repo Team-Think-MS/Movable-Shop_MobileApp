@@ -157,8 +157,8 @@ const styles = StyleSheet.create({
   },
   SearchArea: {
     marginTop: 10,
-    height: 45,
-    width: "94%",
+    height: 36.5,
+    width: "95%",
     backgroundColor: "#f3f2f2",
     borderRadius: 20,
     borderWidth: 1,

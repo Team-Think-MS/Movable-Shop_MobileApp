@@ -17,6 +17,8 @@ import { colors, parameters } from "../global/styles";
 import { data } from "../global/data";
 import { products } from "../global/products";
 import { Button } from "react-native-elements/dist/buttons/Button";
+import SearchComponent from "../components/SearchComponent";
+import Banner from "../components/Banner";
 
 class Btn extends Component {
   render() {
@@ -42,7 +44,12 @@ export default function HomeScree() {
   const [idCheck, setIdCheck] = useState("0");
   return (
     <View style={styles.container}>
+      <SearchComponent />
+
       <ScrollView ScrollView showsHorizontalScrollIndicator={true}>
+        <View>
+          <Banner />
+        </View>
         <View style={styles.headerTextView}>
           <Text style={styles.headerText}>Categories</Text>
         </View>
@@ -174,8 +181,10 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   headerTextView: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "white",
     paddingVertical: 3,
+    marginBottom: 5,
+    marginTop: 2,
   },
   smallCard: {
     borderRadius: 30,
