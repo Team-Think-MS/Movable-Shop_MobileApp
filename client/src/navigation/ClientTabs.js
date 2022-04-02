@@ -3,13 +3,13 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "react-native-elements";
 import HomeScree from "../screens/HomeScree";
-import { color } from "react-native-elements/dist/helpers";
 import SearchScreen from "../screens/SearchScreen";
 import OrderScreen from "../screens/OrderScreen";
 import AccountScreen from "../screens/AccountScreen";
+import { ClientStack } from "./ClientStack";
 
 const clientTab = createBottomTabNavigator();
-const ClientTabs = () => {
+export default function ClientTabs() {
   return (
     <clientTab.Navigator
       tabBarOptions={{
@@ -29,6 +29,7 @@ const ClientTabs = () => {
       />
       <clientTab.Screen
         name="Search"
+        //component={ClientStack}
         component={SearchScreen}
         options={{
           tabBarLabel: "Search",
@@ -62,6 +63,4 @@ const ClientTabs = () => {
       />
     </clientTab.Navigator>
   );
-};
-
-export default ClientTabs;
+}

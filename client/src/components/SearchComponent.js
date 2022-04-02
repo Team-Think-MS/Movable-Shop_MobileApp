@@ -14,7 +14,7 @@ import { Icon } from "react-native-elements";
 import * as Animatable from "react-native-animatable";
 import { useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { products } from "../global/products";
+import { productData, Stores } from "../global/products";
 import filter from "lodash/filter";
 
 export default function SearchComponent() {
@@ -22,7 +22,7 @@ export default function SearchComponent() {
   const [modalVisible, setModalVisible] = useState(false);
   const [textInputFocussed, setTextInputFocussed] = useState(true);
   const textInput = useRef(0);
-  const [data, setData] = useState(products);
+  const [data, setData] = useState(Stores);
 
   //filltering
   const contains = ({ name }, query) => {
@@ -34,7 +34,7 @@ export default function SearchComponent() {
 
   //handle text input
   const handleSearch = (text) => {
-    const dataS = filter(products, (userSearch) => {
+    const dataS = filter(Stores, (userSearch) => {
       return contains(userSearch, text);
     });
 
@@ -115,7 +115,9 @@ export default function SearchComponent() {
               <TouchableOpacity
                 onPress={() => {
                   Keyboard.dismiss;
-                  navigation.navigate("Home", { item: item.name });
+                  navigation.navigate("Home", {
+                    item: item.name,
+                  });
                   setModalVisible(false);
                   setTextInputFocussed(true);
                 }}

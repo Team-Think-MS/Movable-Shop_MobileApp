@@ -68,11 +68,12 @@ const styles = StyleSheet.create({
     width: width,
     alignItems: "center",
     marginTop: 10,
+    marginBottom: -10,
   },
   imageBanner: {
     height: width / 2,
     width: width - 40,
-    borderRadius: 10,
+    borderRadius: 5,
     marginHorizontal: 20,
   },
 });

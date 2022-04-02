@@ -3,7 +3,7 @@ import React from "react";
 import { colors, parameters } from "../global/styles";
 import { Icon, withBadge } from "react-native-elements";
 
-export default function HomeHeader() {
+export default function HomeHeader(navigation) {
   const BadgeIcon = withBadge(0)(Icon);
   return (
     <View style={styles.header}>

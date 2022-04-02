@@ -9,14 +9,15 @@ import {
   Dimensions,
   Alert,
   TouchableHighlight,
+  TouchableOpacity,
 } from "react-native";
 import React, { Component, useState } from "react";
 import { Icon, withTheme } from "react-native-elements";
 import HomeHeader from "../components/HomeHeader";
 import { colors, parameters } from "../global/styles";
 import { data } from "../global/data";
-import { products } from "../global/products";
-import { Button } from "react-native-elements/dist/buttons/Button";
+import { productData, Stores } from "../global/products";
+//import { Button } from "react-native-elements/dist/buttons/Button";
 import SearchComponent from "../components/SearchComponent";
 import Banner from "../components/Banner";
 
@@ -94,12 +95,13 @@ export default function HomeScree() {
           />
         </View>
         <View style={styles.headerTextView}>
-          <Text style={styles.headerText}>Products</Text>
+          <Text style={styles.headerText}>Nearby Stores</Text>
         </View>
         <View>
           <FlatList
-            numColumns={2}
-            data={products}
+            horizontal={true}
+            //numColumns={2}
+            data={Stores}
             keyExtractor={(item) => item.id}
             extraData={idCheck}
             renderItem={({ item, index }) => (
@@ -116,7 +118,84 @@ export default function HomeScree() {
                     styles.productCard
                   }
                 >
-                  <View style={{ alignItems: "center", top: -40 }}>
+                  <View style={{ alignItems: "center", top: 10 }}>
+                    <Image
+                      style={{ height: 100, width: 150, borderRadius: 10 }}
+                      source={item.image}
+                    />
+                  </View>
+                  <View style={{ marginHorizontal: 10 }}>
+                    <Text
+                      style={
+                        /*idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
+                        styles.productCardText
+                      }
+                    >
+                      {item.name}
+                    </Text>
+                    <Text
+                      style={
+                        /*idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
+                        { fontSize: 10, color: "#e2e1e1" }
+                      }
+                    >
+                      {item.name}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      marginTop: 5,
+                      marginHorizontal: 20,
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text
+                      style={
+                        styles.productCardText
+                        /* idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
+                      }
+                    >
+                      {/** Rs.{item.price}.00*/}
+                    </Text>
+                  </View>
+
+                  {/** <Btn /> */}
+                </View>
+              </Pressable>
+            )}
+          />
+          <View style={styles.headerTextView}>
+            <Text style={styles.headerText}>Most Popular Categories</Text>
+          </View>
+          <FlatList
+            numColumns={2}
+            data={productData}
+            keyExtractor={(item) => item.id}
+            extraData={idCheck}
+            renderItem={({ item, index }) => (
+              <Pressable
+                onPress={() => {
+                  setIdCheck(item.id);
+                }}
+              >
+                <View
+                  style={
+                    /*idCheck === item.id
+                      ? { ...styles.productCardSelected }
+                      : { ...styles.productCard }*/
+                    styles.productCardTwo
+                  }
+                >
+                  <View
+                    style={{
+                      alignItems: "center",
+                      top: -2,
+                      marginTop: 5,
+                      marginLeft: 10,
+                      marginRight: 10,
+                    }}
+                  >
                     <Image
                       style={{ height: 100, width: 150, borderRadius: 10 }}
                       source={item.image}
@@ -126,7 +205,7 @@ export default function HomeScree() {
                     <Text
                       style={
                         /*idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
-                        styles.productCardText
+                        styles.productCardTextTwo
                       }
                     >
                       {item.name}
@@ -150,11 +229,11 @@ export default function HomeScree() {
                   >
                     <Text
                       style={
-                        styles.productCardText
+                        styles.productCardTextTwo
                         /* idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
                       }
                     >
-                      ${item.price}
+                      Rs.{item.price}
                     </Text>
                   </View>
 
@@ -176,15 +255,16 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: colors.gray01,
-    fontSize: 22,
+    fontSize: 15.5,
     fontWeight: "bold",
     paddingLeft: 10,
+    fontFamily: "sans-serif-medium",
   },
   headerTextView: {
     backgroundColor: "white",
     paddingVertical: 3,
-    marginBottom: 5,
-    marginTop: 2,
+    marginBottom: -1,
+    marginTop: 5,
   },
   smallCard: {
     borderRadius: 30,
@@ -207,12 +287,14 @@ const styles = StyleSheet.create({
     height: 100,
   },
   smallCardTextSelected: {
-    fontWeight: "bold",
+    //fontWeight: "bold",
     color: "white",
+    fontFamily: "sans-serif-medium",
   },
   smallCardText: {
-    fontWeight: "bold",
+    //fontWeight: "bold",
     color: colors.gray01,
+    fontFamily: "sans-serif-medium",
   },
   productCardSelected: {
     /*borderRadius:20,
@@ -251,12 +333,23 @@ const styles = StyleSheet.create({
     paddingRight:20,
     borderColor:colors.gray01,
    borderWidth:0.5*/
-    height: 240,
+    height: (WIDTH - 40) / 2,
     margin: 5,
     width: (WIDTH - 40) / 2,
     marginHorizontal: 10,
     marginBottom: 20,
-    marginTop: 50,
+    marginTop: 10,
+    borderRadius: 20,
+    elevation: 5,
+    backgroundColor: "white",
+  },
+  productCardTwo: {
+    height: 240,
+    margin: 5,
+    width: (WIDTH - 40) / 2,
+    marginHorizontal: 10,
+    // marginBottom: 20,
+    //marginTop: 50,
     borderRadius: 20,
     elevation: 13,
     backgroundColor: "white",
@@ -275,6 +368,13 @@ const styles = StyleSheet.create({
     color: colors.gray01,
     fontSize:18,
     textAlign:"left",*/
+    fontSize: 15,
+    //fontWeight: "bold",
+    color: "black",
+    marginTop: 15,
+    fontFamily: "sans-serif-medium",
+  },
+  productCardTextTwo: {
     fontSize: 18,
     fontWeight: "bold",
     color: "black",

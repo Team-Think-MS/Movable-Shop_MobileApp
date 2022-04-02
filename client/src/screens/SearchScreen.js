@@ -6,14 +6,18 @@ import {
   TouchableWithoutFeedback,
   ImageBackground,
   Dimensions,
+  Keyboard,
 } from "react-native";
 import React from "react";
 import SearchComponent from "../components/SearchComponent";
-import HomeHeader from "../components/HomeHeader";
-import { products } from "../global/products";
+//import HomeHeader from "../components/HomeHeader";
+import { productData } from "../global/products";
+import { useNavigation } from "@react-navigation/native";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
-const SearchScreen = () => {
+
+export default function SearchScreen() {
+  // const navigation = useNavigation();
   return (
     <View style={{ backgroundColor: "white" }}>
       <SearchComponent />
@@ -21,7 +25,7 @@ const SearchScreen = () => {
       <View>
         <FlatList
           style={{ marginBottom: 1 }}
-          data={products}
+          data={productData}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <TouchableWithoutFeedback>
@@ -44,15 +48,16 @@ const SearchScreen = () => {
       </View>
     </View>
   );
-};
+}
 
 const Footer = () => {
+  //  const navigation = useNavigation();
   return (
     <View style={{ flex: 1, marginBottom: 150 }}>
       <View style={{}}>
         <FlatList
           style={{ marginBottom: 10 }}
-          data={products}
+          data={productData}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <TouchableWithoutFeedback>
@@ -75,8 +80,7 @@ const Footer = () => {
     </View>
   );
 };
-
-export default SearchScreen;
+//export default SearchScreen;
 
 const styles = StyleSheet.create({
   imageView: {
