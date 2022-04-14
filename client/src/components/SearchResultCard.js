@@ -9,7 +9,7 @@ import {
 //import { Icon } from "react-native-elements";
 import React from "react";
 import { colors } from "../global/styles";
-import { productData2 } from "../global/products";
+import { productData } from "../global/products";
 import ProductCard from "./ProductCard";
 
 const SearchResultCard = ({
@@ -17,23 +17,20 @@ const SearchResultCard = ({
   storeName,
   deliveryAvailabe,
   discountAvailable,
-  //discountPercent,
   numberOfReview,
-  // businessAddress,
-  farAway,
   averageReview,
   images,
-  productData,
-  //  productData2,
+  screenWidth,
+  productData2
 }) => {
   return (
     <View>
       {/** <TouchableOpacity onPress={OnPressStoreCard}>*/}
       <View style={styles.view1}>
         <View style={{ height: 150 }}>
-          <ImageBackground
+        <ImageBackground
             style={{ height: 160 }}
-            source={{ uri: images }}
+            source = {(images)}
             imageStyle={styles.imageStyle}
           />
           <View style={styles.image}>
@@ -49,11 +46,11 @@ const SearchResultCard = ({
       </View>
       {/**  </TouchableOpacity>*/}
 
-      <View style={{ marginTop: 5, paddingBottom: 20 }}>
+      <View style={{ marginTop: 0.5, paddingBottom: 20 }}>
         <FlatList
           horizontal={true}
           style={{ backgroundColor: "white" }}
-          data={productData2}
+          data={productData}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <ProductCard
@@ -115,15 +112,16 @@ const styles = StyleSheet.create({
   view3: {
     flexDirection: "column",
     marginHorizontal: 5,
-    marginBottom: 10,
+    marginBottom: 0.5,
     marginLeft: 0,
-    marginTop: 5,
+    marginTop: 10,
   },
 
   text5: {
     fontSize: 17,
     fontWeight: "bold",
     color: colors.gray01,
+    paddingBottom:0.5
   },
 
   view4: {

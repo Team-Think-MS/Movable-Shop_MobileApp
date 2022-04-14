@@ -115,7 +115,7 @@ export const Stores = [
 
 export const Stores2 = [
   {
-    id: "0",
+    id: 0,
     name: "Mini-PIZZA",
     slug: "youghurt",
     category: "Milk Products",
@@ -131,7 +131,7 @@ export const Stores2 = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
   },
   {
-    id: "1",
+    id: 1,
     name: "Ice-Rio",
     // slug: "ice-cream",
     category: "Milk Products",
@@ -145,7 +145,7 @@ export const Stores2 = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
   },
   {
-    id: "2",
+    id: 2,
     name: "Coffee-Coffee",
     //slug: "cabbage",
     category: "Vegetables",
@@ -160,7 +160,7 @@ export const Stores2 = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
   },
   {
-    id: "3",
+    id: 3,
     name: "Take-away",
     slug: "carrot",
     category: "Vegetables",
@@ -176,7 +176,7 @@ export const Stores2 = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
   },
   {
-    id: "4",
+    id: 4,
     name: "Smoothiess",
     slug: "avocado",
     category: "Fruits",
@@ -191,7 +191,7 @@ export const Stores2 = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
   },
   {
-    id: "5",
+    id: 5,
     name: "Fast-Fast",
     //slug: "papaya",
     category: "Fruits",
@@ -206,7 +206,7 @@ export const Stores2 = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
   },
   {
-    id: "6",
+    id: 6,
     name: "TOM's cart",
     //  slug: "tomatoes",
     // category: "Vegetables",
@@ -221,7 +221,7 @@ export const Stores2 = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
   },
   {
-    id: "7",
+    id: 7,
     name: "Nathan's",
     //slug: "pineapple",
     //category: "Fruits",

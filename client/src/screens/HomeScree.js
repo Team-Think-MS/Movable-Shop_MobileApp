@@ -16,10 +16,11 @@ import { Icon, withTheme } from "react-native-elements";
 import HomeHeader from "../components/HomeHeader";
 import { colors, parameters } from "../global/styles";
 import { data } from "../global/data";
-import { productData, Stores } from "../global/products";
+import { productData, Stores2,Stores } from "../global/products";
 //import { Button } from "react-native-elements/dist/buttons/Button";
 import SearchComponent from "../components/SearchComponent";
 import Banner from "../components/Banner";
+import StoreCard from "../components/StoreCard";
 
 class Btn extends Component {
   render() {
@@ -39,7 +40,7 @@ class Btn extends Component {
 
 const WIDTH = Dimensions.get("window").width;
 
-export default function HomeScree() {
+export default function HomeScree(navigation) {
   const numColums = 2;
   const [indexCheck, setIndexCheck] = useState("0");
   const [idCheck, setIdCheck] = useState("0");
@@ -102,67 +103,18 @@ export default function HomeScree() {
             horizontal={true}
             //numColumns={2}
             data={Stores}
-            keyExtractor={(item) => item.id}
-            extraData={idCheck}
-            renderItem={({ item, index }) => (
-              <Pressable
-                onPress={() => {
-                  setIdCheck(item.id);
-                }}
-              >
-                <View
-                  style={
-                    /*idCheck === item.id
-                      ? { ...styles.productCardSelected }
-                      : { ...styles.productCard }*/
-                    styles.productCard
-                  }
-                >
-                  <View style={{ alignItems: "center", top: 10 }}>
-                    <Image
-                      style={{ height: 100, width: 150, borderRadius: 10 }}
-                      source={item.image}
-                    />
-                  </View>
-                  <View style={{ marginHorizontal: 10 }}>
-                    <Text
-                      style={
-                        /*idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
-                        styles.productCardText
-                      }
-                    >
-                      {item.name}
-                    </Text>
-                    <Text
-                      style={
-                        /*idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
-                        { fontSize: 10, color: "#e2e1e1" }
-                      }
-                    >
-                      {item.name}
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      marginTop: 5,
-                      marginHorizontal: 20,
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Text
-                      style={
-                        styles.productCardText
-                        /* idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
-                      }
-                    >
-                      {/** Rs.{item.price}.00*/}
-                    </Text>
-                  </View>
-
-                  {/** <Btn /> */}
-                </View>
-              </Pressable>
+            keyExtractor={(item,index) => index.toString()}
+            showsHorizontalScrollIndicator = {false}
+            //extraData={idCheck}
+            renderItem={({ item}) => (
+             <StoreCard
+             screenWidth={WIDTH*0.5}
+             images ={item.image}
+             restaurantName ={item.name}
+             averageReview ={item.rating}
+             numberOfReview ={item.numReviews}
+            // OnPressFoodCard={()=>{navigation.navigate("RestaurantHomeScreen",{id:index,restaurant:item.restaurantName})}}
+             />
             )}
           />
           <View style={styles.headerTextView}>

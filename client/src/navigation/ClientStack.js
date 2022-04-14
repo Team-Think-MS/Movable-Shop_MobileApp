@@ -7,13 +7,13 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScree from "../screens/HomeScree";
 import SearchScreen from "../screens/SearchScreen";
-import SearchResultScreen from "../screens/SearchResultScreen";
 import SingleProduct from "../screens/SingleProduct";
 import ProductScreen from "../screens/ProductScreen";
+import SearchResultScreen from "../screens/SearchResultScreen";
 
 const ClientSearch = createNativeStackNavigator();
 
-export function ClientStack() {
+export  function ClientStack() {
   return (
     <ClientSearch.Navigator>
       <ClientSearch.Screen

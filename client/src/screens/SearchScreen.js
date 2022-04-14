@@ -16,7 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
-export default function SearchScreen() {
+export default function SearchScreen({navigation}) {
   // const navigation = useNavigation();
   return (
     <View style={{ backgroundColor: "white" }}>
@@ -28,7 +28,12 @@ export default function SearchScreen() {
           data={productData}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+            onPress={()=>{
+              navigation.navigate("SearchResultScreen",{ item: item.name,});
+            }}
+            
+            >
               <View style={styles.imageView}>
                 <ImageBackground style={styles.image} source={item.image}>
                   <View style={styles.textView}>
@@ -51,7 +56,7 @@ export default function SearchScreen() {
 }
 
 const Footer = () => {
-  //  const navigation = useNavigation();
+    const navigation = useNavigation();
   return (
     <View style={{ flex: 1, marginBottom: 150 }}>
       <View style={{}}>
@@ -60,7 +65,11 @@ const Footer = () => {
           data={productData}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+            onPress={()=>{
+              navigation.navigate("SearchResultScreen",{ item: item.name,});
+            }}
+            >
               <View style={styles.imageView}>
                 <ImageBackground style={styles.image} source={item.image}>
                   <View style={styles.textView}>

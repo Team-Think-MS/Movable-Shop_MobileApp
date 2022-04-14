@@ -1,6 +1,6 @@
-/*import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
-import { colors } from "../global/styles";
+//import { colors } from "../global/styles";
 
 const ProductCard = ({ productName, price, image }) => {
   return (
@@ -11,7 +11,7 @@ const ProductCard = ({ productName, price, image }) => {
           <Text style={styles.text1}>Rs.{price}</Text>
         </View>
         <View style={styles.view4}>
-          <Image style={styles.image} source={{ uri: image }} />
+          <Image style={styles.image} source={(image)} />
         </View>
       </View>
     </View>
@@ -37,11 +37,11 @@ const styles = StyleSheet.create({
 
   text1: {
     fontSize: 15,
-    color: colors.gray01,
+    color: "gray",
   },
 
   view4: { width: 75, height: 65 },
 
   image: { height: 65, width: 75 },
 });
-*/
+

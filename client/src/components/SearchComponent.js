@@ -115,7 +115,7 @@ export default function SearchComponent() {
               <TouchableOpacity
                 onPress={() => {
                   Keyboard.dismiss;
-                  navigation.navigate("Home", {
+                  navigation.navigate("SearchResultScreen", {
                     item: item.name,
                   });
                   setModalVisible(false);
