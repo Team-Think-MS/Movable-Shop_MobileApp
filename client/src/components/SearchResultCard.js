@@ -11,21 +11,20 @@ import React from "react";
 import { colors } from "../global/styles";
 import { productData } from "../global/products";
 import ProductCard from "./ProductCard";
+import { useNavigation } from "@react-navigation/native";
 
 const SearchResultCard = ({
   OnPressStoreCard,
   storeName,
-  deliveryAvailabe,
-  discountAvailable,
   numberOfReview,
   averageReview,
   images,
-  screenWidth,
-  productData2
+  
 }) => {
+  const navigation = useNavigation();
   return (
     <View>
-      {/** <TouchableOpacity onPress={OnPressStoreCard}>*/}
+   <TouchableOpacity onPress={OnPressStoreCard}>
       <View style={styles.view1}>
         <View style={{ height: 150 }}>
         <ImageBackground
@@ -44,7 +43,7 @@ const SearchResultCard = ({
           </View>
         </View>
       </View>
-      {/**  </TouchableOpacity>*/}
+   </TouchableOpacity>
 
       <View style={{ marginTop: 0.5, paddingBottom: 20 }}>
         <FlatList
@@ -57,6 +56,7 @@ const SearchResultCard = ({
               image={item.image}
               productName={item.name}
               price={item.price}
+              OnPressProductCard={()=>{navigation.navigate("SingleProduct",{ item: item})}}
             />
           )}
         />

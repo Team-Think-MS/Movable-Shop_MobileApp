@@ -23,6 +23,7 @@ export default function SearchScreen({navigation}) {
       <SearchComponent />
 
       <View>
+        
         <FlatList
           style={{ marginBottom: 1 }}
           data={productData}

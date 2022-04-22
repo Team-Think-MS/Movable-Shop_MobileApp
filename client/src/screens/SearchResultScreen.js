@@ -23,6 +23,7 @@ const SearchResultScreen = ({navigation,route}) => {
                     averageReview={item.rating}
                     numberOfReview={item.numReviews}
                     storeName={item.name}
+                    OnPressStoreCard={()=>{navigation.navigate("ProductScreen",{id:index,item:item})}}
                 /> 
          )}
          ListHeaderComponent={

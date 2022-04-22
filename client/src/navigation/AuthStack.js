@@ -5,6 +5,7 @@ import SearchScreen from "../screens/SearchScreen";
 import SignIn from "../screens/SignIn";
 import ProductScreen from "../screens/ProductScreen";
 import ClientTabs from "./ClientTabs";
+import SingleProduct from "../screens/SingleProduct";
 //import DrawerNavigator from "./DrawerNavigator";
 
 const Stack = createNativeStackNavigator();
@@ -16,6 +17,7 @@ export default function AuthStack() {
       <Stack.Screen name="Home" component={HomeScree} />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="ProductScreen" component={ProductScreen} />
+      <Stack.Screen name="SingleProduct" component={SingleProduct}/>
       <Stack.Screen name="ClientTabs" component={ClientTabs} />
       {/**  <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />*/}
     </Stack.Navigator>

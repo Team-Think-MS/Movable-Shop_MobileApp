@@ -30,20 +30,20 @@ export  function ClientStack() {
           headerShown: false,
         })}
       />
-      {/**   <ClientSearch.Screen
-        name="ProductDetail"
-        component={{ SingleProduct }}
-        options={() => ({
-          headerShown: false,
-        })}
-      />*/}
-      {/**<ClientSearch.Screen
+      <ClientSearch.Screen
         name="ProductScreen"
         component={ProductScreen}
         options={() => ({
           headerShown: false,
         })}
-      /> */}
+      /> 
+       <ClientSearch.Screen
+        name="SingleProduct"
+        component={SingleProduct}
+        options={() => ({
+          headerShown: false,
+        })}
+      /> 
     </ClientSearch.Navigator>
   );
 }

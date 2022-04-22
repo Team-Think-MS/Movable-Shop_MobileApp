@@ -13,11 +13,12 @@ export default function StoreCard({
     numberOfReview ,
     averageReview ,
     images,
-    screenWidth
+    screenWidth,
+    
 }){
 
     return(
-        <TouchableOpacity>
+        <TouchableOpacity  onPress={OnPressFoodCard}>
             <View style ={{...styles.cardView,width:screenWidth}}>
                 <Image 
                     style ={{...styles.image, width:screenWidth}}

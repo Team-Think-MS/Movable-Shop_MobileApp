@@ -40,7 +40,7 @@ class Btn extends Component {
 
 const WIDTH = Dimensions.get("window").width;
 
-export default function HomeScree(navigation) {
+const HomeScree=({navigation})=> {
   const numColums = 2;
   const [indexCheck, setIndexCheck] = useState("0");
   const [idCheck, setIdCheck] = useState("0");
@@ -48,7 +48,7 @@ export default function HomeScree(navigation) {
     <View style={styles.container}>
       <SearchComponent />
 
-      <ScrollView ScrollView showsHorizontalScrollIndicator={true}>
+      <ScrollView  showsHorizontalScrollIndicator={true}>
         <View>
           <Banner />
         </View>
@@ -106,14 +106,14 @@ export default function HomeScree(navigation) {
             keyExtractor={(item,index) => index.toString()}
             showsHorizontalScrollIndicator = {false}
             //extraData={idCheck}
-            renderItem={({ item}) => (
+            renderItem={({ item,index}) => (
              <StoreCard
              screenWidth={WIDTH*0.5}
              images ={item.image}
              restaurantName ={item.name}
              averageReview ={item.rating}
              numberOfReview ={item.numReviews}
-            // OnPressFoodCard={()=>{navigation.navigate("RestaurantHomeScreen",{id:index,restaurant:item.restaurantName})}}
+             OnPressFoodCard={()=>{navigation.navigate("ProductScreen",{item:item,id:index})}}
              />
             )}
           />
@@ -128,14 +128,11 @@ export default function HomeScree(navigation) {
             renderItem={({ item, index }) => (
               <Pressable
                 onPress={() => {
-                  setIdCheck(item.id);
+                  navigation.navigate("SingleProduct",{ item: item});
                 }}
               >
                 <View
                   style={
-                    /*idCheck === item.id
-                      ? { ...styles.productCardSelected }
-                      : { ...styles.productCard }*/
                     styles.productCardTwo
                   }
                 >
@@ -156,7 +153,6 @@ export default function HomeScree(navigation) {
                   <View style={{ marginHorizontal: 20 }}>
                     <Text
                       style={
-                        /*idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
                         styles.productCardTextTwo
                       }
                     >
@@ -164,8 +160,7 @@ export default function HomeScree(navigation) {
                     </Text>
                     <Text
                       style={
-                        /*idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
-                        { fontSize: 12, color: "#e2e1e1" }
+                         { fontSize: 12, color: "#e2e1e1" }
                       }
                     >
                       {item.name}
@@ -182,7 +177,6 @@ export default function HomeScree(navigation) {
                     <Text
                       style={
                         styles.productCardTextTwo
-                        /* idCheck=== item.id?{...styles.productCardSelectedText}:{...styles.productCardText}*/
                       }
                     >
                       Rs.{item.price}
@@ -199,6 +193,7 @@ export default function HomeScree(navigation) {
     </View>
   );
 }
+export default HomeScree;
 
 const styles = StyleSheet.create({
   container: {

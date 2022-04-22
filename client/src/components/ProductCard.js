@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 //import { colors } from "../global/styles";
 
-const ProductCard = ({ productName, price, image }) => {
+const ProductCard = ({ productName, price, image,OnPressProductCard }) => {
   return (
-    <View style={styles.view1}>
+    <TouchableOpacity onPress={OnPressProductCard}>
+      <View style={styles.view1}>
       <View style={styles.view2}>
         <View style={styles.view3}>
           <Text style={styles.text1}>{productName}</Text>
@@ -15,6 +16,8 @@ const ProductCard = ({ productName, price, image }) => {
         </View>
       </View>
     </View>
+    </TouchableOpacity>
+    
   );
 };
 
