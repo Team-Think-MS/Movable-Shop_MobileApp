@@ -16,6 +16,7 @@ import {
   import { useNavigation } from "@react-navigation/native";
   import { productData, Stores } from "../global/products";
   import filter from "lodash/filter";
+  import {Input} from 'native-base'
   
   export default function SearchComponent() {
     const navigation = useNavigation();
@@ -79,7 +80,7 @@ import {
                     iconStyle={{ marginRight: 5 }}
                   />
                 </Animatable.View>
-                <TextInput
+             {/** <TextInput
                   style={{ width: "90%" }}
                   placeholder=""
                   autoFocus={false}
@@ -91,7 +92,8 @@ import {
                     setTextInputFocussed(false);
                   }}
                   onChangeText={handleSearch}
-                />
+                /> */} 
+                 
                 <Animatable.View
                   animation={textInputFocussed ? "fadeInLeft" : ""}
                   duration={400}

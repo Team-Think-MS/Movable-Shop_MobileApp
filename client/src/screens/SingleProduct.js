@@ -79,8 +79,8 @@ const SingleProduct = (props) => {
         </View>
         <TouchableOpacity
            onPress={() => {
-          props.addItemToCart(props),
-          console.log(props)
+          props.addItemToCart(item),
+         console.log(props)
           
           }}
         >
@@ -101,8 +101,10 @@ const SingleProduct = (props) => {
 
 const mapDispatchToProps =(dispatch)=>{
   return{
-    addItemToCart: (product)=>
-      dispatch(actions.addToCart({quantity: 1, product}))
+    addItemToCart: (product)=>{
+       dispatch(actions.addToCart({quantity: 1, product}))
+    }
+     
   }
 }
 
@@ -224,7 +226,11 @@ justifyContent:"space-between",
 paddingRight:10
 },
 view13:{
-  paddingTop:100,
+position:'relative',
+bottom:0,
+left:0,
+marginTop:100,
+flexDirection:'column'
   
 }
 

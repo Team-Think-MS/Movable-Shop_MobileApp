@@ -44,14 +44,15 @@ const HomeHeader=({navigation})=> {
           marginRight: 15,
         }}
       > 
-       
-             <BadgeIcon
+      {/**           <BadgeIcon
           type="material-community"
           name="cart"
           size={30}
           color="black"
         
-        />
+        />*/}
+       
+   
      
         
       </View>

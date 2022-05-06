@@ -55,6 +55,7 @@ import {
           <View style={styles.headerTextView}>
             <Text style={styles.headerText}>Categories</Text>
           </View>
+         
           <View>
             <FlatList
               horizontal={true}
