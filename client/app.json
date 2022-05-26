@@ -2,6 +2,7 @@
   "expo": {
     "name": "movable-shop",
     "slug": "movable-shop",
+    "owner": "movable-shop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
