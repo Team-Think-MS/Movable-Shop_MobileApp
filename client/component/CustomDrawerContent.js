@@ -3,18 +3,15 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-import { View, Text } from 'react-native';
+import { View, Text } from "react-native";
 
 function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
-      <DrawerItem label=""
-        />
+      <DrawerItem label="" />
       <DrawerItemList {...props} />
 
-      <View>
-          <Text>jshhjdskjjsdj</Text>
-      </View>
+      <Text></Text>
     </DrawerContentScrollView>
   );
 }

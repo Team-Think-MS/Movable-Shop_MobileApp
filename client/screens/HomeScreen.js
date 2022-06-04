@@ -2,9 +2,7 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import StoreCard from "../component/StoreCard";
 
 function HomeScreen({ navigation }) {
-  function storeButtonHandler() {
-    navigation.navigate("StoreScreen");
-  }
+  function storeButtonHandler() {}
 
   const prodtName = "This is the first produt";
 
@@ -23,8 +21,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   menuTitle: {
-      fontWeight: 'bold',
-      marginTop: 30,
-      marginLeft: 20
+    fontWeight: "bold",
+    marginTop: 30,
+    marginLeft: 20,
   },
 });

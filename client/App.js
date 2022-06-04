@@ -6,6 +6,7 @@ import "react-native-gesture-handler";
 import HomeScreen from "./screens/HomeScreen";
 import StoreOverviewScreen from "./screens/StoreOverviewScreen";
 import SellingOverviewScreen from "./screens/SellingOverviewScreen";
+import CategoryScreen from "./screens/CategoryScreen";
 import CustomDrawerContent from "./component/CustomDrawerContent";
 
 const stack = createStackNavigator();
@@ -22,6 +23,7 @@ function MenueDrawerNavigaterHandler() {
         name="Selling Managment"
         component={SellingOverviewScreen}
       />
+      <drawer.Screen name="Categories" component={CategoryScreen} />
     </drawer.Navigator>
   );
 }
@@ -39,10 +41,10 @@ export default function App() {
           }}
         />
         <stack.Screen
-          name="StoreScreen"
+          name="StoreOverviewScreen"
           component={StoreOverviewScreen}
           options={{
-            title: "Store Screen",
+            title: "Store Overview Screen",
           }}
         />
       </stack.Navigator>
