@@ -18,7 +18,9 @@ router.get('/',function(req,res){
 });
 
 
+
 /* GET ONE PRODUCT MATCHING ID */
+// /api/products/:prodId
 router.get('/:prodId',(req,res)=>{
    let productId=req.params.prodId;
    database.table('product')
@@ -38,6 +40,7 @@ router.get('/:prodId',(req,res)=>{
 
 
 /*GET ALL PRODUCTS FROM ONE CATEGORY */
+// /api/products/category/:catName
 router.get('/category/:catName',(req,res)=>{
    let cat_name=req.params.catName;
    database.table('praoduct as p')

@@ -1,10 +1,11 @@
 import{ADD_TO_CART,REMOVE_FROM_CART,CLEAR_CART} from '../constants';
 
-//method 1
+//method 1 -> function -> action creator
 export const addToCart = (payload) =>{//payload --> identify the item that we want to add
     return{
-        type: ADD_TO_CART,
-        payload
+        //action
+        type: ADD_TO_CART, //description about the action we did
+        payload // return relevant data 
     }
 }
 

@@ -80,7 +80,7 @@ import {
                     iconStyle={{ marginRight: 5 }}
                   />
                 </Animatable.View>
-             {/** <TextInput
+              <TextInput
                   style={{ width: "90%" }}
                   placeholder=""
                   autoFocus={false}
@@ -92,7 +92,7 @@ import {
                     setTextInputFocussed(false);
                   }}
                   onChangeText={handleSearch}
-                /> */} 
+                />  
                  
                 <Animatable.View
                   animation={textInputFocussed ? "fadeInLeft" : ""}

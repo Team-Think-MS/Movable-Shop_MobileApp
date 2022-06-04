@@ -4,6 +4,8 @@ import{
     CLEAR_CART
 } from '../constants';
 
+//function
+//input gives by ACTION 
 const cartItems = (state = [], action)=>{
     switch(action.type){
         case ADD_TO_CART:

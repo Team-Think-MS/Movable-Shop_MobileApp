@@ -84,7 +84,11 @@ const CartScreen = (props) => {
         </View>
         <Separator/>
         </View>
- <TouchableOpacity>
+ <TouchableOpacity
+ onPress={()=>{props.navigation.navigate('Checkout')}}
+ 
+ 
+ >
         <View style={styles.view13}>
         
            <View style={styles.view17}>
@@ -122,17 +126,39 @@ const CartScreen = (props) => {
      
     ):(
       <Container style={styles.emptyContainer}>
-        <Text style={{fontWeight:'bold', fontSize:20}}>Your cart is empty</Text>
+        <Text style={{fontWeight:'normal', fontSize:15, flex:1}}>Your cart is empty!</Text>
 
-      <Text style={{ fontSize:15}}>Add Products to your cart</Text> 
-      <Link to={{screen:'HomeScreen'}} style={{color:'#88aef7',fontSize:25, paddingTop:10, textDecorationLine:'underline'}}>Go and shop more</Link>
+{/**<Text style={{ fontSize:15, flex:1}}>Add Products to your cart</Text> */}
+       
+      {/**<Link to={{screen:'HomeScreen'}} style={{color:'#88aef7',fontSize:25, paddingTop:10, textDecorationLine:'underline'}}>Go and shop more</Link> */}
+      
+      <TouchableOpacity
+          onPress={()=>{navigation.navigate("HomeScreen")}}
+          style={styles.newOrder}
+
+          >
+        <View style={styles.view14}>
+         
+             <View style={styles.view12}>
+            <Text style={styles.text9}>
+              Create a new order
+            </Text>
+          </View>
+        
+         
+
+        </View>
+          </TouchableOpacity>
+      
       </Container>
+      
     )}
     </>
    
   );
 };
 
+//to get state(in store) to property
 const mapStateToProps = (state)=>{
   const {cartItems} = state;
   return{
@@ -283,4 +309,12 @@ text9:{
     fontSize:15,
     color:"white"
     },
+    newOrder:{
+      bottom:0,
+      left:0,
+      position:'absolute',
+      alignContent:'center',
+      width:'100%'
+
+    }
 });

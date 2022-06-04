@@ -6,6 +6,7 @@ import SignIn from "../screens/SignIn";
 import ProductScreen from "../screens/ProductScreen";
 import ClientTabs from "./ClientTabs";
 import SingleProduct from "../screens/SingleProduct";
+import Checkout from '../screens/Checkout';
 //import CartScreen from '../screens/CartScreen';
 //import DrawerNavigator from "./DrawerNavigator";
 //import DrawerNavigator from "./DrawerNavigator";
@@ -18,11 +19,13 @@ export default function AuthStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="Home" component={HomeScree} />
-      <Stack.Screen name="Search" component={SearchScreen} />
+      <Stack.Screen name="Search" component={SearchScreen} /> 
+      <Stack.Screen name="ClientTabs" component={ClientTabs} />
       <Stack.Screen name="ProductScreen" component={ProductScreen} />
       <Stack.Screen name="SingleProduct" component={SingleProduct}/> 
 {/** <Stack.Screen name="Cart" component={CartNavigator}/>*/}
-      <Stack.Screen name="ClientTabs" component={ClientTabs} /> 
+      
+      <Stack.Screen name="Checkout" component={Checkout}/>
       
        {/** <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />*/}
     </Stack.Navigator>
