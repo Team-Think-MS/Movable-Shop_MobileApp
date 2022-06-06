@@ -5,7 +5,9 @@ import { CATEGORIES } from "../data/dummy-data";
 function CategoryScreen({ navigation }) {
   function renderCategoryItem(itemData) {
     function categoryPressHandler() {
-      navigation.navigate("StoreOverviewScreen");
+      navigation.navigate("StoreOverviewScreen", {
+        categoryID: itemData.item.categoryId,
+      });
     }
 
     return (

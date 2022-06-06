@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
+import { GlobalStyles } from "../constant/Styles";
 
 function SellingDetails({ activeOrders, earnings }) {
   return (
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderBottomWidth: 1,
     borderTopWidth: 1,
-    borderColor: "#C5C5C5",
+    borderColor: GlobalStyles.colors.gray200,
     marginHorizontal: 20,
     marginTop: 10,
     paddingVertical: 15
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     flex: 1, 
     alignItems: "center",
     borderLeftWidth: 1,
-    borderColor: "#C5C5C5",
+    borderColor: GlobalStyles.colors.gray200,
   },
   text: {
     marginBottom: 15,

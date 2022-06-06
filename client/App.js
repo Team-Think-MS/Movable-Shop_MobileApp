@@ -8,6 +8,8 @@ import StoreOverviewScreen from "./screens/StoreOverviewScreen";
 import SellingOverviewScreen from "./screens/SellingOverviewScreen";
 import CategoryScreen from "./screens/CategoryScreen";
 import CustomDrawerContent from "./component/CustomDrawerContent";
+import StoreDetailsScreen from "./screens/StoreDetailsScreen";
+import ProductDetailsScreen from "./screens/ProductDetailsScreen";
 
 const stack = createStackNavigator();
 const drawer = createDrawerNavigator();
@@ -46,6 +48,14 @@ export default function App() {
           options={{
             title: "Store Overview Screen",
           }}
+        />
+        <stack.Screen 
+        name="StoreDetailsScreen"
+        component={StoreDetailsScreen}
+        />
+        <stack.Screen
+          name="ProductDetaislScreen"
+          component={ProductDetailsScreen}
         />
       </stack.Navigator>
     </NavigationContainer>

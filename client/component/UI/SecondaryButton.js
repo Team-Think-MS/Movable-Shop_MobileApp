@@ -1,4 +1,5 @@
 import { View, Pressable, Text, StyleSheet } from "react-native";
+import { GlobalStyles } from "../../constant/Styles";
 
 function SecondaryButton({ children, onPress }) {
   return (
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     width: 380,
     height: 50,
     padding: 5,
-    borderColor: "#8AA6DC",
+    borderColor: GlobalStyles.colors.primary400,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 22,
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     margin: 5
   },
   text: {
-    color: "#154DB9",
+    color: GlobalStyles.colors.primary500,
     fontSize: 16,
   },
 });

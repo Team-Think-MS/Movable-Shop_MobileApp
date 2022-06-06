@@ -1,17 +1,8 @@
-import { Button, StyleSheet, Text, View } from "react-native";
-import StoreCard from "../component/StoreCard";
+import { StyleSheet, View } from "react-native";
 
-function HomeScreen({ navigation }) {
-  function storeButtonHandler() {}
+function HomeScreen() {
 
-  const prodtName = "This is the first produt";
-
-  return (
-    <View style={styles.rootContainer}>
-      <Text style={styles.menuTitle}>Nearby Stores -{">"}</Text>
-      <StoreCard productname={prodtName} onPress={storeButtonHandler} />
-    </View>
-  );
+  return <View style={styles.rootContainer}></View>;
 }
 
 export default HomeScreen;
