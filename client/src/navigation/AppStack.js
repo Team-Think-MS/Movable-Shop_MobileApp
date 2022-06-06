@@ -1,17 +1,30 @@
-{/**import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import HomeScree from "../screens/HomeScree";
+{/**import * as React from 'react';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import ClientTabs from './ClientTabs';
+import { Icon } from 'react-native-elements';
 
-const Drawer = createDrawerNavigator();
+const drawer = createDrawerNavigator();
 
-const AppStack = () => {
-  return (
-    <Drawer.Navigator screenOptions={{ headerShown: false }}>
-      <Drawer.Screen name="Home" component={HomeScree} />
-    </Drawer.Navigator>
-  );
-};
+export default function DrawerNavigator(){
+  return(
+    <drawer.Navigator>
+      <drawer.Screen
+        name="ClientTabs"
+        component={ClientTabs}
+        options={{
+          title:'Home',
+          drawerIcon:({focussed,size})=>{
+            <Icon
+            type='material-community'
+            name='home'
+            color={focussed?'gray':'red'}
+            size={size}
+            
+            />
+          }
 
-export default AppStack;
- */}
+        }}
+      />
+    </drawer.Navigator>
+  )
+} */}

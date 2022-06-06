@@ -7,6 +7,7 @@ import ProductScreen from "../screens/ProductScreen";
 import ClientTabs from "./ClientTabs";
 import SingleProduct from "../screens/SingleProduct";
 import Checkout from '../screens/Checkout';
+import DrawerNavigator from "./AppStack";
 //import CartScreen from '../screens/CartScreen';
 //import DrawerNavigator from "./DrawerNavigator";
 //import DrawerNavigator from "./DrawerNavigator";
@@ -24,10 +25,7 @@ export default function AuthStack() {
       <Stack.Screen name="ProductScreen" component={ProductScreen} />
       <Stack.Screen name="SingleProduct" component={SingleProduct}/> 
 {/** <Stack.Screen name="Cart" component={CartNavigator}/>*/}
-      
-      <Stack.Screen name="Checkout" component={Checkout}/>
-      
-       {/** <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />*/}
-    </Stack.Navigator>
+      <Stack.Screen name="Checkout" component={Checkout}/>  
+        </Stack.Navigator>
   );
 }

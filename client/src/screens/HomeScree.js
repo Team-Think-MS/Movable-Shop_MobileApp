@@ -21,6 +21,7 @@ import {
   import SearchComponent from "../components/SearchComponent";
   import Banner from "../components/Banner";
   import StoreCard from "../components/StoreCard";
+  import Axios from 'axios';
   
   class Btn extends Component {
     render() {
@@ -44,6 +45,8 @@ import {
     const numColums = 2;
     const [indexCheck, setIndexCheck] = useState("0");
     const [idCheck, setIdCheck] = useState("0");
+
+    
     return (
       <View style={styles.container}>
         <SearchComponent />
