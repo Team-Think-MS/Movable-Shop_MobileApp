@@ -1,10 +1,6 @@
 import React from 'react';
 import {Text,View,TouchableOpacity,Image,StyleSheet,Dimensions} from 'react-native';
-
-
-import {
-  Icon
-} from 'react-native-elements';
+import Rating from './Rating';
 
 
 export default function StoreCard({
@@ -25,27 +21,29 @@ export default function StoreCard({
                     source = {(images)}
                 />
 
-<View>
+            <View>
                 <View>
                     <Text style ={styles.restaurantName}>{restaurantName}</Text>
+                    <View style={{marginBottom:2, marginTop:-14}} >
+                        <Rating
+                        rating={averageReview}
+                        numReviews={numberOfReview}
+                    />  
+                    </View>
+                  
                 </View>
 
-                <View style ={{flex:1, flexDirection:"row"}}>
-
-                 
-
-                </View>
             </View>
 
             </View>
 
+<View>
+    
+</View>
          
 
 
-            <View style ={styles.review}>
-                   <Text style ={styles.average}>{averageReview}</Text>   
-                   <Text style ={styles.numberOfReview}>{numberOfReview} reviews</Text>  
-            </View>
+           
         </TouchableOpacity>
     )
 
@@ -59,21 +57,24 @@ const styles = StyleSheet.create({
             borderWidth:0.15,
             borderBottomLeftRadius:5,
             borderBottomRightRadius:5,
-            marginTop:10
+            marginTop:10,
+            marginBottom:5
         },
          image:{
             borderTopLeftRadius:6,
             borderTopRightRadius:6,
-            height:120,
+            height:100,
          },
 
          restaurantName:{
-            fontSize:17,
+            fontSize:15,
             fontWeight:'bold',
             color:'gray',  
             marginTop:15,
             marginLeft:10,
-            marginBottom:10
+            marginBottom:10,
+            paddingBottom:2,
+            paddingHorizontal:8
          },
 
          Min:{

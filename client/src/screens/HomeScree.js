@@ -112,7 +112,7 @@ import {
               //extraData={idCheck}
               renderItem={({ item,index}) => (
                <StoreCard
-               screenWidth={WIDTH*0.5}
+               screenWidth={WIDTH*0.45}
                images ={item.image}
                restaurantName ={item.name}
                averageReview ={item.rating}
@@ -296,7 +296,7 @@ import {
     },
     productCardTwo: {
       height: 240,
-      margin: 5,
+      margin: 10,
       width: (WIDTH - 40) / 2,
       marginHorizontal: 10,
       // marginBottom: 20,
