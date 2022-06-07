@@ -4,6 +4,7 @@ import Banner from "../components/Banner";
 
 
 import { Icon } from "react-native-elements";
+import Rating from "../components/Rating";
 
 const WIDTH = Dimensions.get("window").width;
 const ProductScreen = ({navigation,route}) => {
@@ -24,7 +25,14 @@ const ProductScreen = ({navigation,route}) => {
 /> 
 
     <Text style={styles.text}>{item.description}</Text>
-    <Text style={styles.text}>{item.name}</Text>
+    <View>
+      {/** */}
+      <Rating
+        rating={item.rating}
+        numReviews={item.numReviews}
+      />
+    </View>
+    
     <View style={styles.area}>
      <Text style={styles.header}>Our Products</Text>
      <Icon
