@@ -19,6 +19,7 @@ function StoreList({ stores }) {
         data={stores}
         renderItem={renderStoreList}
         keyExtractor={(item) => item.storeId}
+      
       />
     </View>
   );

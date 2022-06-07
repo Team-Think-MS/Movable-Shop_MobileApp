@@ -1,8 +1,9 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, FlatList, Text } from "react-native";
+import { PRODUCTS } from "../data/dummy-data";
 
 function HomeScreen() {
 
-  return <View style={styles.rootContainer}></View>;
+  return <Text></Text>;
 }
 
 export default HomeScreen;

@@ -49,9 +49,9 @@ export default function App() {
             title: "Store Overview Screen",
           }}
         />
-        <stack.Screen 
-        name="StoreDetailsScreen"
-        component={StoreDetailsScreen}
+        <stack.Screen
+          name="StoreDetailsScreen"
+          component={StoreDetailsScreen}
         />
         <stack.Screen
           name="ProductDetaislScreen"

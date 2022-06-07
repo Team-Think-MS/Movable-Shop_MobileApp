@@ -1,7 +1,9 @@
-import { Text, View, Image, StyleSheet } from "react-native";
+import { Text, View, Image, StyleSheet, FlatList } from "react-native";
 import { STORES, PRODUCTS } from "../data/dummy-data";
 import { Ionicons } from "@expo/vector-icons";
 import { GlobalStyles } from "../constant/Styles";
+import { useLayoutEffect } from "react";
+import ProductCard from "../component/ProductList/ProductCard";
 
 function StoreDetailsScreen({ navigation, route }) {
   const selectedStoreId = route.params.storeID;
@@ -12,27 +14,59 @@ function StoreDetailsScreen({ navigation, route }) {
     (product) => product.storeId.indexOf(selectedStoreId) >= 0
   );
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: selectedStore.storeName,
+    });
+  }, [navigation, selectedStore]);
+
+  function renderProducts(itemData) {
+    return (
+      <ProductCard
+        picture={itemData.item.picture}
+        title={itemData.item.productName}
+        price={itemData.item.price}
+        productid={itemData.item.productId}
+      />
+    );
+  }
+
   return (
-    <View style={styles.rootContainer}>
-      <View style={styles.imageOuterContainer}>
-        <Image source={{ uri: selectedStore.picture }} style={styles.image} />
-      </View>
-      <View style={styles.descriptionOuterContainer}>
-        <Text style={styles.description}>{selectedStore.description}</Text>
-      </View>
-      <View style={styles.rating}>
-        <Ionicons name="md-star-sharp" size={20} color="black" />
-        <Ionicons name="md-star-sharp" size={20} color="black" />
-        <Ionicons name="md-star-sharp" size={20} color="black" />
-        <Ionicons name="md-star-sharp" size={20} color="black" />
-        <Ionicons name="star-half-sharp" size={20} color="black" />
-        <Text style={styles.ratingText}>(17)</Text>
-      </View>
-      <View style={styles.ourProducts}>
-        <Text style={styles.ourProductsText}>Our products</Text>
-        <Ionicons name="arrow-forward-circle-outline" size={24} color="black" />
-      </View>
-    </View>
+    <FlatList
+      ListHeaderComponent={() => (
+        <View style={styles.rootContainer}>
+          <View style={styles.imageOuterContainer}>
+            <Image
+              source={{ uri: selectedStore.picture }}
+              style={styles.image}
+            />
+          </View>
+          <View style={styles.descriptionOuterContainer}>
+            <Text style={styles.description}>{selectedStore.description}</Text>
+          </View>
+          <View style={styles.rating}>
+            <Ionicons name="md-star-sharp" size={20} color="black" />
+            <Ionicons name="md-star-sharp" size={20} color="black" />
+            <Ionicons name="md-star-sharp" size={20} color="black" />
+            <Ionicons name="md-star-sharp" size={20} color="black" />
+            <Ionicons name="star-half-sharp" size={20} color="black" />
+            <Text style={styles.ratingText}>(17)</Text>
+          </View>
+          <View style={styles.ourProducts}>
+            <Text style={styles.ourProductsText}>Our products</Text>
+            <Ionicons
+              name="arrow-forward-circle-outline"
+              size={24}
+              color="black"
+            />
+          </View>
+        </View>
+      )}
+      data={selectedStoreProducts}
+      renderItem={renderProducts}
+      keyExtractor={(item) => item.productId}
+      numColumns={2}
+    />
   );
 }
 
@@ -46,32 +80,31 @@ const styles = StyleSheet.create({
     height: 250,
   },
   description: {
-      paddingTop: 10,
-      paddingHorizontal: 5
+    paddingTop: 10,
+    paddingHorizontal: 5,
   },
   descriptionOuterContainer: {
-      marginVertical: 20,
-      marginHorizontal: 10,
-      borderTopWidth: 1,
-      borderColor: GlobalStyles.colors.gray200
+    marginVertical: 20,
+    marginHorizontal: 10,
+    borderTopWidth: 1,
+    borderColor: GlobalStyles.colors.gray200,
   },
   ourProducts: {
-      marginTop: 10,
-      marginLeft: 10,
-      flexDirection: 'row',
-      alignItems: 'center'
+    margin: 10,
+    flexDirection: "row",
+    alignItems: "center",
   },
   ourProductsText: {
-      fontSize: 20,
-      fontWeight: 'bold', 
-      marginRight: 15
+    fontSize: 20,
+    fontWeight: "bold",
+    marginRight: 15,
   },
   rating: {
-      marginLeft: 20,
-      flexDirection: 'row',
-      alignItems: 'center'
+    marginLeft: 20,
+    flexDirection: "row",
+    alignItems: "center",
   },
   ratingText: {
-    marginLeft: 5
-  }
+    marginLeft: 5,
+  },
 });

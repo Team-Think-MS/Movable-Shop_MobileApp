@@ -3,11 +3,15 @@ import { GlobalStyles } from "../../constant/Styles";
 
 function SecondaryButton({ children, onPress }) {
   return (
-    <View style={styles.rootContainer}>
-      <Pressable onPress={onPress}>
-        <Text style={styles.text}>{children}</Text>
-      </Pressable>
-    </View>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.rootContainer,
+        pressed ? styles.pressed : null,
+      ]}
+    >
+      <Text style={styles.text}>{children}</Text>
+    </Pressable>
   );
 }
 
@@ -15,7 +19,7 @@ export default SecondaryButton;
 
 const styles = StyleSheet.create({
   rootContainer: {
-    width: 380,
+    width: 360,
     height: 50,
     padding: 5,
     borderColor: GlobalStyles.colors.primary400,
@@ -24,10 +28,13 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     borderWidth: 1,
     backgroundColor: "white",
-    margin: 5
+    margin: 5,
   },
   text: {
     color: GlobalStyles.colors.primary500,
     fontSize: 16,
+  },
+  pressed: {
+    opacity: 0.45,
   },
 });
