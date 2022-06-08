@@ -55,9 +55,19 @@ import {
           <View>
             <Banner />
           </View>
-          <View style={styles.headerTextView}>
+          {/**<View style={styles.headerTextView}>
             <Text style={styles.headerText}>Categories</Text>
-          </View>
+          </View> */}
+          
+         <View
+          style={{
+            borderBottomColor: '#C4C4C4',
+            borderBottomWidth: 0.5,
+            paddingHorizontal:20,
+            paddingTop:10
+          }}
+        /> 
+          
          
           <View>
             <FlatList
@@ -79,10 +89,11 @@ import {
                         : { ...styles.smallCard }
                     }
                   >
-                    <Image
+                    {/**  <Image
                       style={{ height: 60, width: 60, borderRadius: 30 }}
                       source={item.image}
-                    />
+                    />*/}
+                   
                     <View>
                       <Text
                         style={
@@ -99,9 +110,33 @@ import {
               )}
             />
           </View>
+          
+         <View
+          style={{
+            borderBottomColor: '#C4C4C4',
+            borderBottomWidth: 0.5,
+            paddingHorizontal:20,
+            paddingTop:2,
+            marginBottom:5
+          }}
+        /> 
           <View style={styles.headerTextView}>
-            <Text style={styles.headerText}>Nearby Stores</Text>
+            <View style={styles.area}>
+               <Text style={styles.headerText}>Nearby Stores</Text>
+               <Icon
+            name="arrow-right-circle-outline"
+            style={styles.arrowIcon}
+            type="material-community"
+            iconStyle={{ marginLeft: 5 }}
+            size={22}
+            color="#65686e"
+            
+          />
+            </View>
+           
+            
           </View>
+          
           <View>
             <FlatList
               horizontal={true}
@@ -122,9 +157,83 @@ import {
               )}
             />
             <View style={styles.headerTextView}>
-              <Text style={styles.headerText}>Most Popular Categories</Text>
+              <View style={styles.area}>
+                <Text style={styles.headerText}>Most Popular Categories</Text>
+                <Icon
+            name="arrow-right-circle-outline"
+            style={styles.arrowIcon}
+            type="material-community"
+            iconStyle={{ marginLeft: 5 }}
+            size={22}
+            color="#65686e"
+            
+          />
+              </View>
+              
             </View>
             <FlatList
+              numColumns={2}
+              data={data}
+              keyExtractor={(item)=>item.id}
+              extraData={indexCheck}
+              renderItem={({item,index})=>(
+                <Pressable onPress={()=>{}}>
+                  
+                  <View
+                    style={
+                      styles.productCardTwo
+                    }
+                  >
+                    <View
+                      style={{
+                        alignItems: "center",
+                        top: -2,
+                        marginTop: 5,
+                        marginLeft: 10,
+                        marginRight: 10,
+                      }}
+                    >
+                      <Image
+                        style={{ height:  (WIDTH - 150) / 2, width: (WIDTH-40)/2,  borderTopLeftRadius:20,borderTopRightRadius:20 }}
+                        source={item.image}
+                      />
+                    </View>
+                    <View style={{ marginHorizontal: 20 }}>
+                      <Text
+                        style={
+                          styles.productCardTextTwo
+                        }
+                      >
+                        {item.name}
+                      </Text>
+                      <Text
+                        style={
+                           { fontSize: 12, color: "#e2e1e1" }
+                        }
+                      >
+                        {item.name}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        marginTop: 10,
+                        marginHorizontal: 20,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                   
+                    </View>
+  
+                  </View>
+                </Pressable>
+              )}
+            
+            
+            
+            />
+         
+            {/**   <FlatList
               numColumns={2}
               data={productData}
               keyExtractor={(item) => item.id}
@@ -191,7 +300,7 @@ import {
                   </View>
                 </Pressable>
               )}
-            />
+            /> */}
           </View>
         </ScrollView>
       </View>
@@ -223,9 +332,9 @@ import {
       justifyContent: "center",
       alignItems: "center",
       padding: 5,
-      width: 80,
+      width: 100,
       margin: 10,
-      height: 100,
+      height: 40,
     },
     smallCardSelected: {
       borderRadius: 30,
@@ -233,9 +342,9 @@ import {
       justifyContent: "center",
       alignItems: "center",
       padding: 5,
-      width: 80,
+      width: 100,
       margin: 10,
-      height: 100,
+      height: 40,
     },
     smallCardTextSelected: {
       //fontWeight: "bold",
@@ -247,43 +356,9 @@ import {
       color: colors.gray01,
       fontFamily: "sans-serif-medium",
     },
-    productCardSelected: {
-      /*borderRadius:20,
-      backgroundColor:colors.buttons,
-      justifyContent:"center",
-      alignItems:"center",
-      padding:5,
-      margin:5,
-      width:(WIDTH-20)/2,
-      height:300,
-      paddingLeft:20,
-      paddingRight:20,
-      borderColor:colors.gray01,
-      borderWidth:0.5*/
-      //------------------------
-      /* height:220,
-     margin:5,
-     width:(WIDTH-20)/2,
-     marginHorizontal:10,
-     marginBottom:20,
-     marginTop:50,
-     borderRadius:15,
-     elevation:13,
-     backgroundColor:colors.buttons*/
-    },
+    
     productCard: {
-      /*borderRadius:20,
-      backgroundColor:"white",
-      justifyContent:"center",
-      alignItems:"center",
-      padding:5,
-      margin:5,
-      width:(WIDTH-20)/2,
-      height:300,
-      paddingLeft:20,
-      paddingRight:20,
-      borderColor:colors.gray01,
-     borderWidth:0.5*/
+     
       height: (WIDTH - 40) / 2,
       margin: 5,
       width: (WIDTH - 40) / 2,
@@ -295,7 +370,7 @@ import {
       backgroundColor: "white",
     },
     productCardTwo: {
-      height: 240,
+      height: (WIDTH - 40) / 2,
       margin: 10,
       width: (WIDTH - 40) / 2,
       marginHorizontal: 10,
@@ -305,15 +380,11 @@ import {
       elevation: 13,
       backgroundColor: "white",
     },
-    /* productCardSelectedText:{
-      fontWeight:"bold",
-      color:"white",
-      fontSize:18,
-      textAlign:"left",
-  
-    
-    
-    },*/
+    arrowIcon: {
+      paddingTop:2,
+      
+      color: "#65686e",
+    },
     productCardText: {
       /* fontWeight: "bold",
       color: colors.gray01,
@@ -347,6 +418,11 @@ import {
       fontSize: 15,
       fontWeight: "bold",
       textAlign: "center",
+    },
+    area:{
+      marginTop:5,
+      flexDirection:"row",
+      alignItems:"center",
     },
   });
   
