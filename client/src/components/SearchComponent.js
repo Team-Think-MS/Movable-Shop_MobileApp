@@ -118,7 +118,7 @@ import {
                   onPress={() => {
                     Keyboard.dismiss;
                     navigation.navigate("SearchResultScreen", {
-                      item: item.name,
+                      item: item.name,productTitle:item.name
                     });
                     setModalVisible(false);
                     setTextInputFocussed(true);

@@ -9,6 +9,7 @@ import AccountScreen from "../screens/AccountScreen";
 import { ClientStack } from "./ClientStack";
 import CartScreen from "../screens/CartScreen";
 import CartIcon from "../components/CartIcon";
+import CartNavigation from "./CartNavigation";
 
 
 const clientTab = createBottomTabNavigator();
@@ -62,7 +63,7 @@ export default function ClientTabs() {
     
       <clientTab.Screen
         name="Cart"
-        component={CartScreen}
+        component={CartNavigation}
         options={{
           tabBarLabel: "Cart",
           headerShown: false,
@@ -80,7 +81,7 @@ export default function ClientTabs() {
         component={AccountScreen}
         options={{
           tabBarLabel: "Account",
-          headerShown: false,
+          headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <Icon name="person" type="material" color={color} size={size} />
           ),

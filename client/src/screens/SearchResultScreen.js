@@ -23,12 +23,14 @@ const SearchResultScreen = ({navigation,route}) => {
                     averageReview={item.rating}
                     numberOfReview={item.numReviews}
                     storeName={item.name}
-                    OnPressStoreCard={()=>{navigation.navigate("ProductScreen",{id:index,item:item})}}
+                    OnPressStoreCard={()=>{navigation.navigate("ProductScreen",{id:index,item:item, productTitle:item.name})}}
                 /> 
          )}
          ListHeaderComponent={
+           
           <View>
-          <Text style={styles.listHeader}>Search Result for {route.params.item}</Text>
+            {/** <Text style={styles.listHeader}>Search Result for {route.params.item}</Text> */}
+         
        </View>
          }
          showsVerticalScrollIndicator={false}
@@ -44,8 +46,8 @@ export default SearchResultScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop:5
+  backgroundColor:'white',
+    paddingTop:25
   },
   listHeader: {
     color:"gray",

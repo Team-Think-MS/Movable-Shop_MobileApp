@@ -22,7 +22,7 @@ const SingleProduct = (props) => {
     <View style={styles.container}>
       <View style={{ marginBottom: 80, padding: 5 }}>
         <View >
-        <Text style={styles.text1}>{item.name}</Text>
+      
           <View style={styles.imageContainer}>
             <Image
             source={item.image}
@@ -112,11 +112,12 @@ const styles = StyleSheet.create({
   container: {
     position: "relative",
     height: "100%",
-    backgroundColor:"white"
+    backgroundColor:"white",
+    paddingTop:50
   },
   imageContainer: {
     backgroundColor: "white",
-    padding: 0,
+    paddingTop:10,
     margin: 0,
     height:250,
     width:"100%",
@@ -229,7 +230,7 @@ view13:{
 position:'relative',
 bottom:0,
 left:0,
-marginTop:100,
+marginTop:65,
 flexDirection:'column'
   
 }

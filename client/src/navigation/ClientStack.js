@@ -27,24 +27,19 @@ export  function ClientStack() {
       <ClientSearch.Screen
         name="SearchResultScreen"
         component={SearchResultScreen}
-        options={() => ({
-          headerShown: false,
-        })}
+        options={({ route }) => ({ title: route.params.productTitle })}
       />
       <ClientSearch.Screen
         name="ProductScreen"
         component={ProductScreen}
-        options={() => ({
-          headerShown: false,
-        })}
+        options={({ route }) => ({ title: route.params.productTitle })}
       /> 
        <ClientSearch.Screen
         name="SingleProduct"
         component={SingleProduct}
-        options={() => ({
-          headerShown: false,
-        })}
-      /> 
+        options={({ route }) => ({ title: route.params.productTitle })}
+      />  
+     
      
     </ClientSearch.Navigator>
   );

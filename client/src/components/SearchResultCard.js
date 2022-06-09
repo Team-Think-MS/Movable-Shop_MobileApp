@@ -56,7 +56,7 @@ import {
                 image={item.image}
                 productName={item.name}
                 price={item.price}
-                OnPressProductCard={()=>{navigation.navigate("SingleProduct",{ item: item})}}
+                OnPressProductCard={()=>{navigation.navigate("SingleProduct",{ item: item,productTitle:item.name})}}
               />
             )}
           />

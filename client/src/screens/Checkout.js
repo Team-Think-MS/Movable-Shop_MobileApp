@@ -4,8 +4,8 @@ import React, { useState } from 'react'
 const Checkout = () => {
  const item=useState();
   return (
-    <View>
-      <Text>Checkout</Text>
+    <View  style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text style={{paddingTop:25, alignSelf:'center',justifyContent:'center'}}>Checkout</Text>
       <Text>{item}</Text>
     </View>
   )

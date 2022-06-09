@@ -21,8 +21,8 @@ const HomeHeader=({navigation})=> {
         color="black" 
         size={32} 
         onPress ={()=>{
-                   
-                }}
+          
+        }}
         />
       </View>
       <View style={{ alignItems: "center", justifyContent: "center" }}>

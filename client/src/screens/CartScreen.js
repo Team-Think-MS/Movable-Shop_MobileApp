@@ -30,13 +30,13 @@ const CartScreen = (props) => {
     </View>*/
     <>
     {props.cartItems.length ? (
-      <Container>
+      <Container style={styles.container}>
         <H1 style={styles.name}>Cart</H1>
         <ScrollView  showsHorizontalScrollIndicator={true}>
         {props.cartItems.map((data)=>{
           return(
             
-            <View style={styles.container}>
+            <View >
             <ListItem style={styles.list}>
               <Body style={styles.body}>
                 <Left>
@@ -178,6 +178,7 @@ export default connect(mapStateToProps,mapDispatchToProps)(CartScreen);
 const styles = StyleSheet.create({
   container:{
     backgroundColor:'white',
+    paddingTop:25
 
     
 
@@ -186,6 +187,8 @@ const styles = StyleSheet.create({
     height:height,
     alignItems:'center',
     justifyContent:'center',
+    paddingTop:50,
+    flex:1
   },
  list:{
    alignItems:'center',

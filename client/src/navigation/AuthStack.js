@@ -8,24 +8,23 @@ import ClientTabs from "./ClientTabs";
 import SingleProduct from "../screens/SingleProduct";
 import Checkout from '../screens/Checkout';
 import DrawerNavigator from "./AppStack";
-//import CartScreen from '../screens/CartScreen';
-//import DrawerNavigator from "./DrawerNavigator";
-//import DrawerNavigator from "./DrawerNavigator";
-//import CartNavigator from "./CartNavigator";
+import CustomerReviews from "../screens/CustomerReviews";
+import MyStack from "../navigation/HomeNavigator";
+import CategoriesPage from "../screens/CategoriesPage";
 
 const Stack = createNativeStackNavigator();
 
 export default function AuthStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="SignIn" component={SignIn} />
-      <Stack.Screen name="Home" component={HomeScree} />
-      <Stack.Screen name="Search" component={SearchScreen} /> 
-      <Stack.Screen name="ClientTabs" component={ClientTabs} />
-      <Stack.Screen name="ProductScreen" component={ProductScreen} />
-      <Stack.Screen name="SingleProduct" component={SingleProduct}/> 
-{/** <Stack.Screen name="Cart" component={CartNavigator}/>*/}
-      <Stack.Screen name="Checkout" component={Checkout}/>  
+    <Stack.Navigator >
+      <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false}} />
+      <Stack.Screen name="Home" component={HomeScree} options={{ headerShown: false}}/> 
+      <Stack.Screen name="Categories" component={CategoriesPage}options={({ route }) => ({ title: route.params.productTitle })}/>
+      <Stack.Screen name="ProductScreen" component={ProductScreen}  options={({ route }) => ({ title: route.params.productTitle })}/>
+      <Stack.Screen name="SingleProduct" component={SingleProduct} options={({ route }) => ({ title: route.params.productTitle })}/>  
+      <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false}} /> 
+      <Stack.Screen name="ClientTabs" component={ClientTabs} options={{ headerShown: false}}/>
+      <Stack.Screen name="Customer Reviews" component={CustomerReviews} options={{ headerShown: true}}/>
         </Stack.Navigator>
   );
 }

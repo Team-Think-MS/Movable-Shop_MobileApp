@@ -17,7 +17,6 @@ import {
   import { colors, parameters } from "../global/styles";
   import { data } from "../global/data";
   import { productData, Stores2,Stores } from "../global/products";
-  //import { Button } from "react-native-elements/dist/buttons/Button";
   import SearchComponent from "../components/SearchComponent";
   import Banner from "../components/Banner";
   import StoreCard from "../components/StoreCard";
@@ -49,6 +48,7 @@ import {
     
     return (
       <View style={styles.container}>
+        <HomeHeader/>
         <SearchComponent />
   
         <ScrollView  showsHorizontalScrollIndicator={true}>
@@ -152,7 +152,7 @@ import {
                restaurantName ={item.name}
                averageReview ={item.rating}
                numberOfReview ={item.numReviews}
-               OnPressFoodCard={()=>{navigation.navigate("ProductScreen",{item:item,id:index})}}
+               OnPressFoodCard={()=>{navigation.navigate("ProductScreen",{item:item,id:index,productTitle:item.name})}}
                />
               )}
             />
@@ -177,7 +177,7 @@ import {
               keyExtractor={(item)=>item.id}
               extraData={indexCheck}
               renderItem={({item,index})=>(
-                <Pressable onPress={()=>{}}>
+                <Pressable onPress={()=>{navigation.navigate('Categories',{item:item,productTitle:item.name})}}>
                   
                   <View
                     style={

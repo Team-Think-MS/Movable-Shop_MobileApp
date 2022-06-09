@@ -25,13 +25,16 @@ const ProductScreen = ({navigation,route}) => {
 /> 
 
     <Text style={styles.text}>{item.description}</Text>
-    <View>
+    <Pressable onPress={()=>{navigation.navigate("Customer Reviews",{item: item})}}>
+     
       {/** */}
       <Rating
         rating={item.rating}
         numReviews={item.numReviews}
       />
-    </View>
+    
+    </Pressable>
+   
     
     <View style={styles.area}>
      <Text style={styles.header}>Our Products</Text>
@@ -57,7 +60,7 @@ const ProductScreen = ({navigation,route}) => {
     renderItem ={({item,index})=> (
 
       <Pressable onPress={()=>{
-        navigation.navigate("SingleProduct",{ item: item});
+        navigation.navigate("SingleProduct",{ item: item,productTitle:item.name});
       }}>
       <View
         style={styles.productCardTwo}>
@@ -122,7 +125,8 @@ const styles = StyleSheet.create({
   container:{
     position:'relative',
     height:'100%',
-    backgroundColor:"white"
+    backgroundColor:"white",
+    paddingTop:25
   },
   imageContainer:{
     backgroundColor:'white',
@@ -140,7 +144,8 @@ const styles = StyleSheet.create({
     paddingRight:20,
     paddingTop:5,
     fontFamily: "sans-serif-medium", 
-    textAlign:"justify"
+    textAlign:"justify",
+    paddingBottom:10
   },
   header:{
     color: "#65686e" ,

@@ -19,7 +19,7 @@ import {
   export default function SearchScreen({navigation}) {
     // const navigation = useNavigation();
     return (
-      <View style={{ backgroundColor: "white" }}>
+      <View style={{ backgroundColor: "white" ,paddingTop:25}}>
         <SearchComponent />
   
         <View>
@@ -31,7 +31,7 @@ import {
             renderItem={({ item }) => (
               <TouchableWithoutFeedback
               onPress={()=>{
-                navigation.navigate("SearchResultScreen",{ item: item.name,});
+                navigation.navigate("SearchResultScreen",{ item: item.name,productTitle:item.name});
               }}
               
               >
@@ -68,7 +68,7 @@ import {
             renderItem={({ item }) => (
               <TouchableWithoutFeedback
               onPress={()=>{
-                navigation.navigate("SearchResultScreen",{ item: item.name,});
+                navigation.navigate("SearchResultScreen",{ item: item.name,productTitle:item.name});
               }}
               >
                 <View style={styles.imageView}>
