@@ -1,23 +1,39 @@
 import { useLayoutEffect } from "react";
-import { Text, Image, View, StyleSheet } from "react-native";
+import { Text, Image, View, StyleSheet, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector, useDispatch } from "react-redux";
 
 import { PRODUCTS } from "../data/dummy-data";
 import { GlobalStyles } from "../constant/Styles";
 import PrimaryButton from "../component/UI/PrimaryButton";
 import AddDeleteItemToCartButton from "../component/UI/AddDeleteItemToCartButton";
+import { wishListActions } from "../store/Redux/wishList-slice";
 
 function ProductDetailsScreen({ navigation, route }) {
+  
+  const dispatch = useDispatch();
+  const productsWishlist = useSelector((state) => state.wishList.productIds );
+  
   const selectedProductId = route.params.productID;
   const selectedProduct = PRODUCTS.find(
     (product) => product.productId === selectedProductId
   );
+
+  const isProductWishList = productsWishlist.includes(selectedProductId);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       title: selectedProduct.productName,
     });
   }, [navigation, selectedProduct]);
+
+  function changeProductWishListStatusHandler() {
+      if(isProductWishList) {
+          dispatch(wishListActions.removeProductWishList({id: selectedProductId}))
+      } else {
+          dispatch(wishListActions.addProductWishList({id: selectedProductId}))
+      }
+  }
 
   return (
     <View style={styles.rootContainer}>
@@ -27,12 +43,9 @@ function ProductDetailsScreen({ navigation, route }) {
             source={{ uri: selectedProduct.picture }}
             style={styles.image}
           />
-          <Ionicons
-            name="ios-heart-outline"
-            size={24}
-            color="black"
-            style={styles.icon}
-          />
+          <Pressable style={({pressed}) => [styles.icon, pressed ? styles.pressed : true ]} onPress={changeProductWishListStatusHandler} >
+            <Ionicons name={isProductWishList ? 'ios-heart-sharp' : "ios-heart-outline"} size={24} color="black" />
+          </Pressable>
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.title}>Rs.{selectedProduct.price}</Text>
@@ -84,4 +97,7 @@ const styles = StyleSheet.create({
   description: {
     marginLeft: 5,
   },
+  pressed: {
+    opacity: 0.35,
+  }
 });
