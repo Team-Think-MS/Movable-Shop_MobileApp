@@ -1,4 +1,4 @@
-import { View, FlatList, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet, Text } from "react-native";
 import { useSelector } from "react-redux";
 import WishListProductCard from "../component/WishListProductCard";
 
@@ -20,6 +20,14 @@ function WishListScreen() {
     );
   }
 
+  if (productsIdsWishlist.length === 0) {
+    return (
+      <View style={styles.rootContainer}>
+        <Text style={styles.text}>You have no Products yet in Wish List!</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.rootContainer}>
       <FlatList
@@ -34,7 +42,13 @@ function WishListScreen() {
 export default WishListScreen;
 
 const styles = StyleSheet.create({
-    rootContainer: {
-        flex:1
-    }
-})
+  rootContainer: {
+    flex: 1,
+  },
+  text: {
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "black",
+    marginTop: 30,
+  },
+});
