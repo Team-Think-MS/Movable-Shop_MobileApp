@@ -3,7 +3,7 @@ import {
     Text,
     View,
     ScrollView,
-    FlatList,
+    //FlatList,
     Pressable,
     Image,
     Dimensions,
@@ -21,6 +21,7 @@ import {
   import Banner from "../components/Banner";
   import StoreCard from "../components/StoreCard";
   import Axios from 'axios';
+  import {FlatList} from 'react-native-gesture-handler'
   
   class Btn extends Component {
     render() {
@@ -48,10 +49,11 @@ import {
     
     return (
       <View style={styles.container}>
-        <HomeHeader/>
+      
+    <HomeHeader navigation={navigation}/>  
         <SearchComponent />
   
-        <ScrollView  showsHorizontalScrollIndicator={true}>
+        <ScrollView   showsVerticalScrollIndicator={true}>
           <View>
             <Banner />
           </View>
@@ -71,6 +73,7 @@ import {
          
           <View>
             <FlatList
+            
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               data={data}
@@ -80,6 +83,7 @@ import {
                 <Pressable
                   onPress={() => {
                     setIndexCheck(item.id);
+                    navigation.navigate('Categories',{item:item,productTitle:item.name})
                   }}
                 >
                   <View
@@ -170,9 +174,11 @@ import {
           />
               </View>
               
-            </View>
+          </View>
+          <View>
             <FlatList
               numColumns={2}
+             showsHorizontalScrollIndicator={false}
               data={data}
               keyExtractor={(item)=>item.id}
               extraData={indexCheck}
@@ -232,75 +238,8 @@ import {
             
             
             />
-         
-            {/**   <FlatList
-              numColumns={2}
-              data={productData}
-              keyExtractor={(item) => item.id}
-              extraData={idCheck}
-              renderItem={({ item, index }) => (
-                <Pressable
-                  onPress={() => {
-                    navigation.navigate("SingleProduct",{ item: item});
-                  }}
-                >
-                  <View
-                    style={
-                      styles.productCardTwo
-                    }
-                  >
-                    <View
-                      style={{
-                        alignItems: "center",
-                        top: -2,
-                        marginTop: 5,
-                        marginLeft: 10,
-                        marginRight: 10,
-                      }}
-                    >
-                      <Image
-                        style={{ height: 100, width: 150, borderRadius: 10 }}
-                        source={item.image}
-                      />
-                    </View>
-                    <View style={{ marginHorizontal: 20 }}>
-                      <Text
-                        style={
-                          styles.productCardTextTwo
-                        }
-                      >
-                        {item.name}
-                      </Text>
-                      <Text
-                        style={
-                           { fontSize: 12, color: "#e2e1e1" }
-                        }
-                      >
-                        {item.name}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        marginTop: 10,
-                        marginHorizontal: 20,
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Text
-                        style={
-                          styles.productCardTextTwo
-                        }
-                      >
-                        Rs.{item.price}
-                      </Text>
-                    </View>
-  
-                    <Btn />
-                  </View>
-                </Pressable>
-              )}
-            /> */}
+          </View>
+            
           </View>
         </ScrollView>
       </View>

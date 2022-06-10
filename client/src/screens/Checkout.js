@@ -6,7 +6,7 @@ const Checkout = () => {
   return (
     <View  style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text style={{paddingTop:25, alignSelf:'center',justifyContent:'center'}}>Checkout</Text>
-      <Text>{item}</Text>
+     
     </View>
   )
 }

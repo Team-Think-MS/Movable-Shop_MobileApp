@@ -11,8 +11,15 @@ const ProductScreen = ({navigation,route}) => {
   const [item, setItem] = useState(route.params.item);
   return (
     <View style={styles.container} >
-         <ScrollView  showsHorizontalScrollIndicator={true}>
-      <View>
+       {/** <ScrollView  showsVerticalScrollIndicator={true}> */} 
+      
+   
+    <View style ={{marginTop:5}}>
+
+<FlatList
+ListHeaderComponent={
+  <>
+  <View>
         <Banner/>
       </View>
       
@@ -49,10 +56,10 @@ const ProductScreen = ({navigation,route}) => {
           />
    
     </View>
-   
-    <View style ={{marginTop:5,paddingBottom:20}}>
+  
+  </>
+}
 
-<FlatList
   numColumns={2}
     style ={{backgroundColor:'white'}}
     data = {item.productData}
@@ -112,10 +119,11 @@ const ProductScreen = ({navigation,route}) => {
     )
   }
     horizontal ={false}
+    showsHorizontalScrollIndicator={false}
 />
    
   </View>
-  </ScrollView>
+ 
     
     </View>
   );
@@ -126,7 +134,7 @@ const styles = StyleSheet.create({
     position:'relative',
     height:'100%',
     backgroundColor:"white",
-    paddingTop:25
+    paddingTop:0
   },
   imageContainer:{
     backgroundColor:'white',

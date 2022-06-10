@@ -35,7 +35,7 @@ function SignIn({ navigation }) {
           elevation: 3,
           width: "50%",
         }}
-        onPress={() => {navigation.navigate("ClientTabs")}}
+        onPress={() => {navigation.navigate("DrawerNavigator")}}
       >
         <Text
           style={{

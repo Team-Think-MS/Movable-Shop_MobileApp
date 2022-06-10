@@ -21,6 +21,7 @@ const HomeHeader=({navigation})=> {
         color="black" 
         size={32} 
         onPress ={()=>{
+          navigation.toggleDrawer()
           
         }}
         />

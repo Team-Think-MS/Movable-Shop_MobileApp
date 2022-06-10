@@ -11,6 +11,7 @@ import CartScreen from "../screens/CartScreen";
 import CartIcon from "../components/CartIcon";
 import CartNavigation from "./CartNavigation";
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const clientTab = createBottomTabNavigator();
 export default function ClientTabs() {
@@ -33,7 +34,7 @@ export default function ClientTabs() {
           tabBarLabel: "Home",
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Icon name="home" type="material" color={color} size={size} />
+            <Ionicons name="home"  color={color} size={size} />
           ),
         }}
       />
@@ -45,7 +46,7 @@ export default function ClientTabs() {
           tabBarLabel: "Search",
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Icon name="search" type="material" color={color} size={size} />
+            <Ionicons name="search"  color={color} size={size} />
           ),
         }}
       />
@@ -69,7 +70,7 @@ export default function ClientTabs() {
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <View>
-               <Icon name="cart" type="material-community" color={color} size={size} />
+               <Ionicons name="cart"  color={color} size={size} />
                <CartIcon/>
             </View>
            
@@ -83,7 +84,7 @@ export default function ClientTabs() {
           tabBarLabel: "Account",
           headerShown: true,
           tabBarIcon: ({ color, size }) => (
-            <Icon name="person" type="material" color={color} size={size} />
+            <Ionicons name="person"  color={color} size={size} />
           ),
         }}
       />
