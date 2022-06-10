@@ -11,6 +11,9 @@ import CustomDrawerContent from "./component/CustomDrawerContent";
 import StoreDetailsScreen from "./screens/StoreDetailsScreen";
 import ProductDetailsScreen from "./screens/ProductDetailsScreen";
 import WishListScreen from "./screens/WishListScreen";
+import ProductManageScreen from './screens/ProductManageScreen';
+import MyProductsListScreen from './screens/MyProductsListScreen'
+
 
 import { Provider } from "react-redux";
 import store from "./store/Redux/store";
@@ -65,6 +68,20 @@ export default function App() {
             <stack.Screen
               name="ProductDetaislScreen"
               component={ProductDetailsScreen}
+            />
+            <stack.Screen
+              name='ProductManageScreen'
+              component={ProductManageScreen}
+              options={{
+                title: "List Your Item",
+              }}
+            />
+            <stack.Screen
+              name='MyProducts'
+              component={MyProductsListScreen}
+              options={{
+                title: "My Products",
+              }}
             />
           </stack.Navigator>
         </NavigationContainer>

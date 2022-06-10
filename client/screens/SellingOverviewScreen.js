@@ -3,20 +3,28 @@ import SellingDetails from "../component/SellingDetails";
 import PrimaryButton from "../component/UI/PrimaryButton";
 import SecondaryButton from "../component/UI/SecondaryButton";
 
+import { useNavigation } from "@react-navigation/native";
+
 function SellingOverviewScreen() {
-  function listAnItemHandler() {}
-  function editStoreHandler() {}
+  const navigation = useNavigation();
+
+  function listAnItemHandler() {
+    navigation.navigate('ProductManageScreen')
+  }
+  function myProductsHandler() {
+    navigation.navigate('MyProducts')
+  }
 
   return (
     <View style={styles.rootContainer}>
       <View >
-        <PrimaryButton onPress={listAnItemHandler} children={"List An Item"} />
-        <SecondaryButton children={"Edit Store"} onPress={editStoreHandler} />
+        <PrimaryButton onPress={listAnItemHandler} children={"List an item"} />
+        <SecondaryButton children={"My Products"} onPress={myProductsHandler} />
         <SellingDetails activeOrders={3} earnings={8000} />
       </View>
       <View>
         <SecondaryButton children={"All orders"} />
-        <SecondaryButton children={"View store"} />
+        <SecondaryButton children={"Edit my store"} />
       </View>
     </View>
   );
