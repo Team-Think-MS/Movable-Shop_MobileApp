@@ -1,11 +1,15 @@
 import { View, StyleSheet, FlatList } from "react-native";
+import { useSelector } from "react-redux";
 import MyProductCard from "../component/MyProductCard";
-import { PRODUCTS } from "../data/dummy-data";
+//import { PRODUCTS } from "../data/dummy-data";
 
 function MyProductsListScreen() {
+  /*
   const myProducts = PRODUCTS.filter(
     (product) => product.storeId.indexOf("s1") >= 0
   );
+  */
+ const selectedStoreProducts = useSelector((state)=>state.manageProduct.products)
 
   function renderProductsHanler(itemData) {
     return (
@@ -21,7 +25,7 @@ function MyProductsListScreen() {
   return (
     <View style={styles.rootContainer}>
       <FlatList
-        data={myProducts}
+        data={selectedStoreProducts}
         keyExtractor={(item) => item.productId}
         renderItem={renderProductsHanler}
       />
