@@ -16,7 +16,7 @@ import MyProductsListScreen from './screens/MyProductsListScreen'
 
 
 import { Provider } from "react-redux";
-import store from "./store/Redux/store";
+import store from "./store/Redux/Store";
 import { StatusBar } from "expo-status-bar";
 
 const stack = createStackNavigator();

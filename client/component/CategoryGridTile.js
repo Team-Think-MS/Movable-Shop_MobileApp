@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Pressable, Image } from "react-native";
 function CategoryGridTile({ picture, categoryName, onPress }) {
   return (
     <View style={styles.rootContainer}>
-      <Pressable onPress={onPress}>
+      <Pressable onPress={onPress} style={({ pressed }) => (pressed ? styles.pressed : null)}>
         <Image source={{ uri: picture }} style={styles.image} />
         <Text style={styles.text}>{categoryName}</Text>
       </Pressable>
@@ -25,4 +25,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
   },
+  pressed: {
+    opacity: 0.75
+  }
 });
