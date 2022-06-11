@@ -32,11 +32,12 @@ const CartScreen = (props) => {
     {props.cartItems.length ? (
       <Container style={styles.container}>
         <H1 style={styles.name}>Cart</H1>
-        <ScrollView  showsHorizontalScrollIndicator={true}>
+        <View style={{flex:1,marginBottom:100}}>
+              <ScrollView  showsVerticalScrollIndicator={true} style={{flex:1}}>
         {props.cartItems.map((data)=>{
           return(
-            
-            <View >
+            <View style={{flex:1}}>
+                <View style={{backgroundColor:'white'}}>
             <ListItem style={styles.list}>
               <Body style={styles.body}>
                 <Left>
@@ -60,15 +61,20 @@ const CartScreen = (props) => {
                 </View>
               </Body>
             </ListItem>
-</View>
+          </View>
+            </View>
+            
+        
      
          
           )
         }
         )
         }
-            </ScrollView>
-            <View style={{ position:"absolute",bottom:0, width:'100%', backgroundColor:'white',}}>
+            </ScrollView> 
+        </View>
+   
+      <View style={{ position:"absolute",width:'100%', backgroundColor:'white',flex:1,bottom:0}}>
         <View style={styles.bottomView}>
           <View style={styles.bottomContainer}>
           <Left>
@@ -83,7 +89,7 @@ const CartScreen = (props) => {
           
         </View>
         <Separator/>
-        </View>
+      </View>
  <TouchableOpacity
  onPress={()=>{props.navigation.navigate('Checkout')}}
  
@@ -178,7 +184,8 @@ export default connect(mapStateToProps,mapDispatchToProps)(CartScreen);
 const styles = StyleSheet.create({
   container:{
     backgroundColor:'white',
-    paddingTop:25
+    paddingTop:25,
+ 
 
     
 
@@ -199,7 +206,8 @@ const styles = StyleSheet.create({
    marginBottom:10,
    borderRadius:10,
    marginHorizontal:15,
-   height:50
+   height:50,
+   flex:1
  },
  bottomView:{
   width:'100%',

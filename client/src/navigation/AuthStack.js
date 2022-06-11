@@ -18,14 +18,9 @@ export default function AuthStack() {
   return (
     <Stack.Navigator >
       <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false}} />
-      {/**  <Stack.Screen name="Home" component={HomeScree} options={{ headerShown: false}}/> */}
-      {/**<Stack.Screen name="Categories" component={CategoriesPage}options={({ route }) => ({ title: route.params.productTitle })}/> */}
-      
       <Stack.Screen name="ProductScreen" component={ProductScreen}  options={({ route }) => ({ title: route.params.productTitle })}/>
       <Stack.Screen name="SingleProduct" component={SingleProduct} options={({ route }) => ({ title: route.params.productTitle })}/>  
       <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false}} /> 
-      
-    {/**<Stack.Screen name="ClientTabs" component={ClientTabs} options={{ headerShown: false}}/> */} 
      <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} options={{ headerShown: false}}/> 
       <Stack.Screen name="Customer Reviews" component={CustomerReviews} options={{ headerShown: true}}/>
         </Stack.Navigator>

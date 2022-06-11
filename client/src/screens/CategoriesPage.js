@@ -7,7 +7,7 @@ const CategoriesPage = ({navigation}) => {
   const [indexCheck, setIndexCheck] = useState("0");
   return (
     <View>
-         <View style={{paddingTop:50,backgroundColor:'white'}}>
+         <View style={{paddingTop:0,backgroundColor:'white'}}>
             <FlatList
               numColumns={2}
              showsHorizontalScrollIndicator={false}

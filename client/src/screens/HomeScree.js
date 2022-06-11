@@ -50,30 +50,30 @@ import {
     return (
       <View style={styles.container}>
       
-    <HomeHeader navigation={navigation}/>  
-        <SearchComponent />
-  
-        <ScrollView   showsVerticalScrollIndicator={true}>
-          <View>
+        <HomeHeader navigation={navigation}/>  
+        <SearchComponent />  
+
+          <View style={{flex:1}}>
+            <FlatList
+            ListHeaderComponent={()=>(
+              <View>
+                <View>
             <Banner />
           </View>
-          {/**<View style={styles.headerTextView}>
-            <Text style={styles.headerText}>Categories</Text>
-          </View> */}
+          
           
          <View
-          style={{
-            borderBottomColor: '#C4C4C4',
-            borderBottomWidth: 0.5,
-            paddingHorizontal:20,
-            paddingTop:10
-          }}
-        /> 
+            style={{
+              borderBottomColor: '#C4C4C4',
+              borderBottomWidth: 0.5,
+              paddingHorizontal:20,
+              paddingTop:10
+            }}
+          /> 
           
          
           <View>
             <FlatList
-            
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               data={data}
@@ -93,10 +93,6 @@ import {
                         : { ...styles.smallCard }
                     }
                   >
-                    {/**  <Image
-                      style={{ height: 60, width: 60, borderRadius: 30 }}
-                      source={item.image}
-                    />*/}
                    
                     <View>
                       <Text
@@ -116,39 +112,35 @@ import {
           </View>
           
          <View
-          style={{
-            borderBottomColor: '#C4C4C4',
-            borderBottomWidth: 0.5,
-            paddingHorizontal:20,
-            paddingTop:2,
-            marginBottom:5
-          }}
-        /> 
+            style={{
+              borderBottomColor: '#C4C4C4',
+              borderBottomWidth: 0.5,
+              paddingHorizontal:20,
+              paddingTop:2,
+              marginBottom:5
+            }}
+         /> 
           <View style={styles.headerTextView}>
             <View style={styles.area}>
                <Text style={styles.headerText}>Nearby Stores</Text>
                <Icon
-            name="arrow-right-circle-outline"
-            style={styles.arrowIcon}
-            type="material-community"
-            iconStyle={{ marginLeft: 5 }}
-            size={22}
-            color="#65686e"
+                  name="arrow-right-circle-outline"
+                  style={styles.arrowIcon}
+                  type="material-community"
+                  iconStyle={{ marginLeft: 5 }}
+                  size={22}
+                  color="#65686e"
             
-          />
+                />
             </View>
-           
-            
           </View>
           
-          <View>
+          
             <FlatList
               horizontal={true}
-              //numColumns={2}
               data={Stores}
               keyExtractor={(item,index) => index.toString()}
               showsHorizontalScrollIndicator = {false}
-              //extraData={idCheck}
               renderItem={({ item,index}) => (
                <StoreCard
                screenWidth={WIDTH*0.45}
@@ -164,19 +156,20 @@ import {
               <View style={styles.area}>
                 <Text style={styles.headerText}>Most Popular Categories</Text>
                 <Icon
-            name="arrow-right-circle-outline"
-            style={styles.arrowIcon}
-            type="material-community"
-            iconStyle={{ marginLeft: 5 }}
-            size={22}
-            color="#65686e"
+                  name="arrow-right-circle-outline"
+                  style={styles.arrowIcon}
+                  type="material-community"
+                  iconStyle={{ marginLeft: 5 }}
+                  size={22}
+                  color="#65686e"
             
-          />
+                />
+              </View>
+            </View>
               </View>
               
-          </View>
-          <View>
-            <FlatList
+
+            )}
               numColumns={2}
              showsHorizontalScrollIndicator={false}
               data={data}
@@ -212,13 +205,8 @@ import {
                       >
                         {item.name}
                       </Text>
-                      <Text
-                        style={
-                           { fontSize: 12, color: "#e2e1e1" }
-                        }
-                      >
-                        {item.name}
-                      </Text>
+                     
+                     
                     </View>
                     <View
                       style={{
@@ -233,15 +221,12 @@ import {
   
                   </View>
                 </Pressable>
-              )}
-            
-            
-            
+              )}            
             />
-          </View>
-            
-          </View>
-        </ScrollView>
+
+            </View> 
+         
+        
       </View>
     );
   }
@@ -318,6 +303,7 @@ import {
       borderRadius: 20,
       elevation: 13,
       backgroundColor: "white",
+      flex:1
     },
     arrowIcon: {
       paddingTop:2,

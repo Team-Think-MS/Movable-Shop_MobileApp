@@ -60,7 +60,7 @@ import {
       const navigation = useNavigation();
     return (
       <View style={{ flex: 1, marginBottom: 150 }}>
-        <View style={{}}>
+        <View style={{flex:1}}>
           <FlatList
             style={{ marginBottom: 10 }}
             data={productData}
