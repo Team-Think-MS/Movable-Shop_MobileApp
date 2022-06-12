@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
 
 import HomeScreen from "./screens/HomeScreen";
 import StoreOverviewScreen from "./screens/StoreOverviewScreen";
@@ -11,13 +12,13 @@ import CustomDrawerContent from "./component/CustomDrawerContent";
 import StoreDetailsScreen from "./screens/StoreDetailsScreen";
 import ProductDetailsScreen from "./screens/ProductDetailsScreen";
 import WishListScreen from "./screens/WishListScreen";
-import ProductManageScreen from './screens/ProductManageScreen';
-import MyProductsListScreen from './screens/MyProductsListScreen'
-
+import ProductManageScreen from "./screens/ProductManageScreen";
+import MyProductsListScreen from "./screens/MyProductsListScreen";
 
 import { Provider } from "react-redux";
 import store from "./store/Redux/Store";
 import { StatusBar } from "expo-status-bar";
+import { Pressable } from "react-native";
 
 const stack = createStackNavigator();
 const drawer = createDrawerNavigator();
@@ -25,13 +26,22 @@ const drawer = createDrawerNavigator();
 function MenueDrawerNavigaterHandler() {
   return (
     <drawer.Navigator
-      screenOptions={{}}
+      screenOptions={({ navigation }) => ({
+        headerRight: () => (
+          <Pressable style={{marginRight: '10%'}}>
+            <Ionicons name="cart-outline" size={24} color="black" />
+          </Pressable>
+        ),
+      })}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <drawer.Screen name="Home Screnn" component={HomeScreen} />
       <drawer.Screen
         name="Selling Managment"
         component={SellingOverviewScreen}
+        options={{
+          headerRight: false
+        }}
       />
       <drawer.Screen name="Categories" component={CategoryScreen} />
       <drawer.Screen name="Wish List" component={WishListScreen} />
@@ -45,7 +55,15 @@ export default function App() {
       <StatusBar style="dark" />
       <Provider store={store}>
         <NavigationContainer>
-          <stack.Navigator>
+          <stack.Navigator
+            screenOptions={({ navigation }) => ({
+              headerRight: () => (
+                <Pressable style={{marginRight: '10%'}}>
+                  <Ionicons name="cart-outline" size={24} color="black" />
+                </Pressable>
+              ),
+            })}
+          >
             <stack.Screen
               name="HomeScrenn"
               component={MenueDrawerNavigaterHandler}
@@ -70,17 +88,19 @@ export default function App() {
               component={ProductDetailsScreen}
             />
             <stack.Screen
-              name='ProductManageScreen'
+              name="ProductManageScreen"
               component={ProductManageScreen}
               options={{
                 title: "List Your Item",
+                headerRight: false
               }}
             />
             <stack.Screen
-              name='MyProducts'
+              name="MyProducts"
               component={MyProductsListScreen}
               options={{
                 title: "My Products",
+                headerRight: false
               }}
             />
           </stack.Navigator>

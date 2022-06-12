@@ -16,10 +16,16 @@ import { useNavigation } from "@react-navigation/native";
 function HomeScreen() {
   const navigation = useNavigation();
   function renderCategorieHandler(itemData) {
+    function popularCategoryPressHandler() {
+      navigation.navigate("StoreOverviewScreen", {
+        categoryID: itemData.item.categoryId,
+      })
+    }
     return (
       <CategoryGridTile
         picture={itemData.item.picture}
         categoryName={itemData.item.categoryName}
+        onPress={popularCategoryPressHandler}
       />
     );
   }
@@ -33,11 +39,6 @@ function HomeScreen() {
     );
   }
 
-  function popularCategoryPressHandler() {
-    navigation.navigate("StoreOverviewScreen", {
-      categoryID: itemData.item.categoryId,
-    })
-  }
 
   return (
     <View style={styles.rootContainer}>
