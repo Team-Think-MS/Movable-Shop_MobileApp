@@ -7,16 +7,22 @@ import {
   ScrollView,
   Button,
   TouchableOpacity,
-  Keyboard
+  Keyboard,
+  Pressable
 } from "react-native";
 import {Icon} from 'react-native-elements';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from "@react-navigation/native";
-import {connect} from 'react-redux';
+import {connect,useSelector} from 'react-redux';
 import * as actions from '../Redux/Actions/cartActions';
+import * as wishListActions from '../Redux/Actions/wishlistActions'
+
 
 const SingleProduct = (props) => {
   const [item, setItem] = useState(props.route.params.item);
   const navigation = useNavigation();
+
+  
 
   return (
     <View style={styles.container}>
@@ -31,7 +37,20 @@ const SingleProduct = (props) => {
           />
 
           </View>
-        
+          <Pressable style={{position:'relative',alignItems:'flex-end',paddingRight:20}}
+          onPress={()=>{
+            props.addToWishList(item),
+         console.log(props)
+          }}
+          >
+                <Ionicons
+                name={'ios-heart-sharp'}
+                size={40}
+                color="black"
+              
+                />
+          </Pressable>
+     
          
          <View
           style={{
@@ -77,6 +96,7 @@ const SingleProduct = (props) => {
           </View>
           
         </View>
+       
         <TouchableOpacity
            onPress={() => {
           props.addItemToCart(item),
@@ -99,10 +119,15 @@ const SingleProduct = (props) => {
   );
 };
 
+
 const mapDispatchToProps =(dispatch)=>{
   return{
     addItemToCart: (product)=>{
        dispatch(actions.addToCart({quantity: 1, product}))
+    },
+    addToWishList:(product)=>{
+      dispatch(wishListActions.addToWishList({product}))
+
     }
      
   }
@@ -119,14 +144,14 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingTop:10,
     margin: 0,
-    height:250,
+    height:200,
     width:"100%",
     borderColor:"#65686e",
     //sborderWidth:0.5
   },
   image: {
     width: "100%",
-    height: 250,
+    height: 200,
   }, 
   text1:{
     color: "#65686e",
