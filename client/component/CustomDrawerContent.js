@@ -1,18 +1,21 @@
 import {
   DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
 } from "@react-navigation/drawer";
 
 import { View, Text, Pressable, Button, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import DrawerButton from "./UI/DrawerButton";
 import { GlobalStyles } from "../constant/Styles";
+import { useNavigation } from "@react-navigation/native";
 
 function CustomDrawerContent(props) {
+  const navigation = useNavigation();
+  function signInPressedHandler() {
+    navigation.navigate('SignInScreen')
+  }
   return (
     <DrawerContentScrollView {...props} style={styles.rootContainer}>
-      <Pressable style={({pressed})=> [styles.signInButtonContainer, pressed ? styles.pressed : true]}>
+      <Pressable style={({pressed})=> [styles.signInButtonContainer, pressed ? styles.pressed : true]} onPress={signInPressedHandler}>
         <Feather name="user" size={45} color="black" />
         <Text style={styles.userText}>Sign In</Text>
       </Pressable>

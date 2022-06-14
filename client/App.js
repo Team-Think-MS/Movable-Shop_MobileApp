@@ -15,6 +15,9 @@ import WishListScreen from "./screens/WishListScreen";
 import ProductManageScreen from "./screens/ProductManageScreen";
 import MyProductsListScreen from "./screens/MyProductsListScreen";
 import CartScreen from "./screens/CartScreen";
+import SignInScreen from "./screens/SignInScreen";
+import SignUpAsaCustomerScreen from "./screens/SignUpAsaCustomerScreen";
+import SignUpAsaSellerScreen from "./screens/SignUpAsaSellerScreen";
 
 import { Provider } from "react-redux";
 import store from "./store/Redux/Store";
@@ -121,6 +124,30 @@ export default function App() {
               component={CartScreen}
               options={{
                 title: "Cart",
+              }}
+            />
+            <stack.Screen
+              name="SignInScreen"
+              component={SignInScreen}
+              options={{
+                title: "Sign In",
+                headerRight: false,
+              }}
+            />
+            <stack.Screen
+              name="SignUpAsaCustomerScreen"
+              component={SignUpAsaCustomerScreen}
+              options={{
+                title: "Register",
+                headerRight: false,
+              }}
+            />
+            <stack.Screen
+              name="SignUpAsaSellerScreen"
+              component={SignUpAsaSellerScreen}
+              options={{
+                title: "Register",
+                headerRight: false,
               }}
             />
           </stack.Navigator>
