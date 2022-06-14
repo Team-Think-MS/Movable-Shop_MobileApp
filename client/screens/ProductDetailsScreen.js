@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Text, Image, View, StyleSheet, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,18 +8,31 @@ import { GlobalStyles } from "../constant/Styles";
 import PrimaryButton from "../component/UI/PrimaryButton";
 import AddDeleteItemToCartButton from "../component/UI/AddDeleteItemToCartButton";
 import { wishListActions } from "../store/Redux/wishList-slice";
+import { cartListActions } from "../store/Redux/cartList-slice";
 
 function ProductDetailsScreen({ navigation, route }) {
-  
+  const [count, setCount] = useState(0);
+
+  function increaseCount() {
+    setCount(count + 1);
+  }
+  function decreaseCount() {
+    if (count == 0) return;
+    setCount(count - 1);
+  }
   const dispatch = useDispatch();
-  const productsWishlist = useSelector((state) => state.wishList.productIds );
-  
+  const productsWishlist = useSelector((state) => state.wishList.productIds);
+  const productsCartlist = useSelector((state) => state.cartList.cartProduct);
   const selectedProductId = route.params.productID;
   const selectedProduct = PRODUCTS.find(
     (product) => product.productId === selectedProductId
   );
 
   const isProductWishList = productsWishlist.includes(selectedProductId);
+
+  const productCartList = productsCartlist.find(
+    (prodct) => prodct.productId === selectedProductId
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -28,11 +41,24 @@ function ProductDetailsScreen({ navigation, route }) {
   }, [navigation, selectedProduct]);
 
   function changeProductWishListStatusHandler() {
-      if(isProductWishList) {
-          dispatch(wishListActions.removeProductWishList({id: selectedProductId}))
-      } else {
-          dispatch(wishListActions.addProductWishList({id: selectedProductId}))
-      }
+    if (isProductWishList) {
+      dispatch(
+        wishListActions.removeProductWishList({ id: selectedProductId })
+      );
+    } else {
+      dispatch(wishListActions.addProductWishList({ id: selectedProductId }));
+    }
+  }
+
+  function addToCartHandler() {
+    if (productCartList) {
+      console.log('ok')
+      cartListActions.updateProductCart({id: selectedProductId, qnty: count, pName: selectedProduct.productName, totPrice: selectedProduct.price * count })
+    } else {
+      dispatch(
+        cartListActions.addProductCart({ id: selectedProductId, qnty: count, pName: selectedProduct.productName, totPrice: selectedProduct.price * count })
+      );
+    }
   }
 
   return (
@@ -43,8 +69,18 @@ function ProductDetailsScreen({ navigation, route }) {
             source={{ uri: selectedProduct.picture }}
             style={styles.image}
           />
-          <Pressable style={({pressed}) => [styles.icon, pressed ? styles.pressed : true ]} onPress={changeProductWishListStatusHandler} >
-            <Ionicons name={isProductWishList ? 'ios-heart-sharp' : "ios-heart-outline"} size={24} color="black" />
+          <Pressable
+            style={({ pressed }) => [
+              styles.icon,
+              pressed ? styles.pressed : true,
+            ]}
+            onPress={changeProductWishListStatusHandler}
+          >
+            <Ionicons
+              name={isProductWishList ? "ios-heart-sharp" : "ios-heart-outline"}
+              size={24}
+              color="black"
+            />
           </Pressable>
         </View>
         <View style={styles.textContainer}>
@@ -53,8 +89,12 @@ function ProductDetailsScreen({ navigation, route }) {
         </View>
       </View>
       <View>
-        <AddDeleteItemToCartButton />
-        <PrimaryButton children={"Add to Cart"} />
+        <AddDeleteItemToCartButton
+          pressAddItem={increaseCount}
+          pressDeleteItem={decreaseCount}
+          count={count}
+        />
+        <PrimaryButton children={"Add to Cart"} onPress={addToCartHandler} />
       </View>
     </View>
   );
@@ -99,5 +139,5 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.35,
-  }
+  },
 });

@@ -48,7 +48,7 @@ function HomeScreen() {
             <Image
               style={styles.image}
               source={{
-                uri: "https://img.freepik.com/free-psd/digital-marketing-facebook-banner-template_237398-233.jpg?w=2000",
+                uri: "https://lh3.googleusercontent.com/iXSbg0LQjhgnG0h5HJLpGk49Nhg6MUz16XOgoyfmHkMcD478blh0N7pmbV6aiBLCSTkygDAv5TPj2F1mSCesyR_JsaNDf9Nqs9b5XQQ0_IKqBqbDR2Z4dQzZKmglFMYhCjIRBqsBYybIj3va5A",
               }}
             />
             <View style={styles.allCategories}>
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 250,
+    height: 200,
     marginVertical: 10,
   },
   menueContainer: {

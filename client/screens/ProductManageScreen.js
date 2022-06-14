@@ -6,6 +6,8 @@ import PrimaryButton from "../component/UI/PrimaryButton";
 import SecondaryButton from "../component/UI/SecondaryButton";
 import { manageProductActions } from "../store/Redux/manageProduct-slice";
 
+const axios = require('axios').default;
+
 function ProductManageScreen({ route, navigation }) {
   const dispatch = useDispatch();
   const productsss = useSelector((state) => state.manageProduct.products);
@@ -26,7 +28,14 @@ function ProductManageScreen({ route, navigation }) {
       );
     } else {
       dispatch(manageProductActions.addProduct(productData));
-    }
+      
+      axios.post("http://localhost:3001/create", {
+        productName: productData.productName,
+        description: productData.description,
+        price: productData.price,
+      }).then(() => {});
+    };
+
     navigation.goBack();
   }
 
@@ -34,10 +43,12 @@ function ProductManageScreen({ route, navigation }) {
     if (isEditingProduct) {
       navigation.setOptions({
         title: "Edit Product",
+        headerRight: false,
       });
     } else {
       navigation.setOptions({
         title: "List a New Item",
+        headerRight: false,
       });
     }
   }, [navigation, isEditingProduct]);

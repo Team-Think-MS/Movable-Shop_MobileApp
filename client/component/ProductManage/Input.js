@@ -42,6 +42,9 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
   },
   invalidInput: {
-    backgroundColor: 'red',
+    backgroundColor: GlobalStyles.colors.error50,
   },
+  invalidLabel: {
+    color: GlobalStyles.colors.error400
+  }
 });

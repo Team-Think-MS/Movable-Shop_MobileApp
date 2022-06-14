@@ -14,6 +14,7 @@ import ProductDetailsScreen from "./screens/ProductDetailsScreen";
 import WishListScreen from "./screens/WishListScreen";
 import ProductManageScreen from "./screens/ProductManageScreen";
 import MyProductsListScreen from "./screens/MyProductsListScreen";
+import CartScreen from "./screens/CartScreen";
 
 import { Provider } from "react-redux";
 import store from "./store/Redux/Store";
@@ -28,7 +29,15 @@ function MenueDrawerNavigaterHandler() {
     <drawer.Navigator
       screenOptions={({ navigation }) => ({
         headerRight: () => (
-          <Pressable style={{marginRight: '10%'}}>
+          <Pressable
+            style={({ pressed }) => [
+              { marginRight: "10%" },
+              pressed ? { opacity: 0.35 } : false,
+            ]}
+            onPress={() => {
+              navigation.navigate("CartScreen");
+            }}
+          >
             <Ionicons name="cart-outline" size={24} color="black" />
           </Pressable>
         ),
@@ -40,7 +49,7 @@ function MenueDrawerNavigaterHandler() {
         name="Selling Managment"
         component={SellingOverviewScreen}
         options={{
-          headerRight: false
+          headerRight: false,
         }}
       />
       <drawer.Screen name="Categories" component={CategoryScreen} />
@@ -58,7 +67,15 @@ export default function App() {
           <stack.Navigator
             screenOptions={({ navigation }) => ({
               headerRight: () => (
-                <Pressable style={{marginRight: '10%'}}>
+                <Pressable
+                  style={({ pressed }) => [
+                    { marginRight: "10%" },
+                    pressed ? { opacity: 0.35 } : false,
+                  ]}
+                  onPress={() => {
+                    navigation.navigate("CartScreen");
+                  }}
+                >
                   <Ionicons name="cart-outline" size={24} color="black" />
                 </Pressable>
               ),
@@ -75,9 +92,6 @@ export default function App() {
             <stack.Screen
               name="StoreOverviewScreen"
               component={StoreOverviewScreen}
-              options={{
-                title: "Store Overview Screen",
-              }}
             />
             <stack.Screen
               name="StoreDetailsScreen"
@@ -92,7 +106,6 @@ export default function App() {
               component={ProductManageScreen}
               options={{
                 title: "List Your Item",
-                headerRight: false
               }}
             />
             <stack.Screen
@@ -100,7 +113,14 @@ export default function App() {
               component={MyProductsListScreen}
               options={{
                 title: "My Products",
-                headerRight: false
+                headerRight: false,
+              }}
+            />
+            <stack.Screen
+              name="CartScreen"
+              component={CartScreen}
+              options={{
+                title: "Cart",
               }}
             />
           </stack.Navigator>
