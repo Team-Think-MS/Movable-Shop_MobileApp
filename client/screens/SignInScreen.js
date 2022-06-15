@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -13,6 +14,26 @@ import PrimaryButton from "../component/UI/PrimaryButton";
 import SecondaryButton from "../component/UI/SecondaryButton";
 
 function SignInScreen() {
+    /*
+    const [emailInput, setEmailInput] = useState('')
+    const [passwordInput, setPasswordInput] = useState('')
+
+    function inputEmailChangeHandler(enteredValue) {
+        setEmailInput(enteredValue) 
+    }
+    function inputPasswordChangeHandler(enteredValue) {
+        setPasswordInput(enteredValue)
+    }
+
+    function submitHandler() {
+        const signInDta = {
+            email: emailInput,
+            password: passwordInput
+        }
+
+        const isEmailValid = 
+    }
+    */
   const navigation = useNavigation();
 
   function createAnAccountPressedHandler() {
@@ -26,11 +47,13 @@ function SignInScreen() {
           <SignInSignUpInput
             textInputConfig={{
               placeholder: "Email",
+
             }}
           />
           <SignInSignUpInput
             textInputConfig={{
               placeholder: "Password",
+
             }}
           />
         </View>
