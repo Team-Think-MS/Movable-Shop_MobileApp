@@ -6,6 +6,7 @@ import Banner from "../components/Banner";
 import { Icon } from "react-native-elements";
 import Rating from "../components/Rating";
 import axios from "axios";
+import { Thumbnail } from "native-base";
 const WIDTH = Dimensions.get("window").width;
 
 const ProductScreen = ({navigation,route}) => {
@@ -27,7 +28,7 @@ useEffect(()=>{
 },[]);
 
 
-  console.log(item.storeName);
+  
   return (
     <View style={styles.container} >
        {/** <ScrollView  showsVerticalScrollIndicator={true}> */} 
@@ -50,7 +51,8 @@ ListHeaderComponent={
   }}
 /> 
 
-    <Text style={styles.text}>{item.storeName}</Text>
+    
+    <Text style={styles.text}>{item.descrption}</Text>
 
    
     <Pressable onPress={()=>{navigation.navigate("Customer Reviews",{item: item})}}>
@@ -106,8 +108,8 @@ ListHeaderComponent={
             marginRight: 10,
           }}
         >
-          <Image
-            style={{ height: 70, width: 120, borderRadius: 10 }}
+          <Thumbnail
+            style={{ height: 90, width: 100, borderRadius: 10 }}
             //source={{uri: item.image}}
             source={{uri:item.picture}}
           />
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
     borderWidth:0.5
   },
   productCardTextTwo: {
-    fontSize: 15,
+    fontSize: 13,
     color: "#65686e",
     marginTop: 10,
     fontFamily: "sans-serif-medium",

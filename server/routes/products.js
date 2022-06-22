@@ -39,12 +39,12 @@ app.get('/:prodId', async(req,res)=>{
 })
 
 /*GET ALL PRODUCTS FROM ONE CATEGORY */
-// /api/products/category/:catName
+// /api/products/category/:catId
 
-app.get('/category/:catName',async(req,res)=>{
-   const catName= req.params.catName;
+app.get('/category/:catId',async(req,res)=>{
+   const catId= req.params.catId;
    try {
-      const result = await database.query("SELECT p.productName,p.picture,p.price,p.stockQty,p.description FROM store s, category c, product p WHERE s.categoryId=c.categoryId AND s.storeId=p.storeId AND c.categoryName=?",[catName]);
+      const result = await database.query("select p.productName,p.description,p.picture,p.price,p.productId,p.stockQty from store s, product p, category c where s.storeId=p.storeId and s.categoryId=c.categoryId and c.categoryId=?",[catId]);
       res.send(result);
       
    } catch (error) {
@@ -65,6 +65,7 @@ app.get('/store/:storeId',async(req,res)=>{
       
    }
 })
+
 
 
 

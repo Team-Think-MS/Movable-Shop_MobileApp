@@ -16,12 +16,13 @@ import {
   import HomeHeader from "../components/HomeHeader";
   import { colors, parameters } from "../global/styles";
   import { data } from "../global/data";
-  import { productData, Stores2,Stores } from "../global/products";
+  //import { productData, Stores2,Stores } from "../global/products";
   import SearchComponent from "../components/SearchComponent";
   import Banner from "../components/Banner";
   import StoreCard from "../components/StoreCard";
   import Axios from 'axios';
   import {FlatList} from 'react-native-gesture-handler'
+  import {Thumbnail} from 'native-base'
  {/**class Btn extends Component {
     render() {
       return (
@@ -56,7 +57,7 @@ import {
         setAllProducts(products.data);
       }).catch((error)=>{
         console.log(error);
-        console.log('gamalath')
+        
       })
     };
 
@@ -101,8 +102,8 @@ import {
             ListHeaderComponent={()=>(
               <View>
                 <View>
-            <Banner />
-          </View>
+                   <Banner />
+              </View>
           
           
          <View
@@ -128,8 +129,8 @@ import {
                 <Pressable
                   onPress={() => {
                     setIndexCheck(item.categoryId);
-                //getAllProducts;
-                    navigation.navigate('Categories',{item:item,productTitle:item.categoryName})
+        
+                    navigation.navigate("Product List",{item:item,productTitle:item.categoryName})
                   }}
                 >
                   
@@ -150,7 +151,7 @@ import {
                         }
                       >
                         {item.categoryName}
-                       {/** {console.log(item.picture)} */}
+                   
                       </Text>
                     </View>
                   </View>
@@ -208,7 +209,15 @@ import {
                />
               )}
             />
-            <View style={styles.headerTextView}>
+        
+              </View>
+              
+
+            )}
+            ListFooterComponent={()=>(
+             
+              <View>
+                    <View style={styles.headerTextView}>
               <View style={styles.area}>
                 <Text style={styles.headerText}>Most Popular Categories</Text>
                 <Icon
@@ -222,73 +231,48 @@ import {
                 />
               </View>
             </View>
-              </View>
-              
-
-            )}
+            <View>
+              <FlatList
               numColumns={2}
-             showsHorizontalScrollIndicator={false}
-              data={data}
-              //date={allcategories}
-              keyExtractor={(item)=>item.id}
-              renderItem={({item,index})=>(
-                
-                <Pressable onPress={()=>{
-                  
-                  navigation.navigate('Categories',{item:item,productTitle:item.name})}}
-                  
-                  >
-                  
-                  
-                  <View
-                    style={
-                      styles.productCardTwo
-                    }
-                  >
-                    <View
-                      style={{
-                        alignItems: "center",
-                        top: -2,
-                        marginTop: 5,
-                        marginLeft: 10,
-                        marginRight: 10,
-                      }}
-                    >
+              showsHorizontalScrollIndicator={false}
+              data={allcategories}
+              keyExtractor={(item)=>item.categoryId}
+              renderItem={({item})=>(
+                <Pressable onPress={()=>{  navigation.navigate("Product List",{item:item,productTitle:item.categoryName})}}>
+                  <View>
+                    
+                    <View style={styles.productCardTwo}>
+                      <View style={{alignItems:'center',top:-2,marginTop:5,marginLeft:10,marginRight:10}}>
+                        <Thumbnail
+                          style={{height:(WIDTH-150)/2, width:(WIDTH-40)/2, borderTopLeftRadius:20,borderTopRightRadius:20}}
+                          source={{uri:item.picture}}                        
+                        />
+                      </View>
+                      <View style={{marginHorizontal:20}}>
+                        <Text style={styles.productCardTextTwo}>
+                          {item.categoryName}
+                        </Text>
+
+                      </View>
                       
-                      <Image
-                        style={{ height:  (WIDTH - 150) / 2, width: (WIDTH-40)/2,  borderTopLeftRadius:20,borderTopRightRadius:20 }}
-                        //source={{uri:item.picture}}
-                        source={item.image}
-                       
-                      />
-                      
+
                     </View>
-                    <View style={{ marginHorizontal: 20 }}>
-                      <Text
-                        style={
-                          styles.productCardTextTwo
-                        }
-                      >
-                        {item.name}
-                        
-                      </Text>
-                     
-                     
-                    </View>
-                    <View
-                      style={{
-                        marginTop: 10,
-                        marginHorizontal: 20,
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                   
-                    </View>
-  
                   </View>
                 </Pressable>
-              )}            
+              )}
+              
+              
+              
+              />
+
+
+
+            </View>
+                 
+            
+              </View>
+            )}
+                     
             />
 
             </View> 
@@ -298,6 +282,8 @@ import {
     );
   }
   export default HomeScree;
+
+  
   
   const styles = StyleSheet.create({
     container: {
@@ -389,9 +375,9 @@ import {
       fontFamily: "sans-serif-medium",
     },
     productCardTextTwo: {
-      fontSize: 18,
+      fontSize: 15,
       fontWeight: "bold",
-      color: "black",
+      color: "gray",
       marginTop: 2,
     },
     btn: {

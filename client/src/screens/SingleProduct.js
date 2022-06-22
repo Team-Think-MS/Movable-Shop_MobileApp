@@ -17,7 +17,7 @@ import {connect,useSelector,useDispatch} from 'react-redux';
 import * as actions from '../Redux/Actions/cartActions';
 import * as wishListActions from '../Redux/Actions/wishlistActions'
 import {addToCart} from '../Redux/cartSlice'
-
+import {Thumbnail} from 'native-base'
 const SingleProduct = (props) => {
   const [item, setItem] = useState(props.route.params.item);
 
@@ -31,8 +31,8 @@ const SingleProduct = (props) => {
         <View >
       
           <View style={styles.imageContainer}>
-            <Image
-            source={item.image}
+            <Thumbnail
+            source={{uri:item.picture}}
             resizeMode="contain"
             style={styles.image}
           />
@@ -61,14 +61,17 @@ const SingleProduct = (props) => {
             paddingTop:20
           }}
         /> 
-         <Text>{item.productName}</Text>
+       
           <Text style={styles.text}>Rs.{item.price}.00</Text>
           <Text style={styles.text2}>{item.description}</Text>
         </View>
 
 
-<View style={styles.view13}>
-   <View style={styles.view14}>
+  <View style={styles.view13}>
+  {item.stockQty > 0 ?
+    <View>
+      
+      <View style={styles.view14}>
           <View style={styles.view15}>
             <Icon
               name ="remove"
@@ -98,23 +101,37 @@ const SingleProduct = (props) => {
 
           </View>
           
-        </View>
-       
+        </View> 
         <TouchableOpacity
-           onPress={() => {
-          props.addItemToCart(item),
-       // dispatch(addToCart(item));
+            onPress={() => {
+            props.addItemToCart(item),
+           // dispatch(addToCart(item));
         
-         console.log(props)
+            console.log(props)
           
           }}
-        >
+          >
             <View style ={styles.view17}>
                     <View style ={styles.view18}>
                         <Text style ={styles.text10}>Add to Cart </Text>
                     </View>
             </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+    </View>
+  
+       
+     
+       
+          
+        : 
+            <View style ={styles.view17}>
+            <View style ={styles.view20}>
+                <Text style ={styles.text10}>Out of Stock </Text>
+            </View>
+          </View>
+      
+      }
+       
       
 </View>
        
@@ -245,6 +262,17 @@ view18:{backgroundColor:"#88aef7",
     width:320,
     borderRadius:25,
     height:45
+    
+  },
+  view20:{backgroundColor:"#DCDCDC",
+    alignItems:"center",
+    paddingVertical:5,
+    paddingHorizontal:5,
+    marginBottom:0,
+    width:320,
+    borderRadius:25,
+    height:45,
+    marginTop:50
     
   },
 

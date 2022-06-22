@@ -11,6 +11,7 @@ import DrawerNavigator from "./AppStack";
 import CustomerReviews from "../screens/CustomerReviews";
 import MyStack from "../navigation/HomeNavigator";
 import CategoriesPage from "../screens/CategoriesPage";
+import ProductList from "../screens/ProductList";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export default function AuthStack() {
       <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false}} /> 
      <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} options={{ headerShown: false}}/> 
       <Stack.Screen name="Customer Reviews" component={CustomerReviews} options={{ headerShown: true}}/>
+      <Stack.Screen name="Product List" component={ProductList} options={({ route }) => ({ title: route.params.productTitle })}/>
         </Stack.Navigator>
   );
 }

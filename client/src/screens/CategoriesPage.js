@@ -1,21 +1,37 @@
 import { StyleSheet, Text, View,FlatList,Dimensions,Pressable,Image } from 'react-native'
-import React, { useState } from 'react';
-import { data } from '../global/data';
+import React, { useState,useEffect } from 'react';
+//import { data } from '../global/data';
+import axios from 'axios';
 const WIDTH = Dimensions.get("window").width;
 
-const CategoriesPage = ({navigation}) => {
-  const [indexCheck, setIndexCheck] = useState("0");
+const CategoriesPage = ({navigation,route}) => {
+ 
+  const [allproducts,setAllProducts]=useState([]);
+
+  const getAllCategories=()=>{
+    axios.get('http://192.168.8.123:3002/api/category/').then((categories)=>{
+      setAllProducts(categories.data);
+    }).catch((error)=>{
+      console.log(error);
+
+    })
+  } 
+  useEffect(()=>{
+    getAllCategories();
+ 
+  },[]);
+
   return (
-    <View>
-         <View style={{paddingTop:0,backgroundColor:'white'}}>
+    <View style={{backgroundColor:'white',flex:1}}>
+         <View >
             <FlatList
               numColumns={2}
              showsHorizontalScrollIndicator={false}
-              data={data}
-              keyExtractor={(item)=>item.id}
-              extraData={indexCheck}
+              data={allproducts}
+              keyExtractor={(item)=>item.categoryId}
+              //extraData={indexCheck}
               renderItem={({item,index})=>(
-                <Pressable onPress={()=>{navigation.navigate('Categories')}}>
+                <Pressable onPress={()=>{navigation.navigate("Product List",{item:item,productTitle:item.categoryName})}}>
                   
                   <View
                     style={
@@ -33,7 +49,7 @@ const CategoriesPage = ({navigation}) => {
                     >
                       <Image
                         style={{ height:  (WIDTH - 150) / 2, width: (WIDTH-40)/2,  borderTopLeftRadius:20,borderTopRightRadius:20 }}
-                        source={item.image}
+                        source={{uri: item.picture}}
                       />
                     </View>
                     <View style={{ marginHorizontal: 20 }}>
@@ -42,14 +58,14 @@ const CategoriesPage = ({navigation}) => {
                           styles.productCardTextTwo
                         }
                       >
-                        {item.name}
+                        {item.categoryName}
                       </Text>
                       <Text
                         style={
                            { fontSize: 12, color: "#e2e1e1" }
                         }
                       >
-                        {item.name}
+                        {item.categoryName}
                       </Text>
                     </View>
                     <View
@@ -92,9 +108,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     // marginBottom: 20,
     //marginTop: 50,
-    borderRadius: 20,
-    elevation: 13,
+    borderRadius: 15,
+    elevation: 5,
     backgroundColor: "white",
+    
   },
   productCardTextTwo: {
     fontSize: 18,

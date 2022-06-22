@@ -89,24 +89,6 @@ export default function DrawerNavigator(){
         }}
       />
         <Drawer.Screen
-        name="Purchases"
-        component={Purchases}
-        options={{
-          headerShown:true,
-          drawerIcon:({color})=>(
-            <Ionicons
-            name='briefcase'
-          color={color}
-            size={22}
-            
-            />
-          ),
-          title:'Purchases',
-          
-
-        }}
-      />
-      <Drawer.Screen
         name="Categories"
         component={CategoriesPage}
         options={{
@@ -124,6 +106,25 @@ export default function DrawerNavigator(){
 
         }}
       />
+        <Drawer.Screen
+        name="Purchases"
+        component={Purchases}
+        options={{
+          headerShown:true,
+          drawerIcon:({color})=>(
+            <Ionicons
+            name='briefcase'
+          color={color}
+            size={22}
+            
+            />
+          ),
+          title:'Purchases',
+          
+
+        }}
+      />
+    
       <Drawer.Screen
         name="Settings"
         component={Settings}

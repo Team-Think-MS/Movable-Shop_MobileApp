@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text,View,TouchableOpacity,Image,StyleSheet,Dimensions} from 'react-native';
 import Rating from './Rating';
+import {Thumbnail} from 'native-base';
 
 
 export default function StoreCard({
@@ -15,17 +16,18 @@ export default function StoreCard({
 
     return(
         <TouchableOpacity  onPress={OnPressFoodCard}>
-              {console.log({restaurantName})}
+            
               
             <View style ={{...styles.cardView,width:screenWidth}}>
-            <Text style ={styles.restaurantName}>{restaurantName}</Text>
-                {/** <Image 
+           
+            <Thumbnail 
                     style ={{...styles.image, width:screenWidth}}
                     //source = {{uri:images}}
                     source={({uri:images})}
-                /> */}
+                />
+                 <Text style ={styles.restaurantName}>{restaurantName}</Text>
                
-                {console.log(images)}
+               
 
             <View>
                 <View>
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
          image:{
             borderTopLeftRadius:6,
             borderTopRightRadius:6,
-            height:100,
+            height:90,
          },
 
          restaurantName:{
