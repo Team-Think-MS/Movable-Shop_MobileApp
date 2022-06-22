@@ -18,7 +18,6 @@ export default function DrawerNavigator(){
     <Drawer.Navigator useLegacyImplementation={true} 
     drawerContent={props => <CustomDrawerContent {...props}/>}
      screenOptions={{
-      
       drawerActiveBackgroundColor:'#f3f2f2',
       drawerActiveTintColor:'black',
       drawerInactiveTintColor:'gray',
@@ -51,7 +50,7 @@ export default function DrawerNavigator(){
 
         }}
       />
-      <Drawer.Screen
+      {/**  <Drawer.Screen
         name="Messages"
         component={Message}
         options={{
@@ -67,8 +66,10 @@ export default function DrawerNavigator(){
           title:'Message',
 
         }}
-      />
-      
+      /> 
+   
+       */}
+     
          <Drawer.Screen
         name="WishList"
         component={WishList}

@@ -550,6 +550,7 @@ export const Stores = [
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
     },
   ];
+  
   export const productData2 = [
     {
       id: "0",

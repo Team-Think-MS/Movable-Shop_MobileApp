@@ -9,25 +9,44 @@ import {
     TouchableOpacity,
     Keyboard,
   } from "react-native";
-  import { React } from "react";
+  import { React, useEffect } from "react";
   import { Icon } from "react-native-elements";
   import * as Animatable from "react-native-animatable";
   import { useState, useRef } from "react";
   import { useNavigation } from "@react-navigation/native";
-  import { productData, Stores } from "../global/products";
+  //import { productData, Stores } from "../global/products";
   import filter from "lodash/filter";
-  import {Input} from 'native-base'
+  import Axios from 'axios';
   
   export default function SearchComponent() {
+
     const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
     const [textInputFocussed, setTextInputFocussed] = useState(true);
     const textInput = useRef(0);
-    const [data, setData] = useState(Stores);
+    const [allStores,setAllStores]=useState([]);
+    const [alldata, setAllData] = useState(allStores);
+    //const [data, setData] = useState(Stores);
+    
+
+
+    const getAllStores=()=>{
+      Axios.get('http://192.168.8.123:3002/api/stores/').then((stores)=>{
+        setAllStores(stores.data);
+      }).catch((error)=>{
+        console.log(error);
+      })
+    }
+    useEffect(()=>{
+      getAllStores();
+      
+    },[]);
+
+    //const [alldata, setAllData] = useState(allStores);
   
     //filltering
-    const contains = ({ name }, query) => {
-      if (name.includes(query)) {
+    const contains = ({storeName}, query) => {
+      if (storeName.includes(query)) {
         return true;
       }
       return false;
@@ -35,11 +54,15 @@ import {
   
     //handle text input
     const handleSearch = (text) => {
-      const dataS = filter(Stores, (userSearch) => {
+      console.log(text);
+    //  const formatedQuery=text.toLowerCase();
+      const dataS = filter(allStores, userSearch => {
+      //const dataS = filter(Stores, (userSearch) => {
         return contains(userSearch, text);
       });
   
-      setData([...dataS]);
+     setAllStores([...dataS]);
+     
     };
   
     return (
@@ -105,20 +128,22 @@ import {
                     style={{ marginRight: -10 }}
                     onPress={() => {
                       textInput.current.clear();
-                      //handleSearch()
+                      handleSearch();
                     }}
                   />
                 </Animatable.View>
               </View>
             </View>
             <FlatList
-              data={data}
+              //data={data}
+              data={allStores}
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() => {
                     Keyboard.dismiss;
+                    //getAllStores;
                     navigation.navigate("SearchResultScreen", {
-                      item: item.name,productTitle:item.name
+                      item: item.storeName,productTitle:item.storeName
                     });
                     setModalVisible(false);
                     setTextInputFocussed(true);
@@ -126,12 +151,24 @@ import {
                 >
                   <View style={styles.view2}>
                     <Text style={{ color: "black", fontSize: 15 }}>
-                      {item.name}
+                      {item.storeName}
                     </Text>
                   </View>
                 </TouchableOpacity>
               )}
-              keyExtractor={(item) => item.id}
+              ListEmptyComponent={()=>(
+                <View
+                  style={{
+                    flex:1,
+                    alignItems:'center',
+                    justifyContent:'center',
+                    marginTop:50
+                  }}
+                >
+                  <Text>No Stores Found</Text>
+                </View>
+              )}
+              keyExtractor={(item) => item.storeId}
             />
           </View>
         </Modal>

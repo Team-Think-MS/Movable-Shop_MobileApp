@@ -8,16 +8,30 @@ import {
     Dimensions,
     Keyboard,
   } from "react-native";
-  import React from "react";
+  import React, { useEffect,useState } from "react";
   import SearchComponent from "../components/SearchComponent";
   //import HomeHeader from "../components/HomeHeader";
   import { productData } from "../global/products";
   import { useNavigation } from "@react-navigation/native";
+  import Axios from 'axios';
+  
   
   const SCREEN_WIDTH = Dimensions.get("window").width;
-  
   export default function SearchScreen({navigation}) {
     // const navigation = useNavigation();
+    const [allStores,setAllStores]=useState([]);
+ 
+
+  const getAllStores=()=>{
+    Axios.get('http://192.168.8.123:3002/api/stores/').then((stores)=>{
+      setAllStores(stores.data);
+    }).catch((error)=>{
+      console.log(error);
+    })
+  }
+  useEffect(()=>{
+    getAllStores();
+  },[]);
     return (
       <View style={{ backgroundColor: "white" ,paddingTop:25}}>
         <SearchComponent />
@@ -26,20 +40,20 @@ import {
           
           <FlatList
             style={{ marginBottom: 1 }}
-            data={productData}
-            keyExtractor={(item) => item.id}
+            data={allStores}
+            keyExtractor={(item) => item.storeId}
             renderItem={({ item }) => (
               <TouchableWithoutFeedback
               onPress={()=>{
-                navigation.navigate("SearchResultScreen",{ item: item.name,productTitle:item.name});
+                navigation.navigate("SearchResultScreen",{ item: item.storeName,productTitle:item.storeName});
               }}
               
               >
                 <View style={styles.imageView}>
-                  <ImageBackground style={styles.image} source={item.image}>
+                  <ImageBackground style={styles.image} source={{uri:item.picture}}>
                     <View style={styles.textView}>
                       <Text style={{ color: "white", fontWeight: "bold" }}>
-                        {item.name}
+                        {item.storeName}
                       </Text>
                     </View>
                   </ImageBackground>
@@ -49,33 +63,45 @@ import {
             horizontal={false}
             showsVerticalScrollIndicator={false}
             numColumns={2}
-            ListFooterComponent={<Footer />}
+           // ListFooterComponent={<Footer />}
           />
         </View>
       </View>
     );
   }
-  
-  const Footer = () => {
+  {/** const Footer = () => {
       const navigation = useNavigation();
+      const [allStores,setAllStores]=useState([]);
+ 
+
+      const getAllStores=()=>{
+        Axios.get('http://192.168.8.123:3002/api/stores/').then((stores)=>{
+          setAllStores(stores.data);
+        }).catch((error)=>{
+          console.log(error);
+        })
+      }
+      useEffect(()=>{
+        getAllStores();
+      },[]);
     return (
       <View style={{ flex: 1, marginBottom: 150 }}>
         <View style={{flex:1}}>
           <FlatList
             style={{ marginBottom: 10 }}
-            data={productData}
+            data={allStores}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <TouchableWithoutFeedback
               onPress={()=>{
-                navigation.navigate("SearchResultScreen",{ item: item.name,productTitle:item.name});
+                navigation.navigate("SearchResultScreen",{ item: item.storeName,productTitle:item.storeName});
               }}
               >
                 <View style={styles.imageView}>
-                  <ImageBackground style={styles.image} source={item.image}>
+                  <ImageBackground style={styles.image} source={{uri:item.picture}}>
                     <View style={styles.textView}>
                       <Text style={{ color: "white", fontWeight: "bold" }}>
-                        {item.name}
+                        {item.storeName}
                       </Text>
                     </View>
                   </ImageBackground>
@@ -89,7 +115,8 @@ import {
         </View>
       </View>
     );
-  };
+  };*/}
+  
   //export default SearchScreen;
   
   const styles = StyleSheet.create({

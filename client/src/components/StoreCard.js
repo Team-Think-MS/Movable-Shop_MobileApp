@@ -6,8 +6,8 @@ import Rating from './Rating';
 export default function StoreCard({
     OnPressFoodCard,
     restaurantName,
-    numberOfReview ,
-    averageReview ,
+   // numberOfReview ,
+    //averageReview ,
     images,
     screenWidth,
     
@@ -15,20 +15,26 @@ export default function StoreCard({
 
     return(
         <TouchableOpacity  onPress={OnPressFoodCard}>
+              {console.log({restaurantName})}
+              
             <View style ={{...styles.cardView,width:screenWidth}}>
-                <Image 
+            <Text style ={styles.restaurantName}>{restaurantName}</Text>
+                {/** <Image 
                     style ={{...styles.image, width:screenWidth}}
-                    source = {(images)}
-                />
+                    //source = {{uri:images}}
+                    source={({uri:images})}
+                /> */}
+               
+                {console.log(images)}
 
             <View>
                 <View>
-                    <Text style ={styles.restaurantName}>{restaurantName}</Text>
+                   
                     <View style={{marginBottom:2, marginTop:-14}} >
-                        <Rating
+                        {/** <Rating
                         rating={averageReview}
                         numReviews={numberOfReview}
-                    />  
+                    />  */}
                     </View>
                   
                 </View>

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View ,Dimensions} from 'react-native'
 import React from 'react'
-import {connect} from 'react-redux'
+import {connect, useSelector} from 'react-redux'
 import { Body, Container, Left, ListItem, Right } from 'native-base'
 import { Icon } from 'react-native-elements';
 import * as actions from '../Redux/Actions/wishlistActions'
@@ -8,6 +8,7 @@ import * as actions from '../Redux/Actions/wishlistActions'
 var {height}= Dimensions.get('window').width;
 
 const WishList = (props) => {
+ 
   return (
     <>
     {props.wishlistItems.length ? (
@@ -20,7 +21,7 @@ const WishList = (props) => {
             >
               <Body style={styles.body}>
                  <Left>
-                  <Text>{data.product.name}</Text>
+                  <Text>{data.product.productName}</Text>
                 </Left>
                 <Right>
                 <Icon

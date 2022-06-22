@@ -11,7 +11,7 @@ import {
     TouchableHighlight,
     TouchableOpacity,
   } from "react-native";
-  import React, { Component, useState } from "react";
+  import React, { Component, useEffect, useState } from "react";
   import { Icon, withTheme } from "react-native-elements";
   import HomeHeader from "../components/HomeHeader";
   import { colors, parameters } from "../global/styles";
@@ -22,8 +22,7 @@ import {
   import StoreCard from "../components/StoreCard";
   import Axios from 'axios';
   import {FlatList} from 'react-native-gesture-handler'
-  
-  class Btn extends Component {
+ {/**class Btn extends Component {
     render() {
       return (
         <TouchableHighlight
@@ -38,14 +37,58 @@ import {
       );
     }
   }
+   */} 
   
   const WIDTH = Dimensions.get("window").width;
   
-  const HomeScree=({navigation})=> {
+  const HomeScree=({navigation,props})=> {
     const numColums = 2;
     const [indexCheck, setIndexCheck] = useState("0");
     const [idCheck, setIdCheck] = useState("0");
+    const [allProducts,setAllProducts]=useState([]);
+    const [allStores,setAllStores]=useState([]);
+    const [allcategories,setAllCategories]= useState([]);
 
+
+    
+    const getAllProducts=()=>{
+      Axios.get('http://192.168.8.123:3002/api/products/').then((products) => {
+        setAllProducts(products.data);
+      }).catch((error)=>{
+        console.log(error);
+        console.log('gamalath')
+      })
+    };
+
+  
+    
+    
+    useEffect(()=>{
+      
+      getAllProducts();
+      getAllCategories();
+      getAllStores();
+   
+    },[]);
+
+     const getAllStores=()=>{
+      Axios.get('http://192.168.8.123:3002/api/stores/').then((stores)=>{
+        setAllStores(stores.data);
+      }).catch((error)=>{
+        console.log(error);
+      })
+    }
+   
+
+    const getAllCategories=()=>{
+      Axios.get('http://192.168.8.123:3002/api/category/').then((categories)=>{
+        setAllCategories(categories.data);
+      }).catch((error)=>{
+        console.log(error);
+
+      })
+    } 
+  
     
     return (
       <View style={styles.container}>
@@ -76,20 +119,24 @@ import {
             <FlatList
               horizontal={true}
               showsHorizontalScrollIndicator={false}
-              data={data}
-              keyExtractor={(item) => item.id}
+             data={allcategories}
+             //data={data}
+              keyExtractor={(item) => item.categoryId}
               extraData={indexCheck}
-              renderItem={({ item, index }) => (
+              renderItem={({ item,index }) => (
+                
                 <Pressable
                   onPress={() => {
-                    setIndexCheck(item.id);
-                    navigation.navigate('Categories',{item:item,productTitle:item.name})
+                    setIndexCheck(item.categoryId);
+                //getAllProducts;
+                    navigation.navigate('Categories',{item:item,productTitle:item.categoryName})
                   }}
                 >
+                  
                   <View
                     style={
-                      indexCheck === item.id
-                        ? { ...styles.smallCardSelected }
+                      indexCheck === item.categoryId
+                       ? { ...styles.smallCardSelected }
                         : { ...styles.smallCard }
                     }
                   >
@@ -97,16 +144,18 @@ import {
                     <View>
                       <Text
                         style={
-                          indexCheck === item.id
+                          indexCheck === item.categoryId
                             ? { ...styles.smallCardTextSelected }
                             : { ...styles.smallCardText }
                         }
                       >
-                        {item.name}
+                        {item.categoryName}
+                       {/** {console.log(item.picture)} */}
                       </Text>
                     </View>
                   </View>
                 </Pressable>
+                
               )}
             />
           </View>
@@ -138,17 +187,24 @@ import {
           
             <FlatList
               horizontal={true}
-              data={Stores}
-              keyExtractor={(item,index) => index.toString()}
+             // data={Stores}
+              data={allStores}
+              keyExtractor={(item,index) => item.storeId}
               showsHorizontalScrollIndicator = {false}
               renderItem={({ item,index}) => (
+                
                <StoreCard
                screenWidth={WIDTH*0.45}
-               images ={item.image}
-               restaurantName ={item.name}
-               averageReview ={item.rating}
-               numberOfReview ={item.numReviews}
-               OnPressFoodCard={()=>{navigation.navigate("ProductScreen",{item:item,id:index,productTitle:item.name})}}
+               images ={item.picture}
+               restaurantName ={item.storeName}
+               //averageReview ={item.rating}
+               //numberOfReview ={item.numReviews}
+               
+               OnPressFoodCard={()=>{
+              
+                navigation.navigate("ProductScreen",{item:item,id:item.storeId,productTitle:item.storeName})}
+              
+              }
                />
               )}
             />
@@ -173,10 +229,16 @@ import {
               numColumns={2}
              showsHorizontalScrollIndicator={false}
               data={data}
+              //date={allcategories}
               keyExtractor={(item)=>item.id}
-              extraData={indexCheck}
               renderItem={({item,index})=>(
-                <Pressable onPress={()=>{navigation.navigate('Categories',{item:item,productTitle:item.name})}}>
+                
+                <Pressable onPress={()=>{
+                  
+                  navigation.navigate('Categories',{item:item,productTitle:item.name})}}
+                  
+                  >
+                  
                   
                   <View
                     style={
@@ -192,10 +254,14 @@ import {
                         marginRight: 10,
                       }}
                     >
+                      
                       <Image
                         style={{ height:  (WIDTH - 150) / 2, width: (WIDTH-40)/2,  borderTopLeftRadius:20,borderTopRightRadius:20 }}
+                        //source={{uri:item.picture}}
                         source={item.image}
+                       
                       />
+                      
                     </View>
                     <View style={{ marginHorizontal: 20 }}>
                       <Text
@@ -204,6 +270,7 @@ import {
                         }
                       >
                         {item.name}
+                        
                       </Text>
                      
                      

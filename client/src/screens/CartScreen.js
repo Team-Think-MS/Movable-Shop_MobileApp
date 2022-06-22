@@ -1,14 +1,15 @@
 import { StyleSheet, Text, View , Dimensions,Button,TouchableOpacity,ScrollView} from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {connect} from "react-redux";
 import { Icon } from "react-native-elements";
 import * as actions from '../Redux/Actions/cartActions';
 import {Container,H1,Left,Thumbnail,Right,ListItem, Body} from 'native-base';
 import { useNavigation } from "@react-navigation/native";
-import {Link} from '@react-navigation/native';
+import axios from 'axios';
 
 
 var {height}= Dimensions.get('window').width;
+
 const Separator = () => (
   <View style={styles.separator} />
 );
@@ -16,10 +17,44 @@ const Separator = () => (
 
 const CartScreen = (props) => {
   const navigation = useNavigation();
+
+  //total price
   var totalPrice = 0;
   props.cartItems.forEach((cart)=>{
     return (totalPrice += cart.product.price)
   })
+
+  //Add this
+  {/** const [productUpdate, setProductUpdate] = useState()
+  const [totalPrice, setTotalPrice]= useState();
+  useEffect(()=>{
+     getProducts()
+    return () => {
+      setProductUpdate()
+      setTotalPrice()
+    }
+  }, [props])*/}
+  
+
+{/** const getProducts=()=>{
+    var products = [];
+    props.cartItems.forEach(cart=>{
+      axios.get(`http://localhost:3001/${cart.product}`).then(data=>{
+        products.push(data.data)
+        setProductUpdate(products)
+        var total=0;
+        products.forEach(product=>{
+          const price=(total+=product.price)
+          setTotalPrice(price)
+        });
+      })
+      .catch(e=>{
+        console.log(e);
+      })
+    })
+  }*/}
+  
+  
   return (
   /*  <View style={{flex:1, alignItems:'center'}}>
       {props.cartItems.map((x)=>{
@@ -29,6 +64,12 @@ const CartScreen = (props) => {
       })}
     </View>*/
     <>
+    {/*   {productUpdate?(
+      <Container>
+
+      </Container>
+    )}*/}
+ 
     {props.cartItems.length ? (
       <Container style={styles.container}>
         <H1 style={styles.name}>Cart</H1>
@@ -38,10 +79,10 @@ const CartScreen = (props) => {
           return(
             <View style={{flex:1}}>
                 <View style={{backgroundColor:'white'}}>
-            <ListItem style={styles.list}>
+            <ListItem style={styles.list} key={Math.random()}>
               <Body style={styles.body}>
                 <Left>
-                  <Text>{data.product.name}</Text>
+                  <Text>{data.product.productName}</Text>
                 </Left>
                 <View style={{alignSelf:'flex-end'}}>
                   <Text >
@@ -56,6 +97,7 @@ const CartScreen = (props) => {
                   color ="#7393d1"
                   size ={25}
                   onPress={()=> props.removeFromCart(data)}
+                  //onPress={()=> props.removeFromCart(data.item)}
 
                   />
                 </View>

@@ -1,4 +1,4 @@
-import{ADD_TO_CART,REMOVE_FROM_CART,CLEAR_CART} from '../constants';
+import{ADD_TO_CART,REMOVE_FROM_CART,CLEAR_CART,INCREMENT} from '../constants';
 
 //method 1 -> function -> action creator
 export const addToCart = (payload) =>{//payload --> identify the item that we want to add
@@ -23,3 +23,12 @@ export const clearCart = () => {
         type: CLEAR_CART
     }
 }
+
+//method 4
+export const increment=(payload)=>{
+    return{
+        type: INCREMENT,
+        payload,
+    }
+}
+{/** */}

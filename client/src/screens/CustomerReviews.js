@@ -5,8 +5,8 @@ import Rating from '../components/Rating'
 const CustomerReviews = (props) => {
     const [item,setItem]=useState(props.route.params.item);
   return (
-    <View>
-        <View  >
+    <View  style={{backgroundColor:'white'}}>
+        <View >
       <Text style={styles.Text}>{item.rating}</Text>
       <Text style={styles.smallText}>Out of 5</Text>
     </View>

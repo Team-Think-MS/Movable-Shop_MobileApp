@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import {DrawerContentScrollView,DrawerItemList,DrawerItem} from '@react-navigation/drawer';
-import {Avatar,Button} from 'react-native-elements'
+import {Avatar} from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const CustomDrawerContent = (props) => {
   return (
@@ -26,7 +26,6 @@ const CustomDrawerContent = (props) => {
       
         <DrawerItemList {...props}/>
         
-
               
    
     <View>

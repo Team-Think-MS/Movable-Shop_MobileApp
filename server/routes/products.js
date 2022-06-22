@@ -1,7 +1,7 @@
 const express=require('express');
 //const router= express.Router();
 const {database}=require('../config/helpers');
-const bodyParser= require('body-parser');
+
 
 const app=express();
 //-----------------------------
@@ -27,8 +27,9 @@ app.get('/',async(req,res)=>{
 /* GET ONE PRODUCT MATCHING ID */
 // /api/products/:prodId
 app.get('/:prodId', async(req,res)=>{
+   const id = req.params.prodId;
    try {
-      const result = await database.query("SELECT * FROM product WHERE productId= 'prodId'");
+      const result = await database.query("SELECT * FROM product WHERE productId= ?",[id]);
       res.send(result);
       
    } catch (error) {
@@ -41,8 +42,9 @@ app.get('/:prodId', async(req,res)=>{
 // /api/products/category/:catName
 
 app.get('/category/:catName',async(req,res)=>{
+   const catName= req.params.catName;
    try {
-      const result = await async("SELECT p.productName,p.picture,p.price,p.stockQty,p.description FROM store s, category c, product p WHERE s.categoryId=c.categoryId AND s.storeId=p.storeId AND c.categoryName='catName'");
+      const result = await database.query("SELECT p.productName,p.picture,p.price,p.stockQty,p.description FROM store s, category c, product p WHERE s.categoryId=c.categoryId AND s.storeId=p.storeId AND c.categoryName=?",[catName]);
       res.send(result);
       
    } catch (error) {
@@ -50,6 +52,20 @@ app.get('/category/:catName',async(req,res)=>{
       
    }
 })
+
+// /api/products/store/:storeId
+app.get('/store/:storeId',async(req,res)=>{
+   const storeId=req.params.storeId;
+   try {
+      const result=await database.query("select p.productName,p.description,p.picture,p.price,p.productId,p.stockQty from store s, product p where s.storeId=p.storeId and p.storeId=?",[storeId]);
+      res.send(result);
+      
+   } catch (error) {
+      throw error;
+      
+   }
+})
+
 
 
 {/** router.get('/',function(req,res){

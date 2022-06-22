@@ -13,14 +13,15 @@ import {
 import {Icon} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from "@react-navigation/native";
-import {connect,useSelector} from 'react-redux';
+import {connect,useSelector,useDispatch} from 'react-redux';
 import * as actions from '../Redux/Actions/cartActions';
 import * as wishListActions from '../Redux/Actions/wishlistActions'
-
+import {addToCart} from '../Redux/cartSlice'
 
 const SingleProduct = (props) => {
   const [item, setItem] = useState(props.route.params.item);
-  const navigation = useNavigation();
+
+  
 
   
 
@@ -44,7 +45,7 @@ const SingleProduct = (props) => {
           }}
           >
                 <Ionicons
-                name={'ios-heart-sharp'}
+                name={'ios-heart-outline'}
                 size={40}
                 color="black"
               
@@ -60,7 +61,7 @@ const SingleProduct = (props) => {
             paddingTop:20
           }}
         /> 
-         
+         <Text>{item.productName}</Text>
           <Text style={styles.text}>Rs.{item.price}.00</Text>
           <Text style={styles.text2}>{item.description}</Text>
         </View>
@@ -74,7 +75,9 @@ const SingleProduct = (props) => {
               type = "material"
               color ="#7393d1"
               size ={25}
-              onPress ={()=>{}}
+              onPress ={()=>{
+               
+              }}
             />
 
           </View>
@@ -100,6 +103,8 @@ const SingleProduct = (props) => {
         <TouchableOpacity
            onPress={() => {
           props.addItemToCart(item),
+       // dispatch(addToCart(item));
+        
          console.log(props)
           
           }}
@@ -119,7 +124,6 @@ const SingleProduct = (props) => {
   );
 };
 
-
 const mapDispatchToProps =(dispatch)=>{
   return{
     addItemToCart: (product)=>{
@@ -128,10 +132,14 @@ const mapDispatchToProps =(dispatch)=>{
     addToWishList:(product)=>{
       dispatch(wishListActions.addToWishList({product}))
 
+    },
+    increment:(product)=>{
+      dispatch(actions.increment({product}))
     }
      
   }
-}
+} 
+
 
 const styles = StyleSheet.create({
   container: {
@@ -264,3 +272,4 @@ flexDirection:'column'
 
 export default connect(null,mapDispatchToProps)(SingleProduct);
 
+//export default SingleProduct;

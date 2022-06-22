@@ -1,14 +1,33 @@
 import { StyleSheet, Text, View,Image,ScrollView ,FlatList,Pressable,Dimensions} from "react-native";
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import Banner from "../components/Banner";
 
 
 import { Icon } from "react-native-elements";
 import Rating from "../components/Rating";
-
+import axios from "axios";
 const WIDTH = Dimensions.get("window").width;
+
 const ProductScreen = ({navigation,route}) => {
   const [item, setItem] = useState(route.params.item);
+  const [allproducts,setAllProducts]=useState([]);
+
+
+const getProducts=()=>{
+  axios.get(`http://192.168.8.123:3002/api/products/store/${item.storeId}`
+  ).then((products)=>{
+    setAllProducts(products.data);
+    console.log(item.storeId)
+  }).catch((error)=>{
+    console.log(error);
+  })
+}
+useEffect(()=>{
+  getProducts();
+},[]);
+
+
+  console.log(item.storeName);
   return (
     <View style={styles.container} >
        {/** <ScrollView  showsVerticalScrollIndicator={true}> */} 
@@ -31,7 +50,9 @@ ListHeaderComponent={
   }}
 /> 
 
-    <Text style={styles.text}>{item.description}</Text>
+    <Text style={styles.text}>{item.storeName}</Text>
+
+   
     <Pressable onPress={()=>{navigation.navigate("Customer Reviews",{item: item})}}>
      
       {/** */}
@@ -44,7 +65,10 @@ ListHeaderComponent={
    
     
     <View style={styles.area}>
-     <Text style={styles.header}>Our Products</Text>
+     <Text style={styles.header}>Our Products
+     
+     
+     </Text>
      <Icon
             name="arrow-right-circle-outline"
             style={styles.arrowIcon}
@@ -62,12 +86,14 @@ ListHeaderComponent={
 
   numColumns={2}
     style ={{backgroundColor:'white'}}
-    data = {item.productData}
-    keyExtractor ={(item,index)=>index.toString()}
+   // data = {item.productData}
+   data={allproducts}
+    //keyExtractor ={(item,index)=>index.toString()}
+    keyExtractor={(item)=>item.productId}
     renderItem ={({item,index})=> (
 
       <Pressable onPress={()=>{
-        navigation.navigate("SingleProduct",{ item: item,productTitle:item.name});
+        navigation.navigate("SingleProduct",{ item: item,productTitle:item.productName});
       }}>
       <View
         style={styles.productCardTwo}>
@@ -82,7 +108,8 @@ ListHeaderComponent={
         >
           <Image
             style={{ height: 70, width: 120, borderRadius: 10 }}
-            source={item.image}
+            //source={{uri: item.image}}
+            source={{uri:item.picture}}
           />
         </View>
         <View style={{ marginHorizontal: 20 }}>
@@ -91,7 +118,7 @@ ListHeaderComponent={
              styles.productCardTextTwo
             }
           >
-            {item.name}
+            {item.productName}
           </Text>   
         </View>
         <View
