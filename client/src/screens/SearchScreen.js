@@ -45,7 +45,7 @@ import {
             renderItem={({ item }) => (
               <TouchableWithoutFeedback
               onPress={()=>{
-                navigation.navigate("SearchResultScreen",{ item: item.storeName,productTitle:item.storeName});
+                navigation.navigate("ProductScreen",{ item: item,productTitle:item.storeName});
               }}
               
               >

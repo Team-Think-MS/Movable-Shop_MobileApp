@@ -142,8 +142,8 @@ import {
                   onPress={() => {
                     Keyboard.dismiss;
                     //getAllStores;
-                    navigation.navigate("SearchResultScreen", {
-                      item: item.storeName,productTitle:item.storeName
+                    navigation.navigate("ProductScreen", {id:item.storeId,
+                      item: item,productTitle:item.storeName
                     });
                     setModalVisible(false);
                     setTextInputFocussed(true);

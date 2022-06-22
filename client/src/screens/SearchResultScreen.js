@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, Dimensions, FlatList } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import SearchResultCard from "../components/SearchResultCard";
 import { Stores2,Stores } from "../global/products";
 
 const WIDTH_OF_SCREEN = Dimensions.get("window").width;
 
 const SearchResultScreen = ({navigation,route}) => {
+  const [item,setItem]=useState(route.params.item);
+  
   return (
     <View style={styles.container}>
    

@@ -24,11 +24,12 @@ export  function ClientStack() {
           headerShown: false,
         })}
       />
-      <ClientSearch.Screen
+      {/**     <ClientSearch.Screen
         name="SearchResultScreen"
         component={SearchResultScreen}
         options={({ route }) => ({ title: route.params.productTitle })}
-      />
+      /> */}
+ 
       <ClientSearch.Screen
         name="ProductScreen"
         component={ProductScreen}
