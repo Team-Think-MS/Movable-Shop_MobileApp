@@ -17,6 +17,10 @@ function SignUpAsaSellerScreen() {
   function signInPressedHandler() {
     navigation.navigate("SignInScreen");
   }
+
+  function signUpPressedHandler() {
+    navigation.navigate('StoreCreateScreen');
+  }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.rootContainer}>
@@ -54,7 +58,7 @@ function SignUpAsaSellerScreen() {
           />
         </View>
         <View style={styles.signContainer}>
-          <PrimaryButton children={"Sign Up"} />
+          <PrimaryButton children={"Sign Up"} onPress={signUpPressedHandler}/>
           <View style={styles.signUpContainer}>
             <Text>Already have an account? </Text>
             <Button title="Sign In" onPress={signInPressedHandler} />

@@ -2,22 +2,20 @@ const Sequelize = require("sequelize");
 
 const sequelize = require("../util/database");
 
-const Store = sequelize.define("store", {
-  storeId: {
+const SellerBankAccount = sequelize.define("sellerBankAccount", {
+  accountNo: {
     type: Sequelize.INTEGER,
-    autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  storeName: Sequelize.STRING,
-  picture: {
+  bankName: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  description: {
+  branchName: {
     type: Sequelize.STRING,
     allowNull: false,
-  },
+  }
 });
 
-module.exports = Store;
+module.exports = SellerBankAccount;

@@ -2,22 +2,18 @@ const Sequelize = require("sequelize");
 
 const sequelize = require("../util/database");
 
-const Store = sequelize.define("store", {
-  storeId: {
+const Category = sequelize.define("category", {
+  categoryId: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  storeName: Sequelize.STRING,
   picture: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  description: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
+  categoryName: Sequelize.STRING,
 });
 
-module.exports = Store;
+module.exports = Category;

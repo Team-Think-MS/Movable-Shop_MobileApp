@@ -55,18 +55,57 @@ const bodyParser = require('body-parser');
 
 const sequelize = require('./util/database');
 const Product = require('./models/productModel');
-const Store = require('./models/storeModel')
+const Store = require('./models/storeModel');
+const Cart = require('./models/cartModel');
+const Category = require('./models/categoryModel');
+const Order = require('./models/orderModel');
+const Payment = require('./models/paymentModel');
+const Rating = require('./models/ratingModel');
+const SellerBankAccount = require('./models/sellerBankAccountModel');
+const User = require('./models/userModel')
 
 const app = express();
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 
 const productRoutes = require('./routes/product');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-
+//app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(productRoutes);
 
+Store.hasMany(Product);
+Product.belongsTo(Store);
+User.hasOne(Store);
+Store.belongsTo(User);
+User.hasMany(Order);
+Order.belongsTo(User);
+User.hasOne(SellerBankAccount);
+SellerBankAccount.belongsTo(User);
+User.hasMany(Category);
+Category.belongsTo(User);
+Order.hasOne(Cart);
+Cart.belongsTo(Order);
+Order.hasOne(Payment);
+Payment.belongsTo(Order);
+User.hasMany(Payment);
+Payment.belongsTo(User);
+Store.hasMany(Rating);
+Rating.belongsTo(Store);
+User.hasMany(Rating);
+Rating.belongsTo(User);
+
+Cart.belongsToMany(Product, { through: 'ProductCart' });
+Product.belongsToMany(Cart, { through: 'ProductCart' });
+Store.belongsToMany(Category, { through: 'CategoryStore' });
+Category.belongsToMany(Store, { through: 'CategoryStore' });
 
 sequelize
   // .sync({ force: true })

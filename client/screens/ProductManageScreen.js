@@ -29,11 +29,11 @@ function ProductManageScreen({ route, navigation }) {
     } else {
       dispatch(manageProductActions.addProduct(productData));
       
-      axios.post("http://localhost:3001/create", {
-        productName: productData.productName,
-        description: productData.description,
-        price: productData.price,
-      }).then(() => {});
+      // axios.post("http://localhost:3001/create", {
+      //   productName: productData.productName,
+      //   description: productData.description,
+      //   price: productData.price,
+      // }).then(() => {});
     };
 
     navigation.goBack();

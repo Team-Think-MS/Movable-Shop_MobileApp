@@ -101,5 +101,6 @@ const styles = StyleSheet.create({
   signInContainer: {
     flexDirection: "row",
     alignItems: "center",
+    marginTop: 6
   },
 });

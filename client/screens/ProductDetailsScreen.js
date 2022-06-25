@@ -1,7 +1,8 @@
 import { useLayoutEffect, useState } from "react";
-import { Text, Image, View, StyleSheet, Pressable } from "react-native";
+import { Text, Image, View, StyleSheet, Pressable, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 import { PRODUCTS } from "../data/dummy-data";
 import { GlobalStyles } from "../constant/Styles";
@@ -51,14 +52,57 @@ function ProductDetailsScreen({ navigation, route }) {
   }
 
   function addToCartHandler() {
-    if (productCartList) {
-      console.log('ok')
-      cartListActions.updateProductCart({id: selectedProductId, qnty: count, pName: selectedProduct.productName, totPrice: selectedProduct.price * count })
-    } else {
-      dispatch(
-        cartListActions.addProductCart({ id: selectedProductId, qnty: count, pName: selectedProduct.productName, totPrice: selectedProduct.price * count })
-      );
+    const isDifferentStore =
+      !productsCartlist.filter(
+        (product) => product.storeId === selectedProduct.storeId
+      ).length > 0;
+    if (isDifferentStore && productsCartlist.length > 0) {
+      Alert.alert("Create a new cart!", "And also add this product to new cart.", [
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            dispatch(
+              cartListActions.resetAndAddNewProductCart({
+                id: selectedProductId,
+                qnty: count,
+                pName: selectedProduct.productName,
+                totPrice: selectedProduct.price * count,
+                strId: selectedProduct.storeId,
+              })
+            );
+            navigation.navigate("CartScreen");
+          },
+        },
+      ]);
+    } else if (!count == 0) {
+      if (productCartList) {
+        dispatch(
+          cartListActions.updateProductCart({
+            id: selectedProductId,
+            qnty: count,
+            totPrice: selectedProduct.price * count,
+          })
+        );
+        navigation.navigate("CartScreen");
+      } else {
+        dispatch(
+          cartListActions.addProductCart({
+            id: selectedProductId,
+            qnty: count,
+            pName: selectedProduct.productName,
+            totPrice: selectedProduct.price * count,
+            strId: selectedProduct.storeId,
+          })
+        );
+        navigation.navigate("CartScreen");
+      }
     }
+    return;
   }
 
   return (

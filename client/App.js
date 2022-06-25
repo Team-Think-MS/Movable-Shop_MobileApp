@@ -23,6 +23,8 @@ import { Provider } from "react-redux";
 import store from "./store/Redux/Store";
 import { StatusBar } from "expo-status-bar";
 import { Pressable } from "react-native";
+import StoreCreateScreen from "./screens/StoreCreateScreen";
+import CheckoutScreen from "./screens/CheckoutScreen";
 
 const stack = createStackNavigator();
 const drawer = createDrawerNavigator();
@@ -149,6 +151,22 @@ export default function App() {
                 title: "Register",
                 headerRight: false,
               }}
+            />
+            <stack.Screen 
+              name="StoreCreateScreen"
+              component={StoreCreateScreen}
+              options={{
+                title: "Create Your Store",
+                headerRight: false,
+              }}
+            />
+            <stack.Screen
+            name="CheckoutScreen"
+            component={CheckoutScreen}
+            options={{
+              title: "Checkout",
+              headerRight: false,
+            }}
             />
           </stack.Navigator>
         </NavigationContainer>

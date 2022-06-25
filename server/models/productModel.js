@@ -27,8 +27,5 @@ const Product = sequelize.define("product", {
     allowNull: false,
   },
 });
-// Product.belongsTo(Store, {
-//   foreignKey: "storeId",
-// });
 
 module.exports = Product;

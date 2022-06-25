@@ -1,12 +1,15 @@
 import { useLayoutEffect } from "react";
 import { Text, View, StyleSheet, Pressable, FlatList } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CartCard from "../component/CartCard";
 import PrimaryButton from "../component/UI/PrimaryButton";
 import SecondaryButton from "../component/UI/SecondaryButton";
+import { GlobalStyles } from "../constant/Styles";
 import { PRODUCTS } from "../data/dummy-data";
+import { cartListActions } from "../store/Redux/cartList-slice";
 
 function CartScreen({ navigation }) {
+  const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cartList.cartProduct);
   const cartItemsIds = cartItems.map((item) => {
     return item.productId;
@@ -18,17 +21,9 @@ function CartScreen({ navigation }) {
     cartItemsIds.includes(product.productId)
   );
 
-  /*
-  const cartItemsWithQunt = cartItemsNumber.map((number, index) => {
-    return {
-      quantity: number,
-      productName: productsCartlist[index].productName,
-      price: productsCartlist[index].price,
-      productId: productsCartlist[index].productId
-    };
-  });
-
-  */
+  const subTotalPrice = cartItems
+    .map((item) => item.totalPrice)
+    .reduce((a, b) => a + b, 0);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -46,6 +41,26 @@ function CartScreen({ navigation }) {
       />
     );
   }
+
+  if (cartItems.length === 0) {
+    return (
+      <View style={styles.rootContainer}>
+        <Text style={styles.text}>You have no Products yet in Cart!</Text>
+      </View>
+    );
+  }
+
+  function createNewCart() {
+    dispatch(cartListActions.resetCart());
+    navigation.navigate("HomeScrenn");
+  }
+
+  function checkoutPressedHandler() {
+    navigation.navigate("CheckoutScreen", {
+      subtot: subTotalPrice,
+    });
+  }
+
   return (
     <View style={styles.rootContainer}>
       <View style={styles.itemListContainer}>
@@ -57,12 +72,18 @@ function CartScreen({ navigation }) {
       </View>
       <View style={styles.footerConatiner}>
         <View style={styles.totalPriceContainer}>
-          <Text></Text>
-          <Text></Text>
+          <Text style={styles.subTotalText}>Sub Total :</Text>
+          <Text style={styles.subTotalPrice}>Rs.{subTotalPrice}.00</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <PrimaryButton children={"Checkout"} />
-          <SecondaryButton children={"Create a new Order"} />
+          <PrimaryButton
+            children={"Checkout"}
+            onPress={checkoutPressedHandler}
+          />
+          <SecondaryButton
+            children={"Create a new Order"}
+            onPress={createNewCart}
+          />
         </View>
       </View>
     </View>
@@ -75,12 +96,33 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     justifyContent: "space-between",
-    marginBottom: 50
+    marginBottom: 50,
   },
   itemListContainer: {},
   footerConatiner: {},
-  totalPriceContainer: {},
+  totalPriceContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: "8%",
+    marginBottom: 20,
+    paddingBottom: 6,
+    borderBottomWidth: 1,
+    borderBottomColor: GlobalStyles.colors.gray200,
+  },
   buttonContainer: {
-    alignItems: 'center'
+    alignItems: "center",
+  },
+  text: {
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "black",
+    marginTop: 30,
+  },
+  subTotalText: {
+    fontSize: 20,
+  },
+  subTotalPrice: {
+    fontSize: 22,
+    fontWeight: "500",
   },
 });
