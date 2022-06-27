@@ -79,11 +79,13 @@ app.use(bodyParser.json());
 
 const productRoutes = require('./routes/product');
 const storeRoutes = require('./routes/store');
-const categoryRoutes = require('./routes/category')
+const categoryRoutes = require('./routes/category');
+const orderRoutes = require('./routes/order');
 
 app.use('/store', storeRoutes);
 app.use('/product', productRoutes);
 app.use('/category', categoryRoutes);
+app.use('/order', orderRoutes);
 
 
 Store.hasMany(Product);

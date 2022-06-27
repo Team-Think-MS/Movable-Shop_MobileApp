@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Pressable,
   Image,
+  ScrollView,
 } from "react-native";
 import { GlobalStyles } from "../../constant/Styles";
 import Input from "./Input";
@@ -15,8 +16,10 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import Axios from "axios";
+import { Picker } from "@react-native-picker/picker";
 
-function StoreForm({ defaultInputData, onSubmit }) {
+function StoreForm({ defaultInputData }) {
+  
   const navigation = useNavigation();
   const [inputs, setInputs] = useState({
     title: {
@@ -29,10 +32,15 @@ function StoreForm({ defaultInputData, onSubmit }) {
     },
   });
 
+
   const [image, setImage] = useState(
     defaultInputData ? defaultInputData.picture : null
   );
+  const [selectedCategory, setSelectedCategory] = useState(
+    defaultInputData ? defaultInputData.categoryId : null
+  );
   const [imageIsValid, setImageIsValid] = useState(true);
+  const [selectedCategoryIsValid, setSelectedCategoryIsValid] = useState(true);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -42,8 +50,6 @@ function StoreForm({ defaultInputData, onSubmit }) {
       aspect: [4, 3],
       quality: 1,
     });
-
-    console.log(result);
     if (!result.cancelled) {
       setImage(result.uri);
       setImageIsValid(true);
@@ -59,18 +65,20 @@ function StoreForm({ defaultInputData, onSubmit }) {
     });
   }
 
-  async function publishPressedHandler() {
+  function publishPressedHandler() {
     const storeData = {
       storeName: inputs.title.value,
       description: inputs.description.value,
       picture: image,
+      categoryId: selectedCategory,
     };
 
     const isStoreNameValid = storeData.storeName.trim().length > 0;
     const isDescriptionValid = storeData.description.trim().length > 0;
     const isPictureValid = !storeData.picture;
+    const isSelectedCategoryValid = !selectedCategory;
 
-    if (!isStoreNameValid || !isDescriptionValid || isPictureValid) {
+    if (!isStoreNameValid || !isDescriptionValid || isPictureValid || isSelectedCategoryValid) {
       setInputs((curInputs) => {
         return {
           title: {
@@ -84,9 +92,14 @@ function StoreForm({ defaultInputData, onSubmit }) {
         };
       });
       setImageIsValid(!isPictureValid);
+      setSelectedCategoryIsValid(!isSelectedCategoryValid);
       return;
     }
+    submitData(storeData);
+    navigation.navigate("Selling Managment");
+  }
 
+  async function submitData(storeData) {
     if (image) {
       const imageFile = {
         uri: image,
@@ -106,21 +119,33 @@ function StoreForm({ defaultInputData, onSubmit }) {
         const lk = reponse["data"]["secure_url"];
         console.log(lk);
         Axios.post("http://localhost:3000/store/createStore", {
-            storeName: storeData.storeName,
-            description: storeData.description,
-            picture: lk,
-          });
+          storeName: storeData.storeName,
+          description: storeData.description,
+          picture: lk,
+          categoryId: selectedCategory
+        });
       });
     }
-    navigation.navigate("Selling Managment");
   }
 
   const formIsInvalid =
-    !inputs.title.isValid || !inputs.description.isValid || !imageIsValid;
+    !inputs.title.isValid || !inputs.description.isValid || !imageIsValid || !selectedCategoryIsValid;
+
+
+    const imagelabelStyles = [styles.imagePickerLabel];
+    const categorylabelStyles = [styles.categoryPickerLabel];
+    if(!imageIsValid) {
+      imagelabelStyles.push(styles.invaildLabel);
+    }
+    if(!selectedCategoryIsValid) {
+        categorylabelStyles.push(styles.invaildLabel);
+    }
 
   return (
+    
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.rootContainer}>
+      <ScrollView>
         <View>
           <Input
             label={"Store Name"}
@@ -141,15 +166,35 @@ function StoreForm({ defaultInputData, onSubmit }) {
           />
           <View style={styles.imagePickerContainer}>
             {!image && (
-              <Pressable onPress={pickImage}>
+              <Pressable onPress={pickImage} style={styles.pickerContainer}>
                 <Ionicons name="image-outline" size={70} color="black" />
               </Pressable>
             )}
             {image && <Image source={{ uri: image }} style={styles.image} />}
 
-            <Text style={styles.imageLable}>Image</Text>
+            <Text style={imagelabelStyles}>Image</Text>
+          </View>
+          <View style={styles.imagePickerContainer}>
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={selectedCategory}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedCategory(itemValue)
+                }
+              >
+                <Picker.Item label="Vegetables" value="1" />
+                <Picker.Item label="Bakery" value="2" />
+                <Picker.Item label="Ice Cream" value="3" />
+                <Picker.Item label="Sweet" value="4" />
+                <Picker.Item label="Fruit" value="5" />
+                <Picker.Item label="Bun" value="6" />
+              </Picker>
+            </View>
+
+            <Text style={categorylabelStyles}>Store Category</Text>
           </View>
         </View>
+        </ScrollView>
         <View style={styles.button}>
           {formIsInvalid && (
             <Text style={styles.errorText}>
@@ -163,6 +208,7 @@ function StoreForm({ defaultInputData, onSubmit }) {
         </View>
       </View>
     </TouchableWithoutFeedback>
+
   );
 }
 
@@ -186,14 +232,30 @@ const styles = StyleSheet.create({
   imagePickerContainer: {
     marginHorizontal: 10,
   },
-  imageLable: {
-    margin: 5,
-    fontSize: 16,
-  },
   image: {
-    margin: 5,
+    margin: 4,
     width: 100,
     height: 100,
     borderRadius: 6,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: GlobalStyles.colors.gray200
   },
+  imagePickerLabel: {
+    margin: 5,
+    fontSize: 16,
+  },
+  categorylabelStyles: {
+    margin: 5,
+    fontSize: 16,
+  },
+  invaildLabel: {
+    color: GlobalStyles.colors.error400
+  },
+  pickerContainer: {
+    margin: 4,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: GlobalStyles.colors.gray200
+  }
 });

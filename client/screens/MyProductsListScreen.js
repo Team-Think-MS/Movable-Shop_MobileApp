@@ -1,15 +1,26 @@
 import { View, StyleSheet, FlatList } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MyProductCard from "../component/MyProductCard";
-//import { PRODUCTS } from "../data/dummy-data";
-
+import {  useEffect } from 'react';
+import { getProductByStoreId, updateProduct } from "../util/http/product";
+import { manageProductActions } from "../store/Redux/manageProduct-slice";
+ 
 function MyProductsListScreen() {
-  /*
-  const myProducts = PRODUCTS.filter(
-    (product) => product.storeId.indexOf("s1") >= 0
-  );
-  */
- const selectedStoreProducts = useSelector((state)=>state.manageProduct.products)
+ const selectedStoreProducts = useSelector((state)=>state.manageProduct.products);
+ const dispatch = useDispatch();
+
+ useEffect(() => {
+   async function getProducts() {
+     try {
+       const pdt = await getProductByStoreId();
+       dispatch(manageProductActions.setProducts({data : pdt }));
+     } catch (error) {
+       console.log(error);
+     }
+   }
+   getProducts();
+ }, []);
+
 
   function renderProductsHanler(itemData) {
     return (

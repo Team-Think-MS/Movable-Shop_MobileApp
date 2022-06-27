@@ -17,3 +17,19 @@ export async function fetchStores() {
   }
   return stores;
 }
+
+export async function getStoreByUserId() {
+  const response = await Axios.get(
+    "http://localhost:3000/store/getStoreByUserId"
+  );
+    const stObj = {
+      storeId: response.data.store[0].storeId,
+      storeName: response.data.store[0].storeName,
+      picture: response.data.store[0].picture,
+      categoryId: response.data.store[0].categoryCategoryId,
+      description: response.data.store[0].description,
+    };
+  
+  return stObj;
+}
+

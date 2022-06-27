@@ -2,9 +2,9 @@ import { useLayoutEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import ProductForm from "../component/ProductManage/ProductForm";
-import PrimaryButton from "../component/UI/PrimaryButton";
 import SecondaryButton from "../component/UI/SecondaryButton";
 import { manageProductActions } from "../store/Redux/manageProduct-slice";
+import { deleteProduct, storeProduct, updateProduct } from "../util/http/product";
 
 const axios = require('axios').default;
 
@@ -21,21 +21,24 @@ function ProductManageScreen({ route, navigation }) {
   function cancelHandler() {
     navigation.goBack();
   }
-  function submitHandler(productData) {
+  async function submitHandler({productData, lk}) {
     if (isEditingProduct) {
+      await updateProduct({productData, lk, editedProductId})
       dispatch(
         manageProductActions.updateProduct({ id: editedProductId , data: productData})
       );
     } else {
-      dispatch(manageProductActions.addProduct(productData));
-      
-      // axios.post("http://localhost:3001/create", {
-      //   productName: productData.productName,
-      //   description: productData.description,
-      //   price: productData.price,
-      // }).then(() => {});
+      const id = await storeProduct({productData, lk});
+      dispatch(manageProductActions.addProduct({data : productData , id: id, lk : lk}));
     };
 
+    navigation.goBack();
+  }
+async function deleteHandler() {
+      await deleteProduct({editedProductId});
+      dispatch(
+        manageProductActions.deletProduct({id: editedProductId})
+      );
     navigation.goBack();
   }
 
@@ -55,24 +58,26 @@ function ProductManageScreen({ route, navigation }) {
 
   return (
     <View style={styles.rootContainer}>
-      <View>
+      <View style={styles.form}>
         <ProductForm
           defaultInputData={selectedProduct}
           submitButtonLabel={isEditingProduct ? "Save" : "Publish the product"}
           onSubmit={submitHandler}
         />
       </View>
-      {!isEditingProduct && (
+      <View style={styles.footer}>
+        {!isEditingProduct && (
         <View style={styles.buttonContainer}>
           <SecondaryButton children={"Cancel"} onPress={cancelHandler} />
         </View>
       )}
       {isEditingProduct && (
         <View style={styles.buttonContainer}>
-          <SecondaryButton children={"Delete"} />
+          <SecondaryButton children={"Delete"} onPress={deleteHandler}/>
           <SecondaryButton children={"Cancel"} onPress={cancelHandler} />
         </View>
       )}
+      </View>
     </View>
   );
 }
@@ -83,9 +88,15 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     justifyContent: "space-between",
-    marginBottom: 80,
+    marginBottom: 60,
   },
   buttonContainer: {
     alignItems: "center",
   },
+  form: {
+    flex: 6
+  },
+  footer: {
+    flex: 1
+  }
 });
