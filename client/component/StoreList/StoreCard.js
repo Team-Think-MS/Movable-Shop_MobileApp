@@ -10,12 +10,15 @@ import {
 import { GlobalStyles } from "../../constant/Styles";
 import { useNavigation } from "@react-navigation/native";
 
-function StoreCard({ storeName, picture, storeid }) {
+function StoreCard({ storeName, picture, storeid, description }) {
   const navigation = useNavigation();
 
   function storePressedHandler() {
     navigation.navigate("StoreDetailsScreen", {
       storeID: storeid,
+      storeName: storeName,
+      picture: picture,
+      description: description,
     });
   }
 

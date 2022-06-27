@@ -6,13 +6,15 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Pressable,
+  Image,
 } from "react-native";
 import { GlobalStyles } from "../../constant/Styles";
 import Input from "./Input";
 import PrimaryButton from "../UI/PrimaryButton";
 import { useNavigation } from "@react-navigation/native";
-import { launchImageLibrary} from 'react-native-image-picker';
-import { Ionicons } from '@expo/vector-icons';
+import * as ImagePicker from "expo-image-picker";
+import { Ionicons } from "@expo/vector-icons";
+import Axios from "axios";
 
 function StoreForm({ defaultInputData, onSubmit }) {
   const navigation = useNavigation();
@@ -27,17 +29,26 @@ function StoreForm({ defaultInputData, onSubmit }) {
     },
   });
 
-  const [imgResponse, setImgResponse] = useState(null);
+  const [image, setImage] = useState(
+    defaultInputData ? defaultInputData.picture : null
+  );
+  const [imageIsValid, setImageIsValid] = useState(true);
 
-  const onButtonPress = useCallback(() => {
-    launchImageLibrary(
-      {
-        mediaType: "photo",
-        includeBase64: false,
-      },
-      setImgResponse
-    );
-  }, []);
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+    if (!result.cancelled) {
+      setImage(result.uri);
+      setImageIsValid(true);
+    }
+  };
 
   function inputChangeHandler(identifier, enteredValue) {
     setInputs((curInputs) => {
@@ -48,17 +59,18 @@ function StoreForm({ defaultInputData, onSubmit }) {
     });
   }
 
-  function publishPressedHandler() {
+  async function publishPressedHandler() {
     const storeData = {
       storeName: inputs.title.value,
       description: inputs.description.value,
-      picture: imgResponse,
+      picture: image,
     };
 
     const isStoreNameValid = storeData.storeName.trim().length > 0;
     const isDescriptionValid = storeData.description.trim().length > 0;
+    const isPictureValid = !storeData.picture;
 
-    if (!isStoreNameValid || !isDescriptionValid) {
+    if (!isStoreNameValid || !isDescriptionValid || isPictureValid) {
       setInputs((curInputs) => {
         return {
           title: {
@@ -71,13 +83,40 @@ function StoreForm({ defaultInputData, onSubmit }) {
           },
         };
       });
+      setImageIsValid(!isPictureValid);
       return;
     }
+
+    if (image) {
+      const imageFile = {
+        uri: image,
+        type: `test/${image.split(".")[1]}`,
+        name: `test.${image.split(".")[1]}`,
+      };
+
+      const formData = new FormData();
+      formData.append("file", imageFile);
+      formData.append("upload_preset", "dyshoper");
+      formData.append("cloud_name", "dj4w8sx0t");
+
+      await Axios.post(
+        "https://api.cloudinary.com/v1_1/dj4w8sx0t/image/upload",
+        formData
+      ).then((reponse) => {
+        const lk = reponse["data"]["secure_url"];
+        console.log(lk);
+        Axios.post("http://localhost:3000/store/createStore", {
+            storeName: storeData.storeName,
+            description: storeData.description,
+            picture: lk,
+          });
+      });
+    }
     navigation.navigate("Selling Managment");
-    onSubmit(storeData);
   }
 
-  const formIsInvalid = !inputs.title.isValid || !inputs.description.isValid;
+  const formIsInvalid =
+    !inputs.title.isValid || !inputs.description.isValid || !imageIsValid;
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -101,10 +140,13 @@ function StoreForm({ defaultInputData, onSubmit }) {
             }}
           />
           <View style={styles.imagePickerContainer}>
-            <Pressable onPress={onButtonPress}>
-            <Ionicons name="image-outline" size={70} color="black" />
+            {!image && (
+              <Pressable onPress={pickImage}>
+                <Ionicons name="image-outline" size={70} color="black" />
+              </Pressable>
+            )}
+            {image && <Image source={{ uri: image }} style={styles.image} />}
 
-            </Pressable>
             <Text style={styles.imageLable}>Image</Text>
           </View>
         </View>
@@ -148,5 +190,10 @@ const styles = StyleSheet.create({
     margin: 5,
     fontSize: 16,
   },
-
+  image: {
+    margin: 5,
+    width: 100,
+    height: 100,
+    borderRadius: 6,
+  },
 });

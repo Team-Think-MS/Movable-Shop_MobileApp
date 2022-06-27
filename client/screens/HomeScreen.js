@@ -9,17 +9,44 @@ import {
 import CategoryGridTile from "../component/CategoryGridTile";
 import StoreCardHome from "../component/StoreList/StoreCardHome";
 import { Ionicons } from "@expo/vector-icons";
-import { STORES, CATEGORIES } from "../data/dummy-data";
 import { GlobalStyles } from "../constant/Styles";
 import { useNavigation } from "@react-navigation/native";
+import { useState, useEffect } from "react";
+import { fetchCategory } from "../util/http/category";
+import { fetchStores } from "../util/http/store";
 
 function HomeScreen() {
+  const [categoryData, setCategoryData] = useState([]);
+  const [storeData, setStoreData] = useState([]);
+
+  useEffect(() => {
+    async function getCategories() {
+      try {
+        const cat = await fetchCategory();
+        setCategoryData(cat);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    async function getStores() {
+      try {
+        const str = await fetchStores();
+        setStoreData(str);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getStores();
+    getCategories();
+  }, [navigation]);
+
   const navigation = useNavigation();
   function renderCategorieHandler(itemData) {
     function popularCategoryPressHandler() {
       navigation.navigate("StoreOverviewScreen", {
-        categoryID: itemData.item.categoryId,
-      })
+        categoryName: itemData.item.categoryName,
+        categoryId: itemData.item.categoryId,
+      });
     }
     return (
       <CategoryGridTile
@@ -35,10 +62,10 @@ function HomeScreen() {
         picture={itemData.item.picture}
         storeName={itemData.item.storeName}
         storeid={itemData.item.storeId}
+        description={itemData.item.description}
       />
     );
   }
-
 
   return (
     <View style={styles.rootContainer}>
@@ -53,14 +80,15 @@ function HomeScreen() {
             />
             <View style={styles.allCategories}>
               <FlatList
-                data={CATEGORIES}
+                data={categoryData}
                 keyExtractor={(item) => item.categoryId}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 renderItem={(itemData) => {
                   function categoryPressHandler() {
                     navigation.navigate("StoreOverviewScreen", {
-                      categoryID: itemData.item.categoryId,
+                      categoryName: itemData.item.categoryName,
+                      categoryId: itemData.item.categoryId,
                     });
                   }
                   return (
@@ -88,7 +116,7 @@ function HomeScreen() {
               />
             </View>
             <FlatList
-              data={STORES}
+              data={storeData}
               keyExtractor={(item) => item.storeId}
               renderItem={renderStoresHandler}
               horizontal={true}
@@ -104,7 +132,7 @@ function HomeScreen() {
             </View>
           </View>
         )}
-        data={CATEGORIES}
+        data={categoryData}
         keyExtractor={(item) => item.categoryId}
         renderItem={renderCategorieHandler}
         numColumns={3}

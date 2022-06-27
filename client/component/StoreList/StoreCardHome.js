@@ -2,12 +2,15 @@ import { Text, Pressable, View, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-function StoreCardHome({ picture, storeName, storeid }) {
+function StoreCardHome({ picture, storeName, storeid, description }) {
   const navigation = useNavigation();
 
   function storePressHandler() {
     navigation.navigate("StoreDetailsScreen", {
       storeID: storeid,
+      storeName: storeName,
+      picture: picture,
+      description: description,
     });
   }
   return (

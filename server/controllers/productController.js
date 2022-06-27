@@ -1,7 +1,7 @@
 const Product = require("../models/productModel");
 
 exports.createProduct = async (req, res, next) => {
-  const productId = req.body.productId;
+  //const productId = req.body.productId;
   const productName = req.body.productName;
   const price = req.body.price;
   const picture = req.body.picture;
@@ -29,7 +29,18 @@ exports.createProduct = async (req, res, next) => {
   });
 };
 
-exports.getProduct = async (req, res, next) => {
-  const product = await Product.findAll();
-  res.status(202).json(product);
+exports.getAllProducts = async (req, res, next) => {
+  await Product.findAll({})
+    .then((prodct) => {
+      res.status(201).json({
+        message: "all products feched",
+        products: prodct,
+      });
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
 };

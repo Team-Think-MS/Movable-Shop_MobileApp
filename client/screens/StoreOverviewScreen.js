@@ -1,23 +1,36 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState, useEffect } from "react";
 import { StyleSheet, Text } from "react-native";
 import StoreList from "../component/StoreList/StoreList";
-import { STORES, CATEGORIES } from "../data/dummy-data";
+//import { STORES, CATEGORIES } from "../data/dummy-data";
+import { fetchStores } from "../util/http/store";
 
 function StoreOverviewScreen({ route, navigation }) {
-  const categoryid = route.params.categoryID;
-  const selectedStores = STORES.filter(
-    (store) => store.categoryId.indexOf(categoryid) >= 0
-  );
+  const [storeData, setStoreData] = useState([]);
+
+  useEffect(() => {
+    async function getStores() {
+      try {
+        const str = await fetchStores();
+        setStoreData(str);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getStores();
+  }, [navigation]);
+  const categoryName = route.params.categoryName;
+  const categoryId = route.params.categoryId;
+
+    const selectedStores = storeData.filter(
+      (store) => store.categoryId === categoryId
+    );
+
 
   useLayoutEffect(() => {
-    const categoryname = CATEGORIES.find(
-      (category) => category.categoryId === categoryid
-    ).categoryName;
-
     navigation.setOptions({
-      title: categoryname,
+      title: categoryName,
     });
-  }, [categoryid, navigation]);
+  }, [navigation]);
 
   return <StoreList stores={selectedStores} />;
 }

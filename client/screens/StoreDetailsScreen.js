@@ -1,24 +1,39 @@
 import { Text, View, Image, StyleSheet, FlatList } from "react-native";
-import { STORES, PRODUCTS } from "../data/dummy-data";
 import { Ionicons } from "@expo/vector-icons";
 import { GlobalStyles } from "../constant/Styles";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useEffect, useState } from "react";
 import ProductCard from "../component/ProductList/ProductCard";
+import { fetchProducts } from "../util/http/product";
 
 function StoreDetailsScreen({ navigation, route }) {
   const selectedStoreId = route.params.storeID;
-  const selectedStore = STORES.find(
-    (store) => store.storeId === selectedStoreId
-  );
-  const selectedStoreProducts = PRODUCTS.filter(
-    (product) => product.storeId.indexOf(selectedStoreId) >= 0
+  const selectedStoreName = route.params.storeName;
+  const selectedStoreDescription = route.params.description;
+  const selectedStorePicture = route.params.picture;
+
+  const [productData, setProductData] = useState([]);
+
+  useEffect(() => {
+    async function getProducts() {
+      try {
+        const pdt = await fetchProducts();
+        setProductData(pdt);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getProducts();
+  }, [navigation]);
+
+  const selectedStoreProducts = productData.filter(
+    (product) => product.storeId === selectedStoreId
   );
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: selectedStore.storeName,
+      title: selectedStoreName,
     });
-  }, [navigation, selectedStore]);
+  }, [navigation]);
 
   function renderProducts(itemData) {
     return (
@@ -27,6 +42,8 @@ function StoreDetailsScreen({ navigation, route }) {
         title={itemData.item.productName}
         price={itemData.item.price}
         productid={itemData.item.productId}
+        description={itemData.item.description}
+        storeId={itemData.item.storeId}
       />
     );
   }
@@ -37,12 +54,12 @@ function StoreDetailsScreen({ navigation, route }) {
         <View style={styles.rootContainer}>
           <View style={styles.imageOuterContainer}>
             <Image
-              source={{ uri: selectedStore.picture }}
+              source={{ uri: selectedStorePicture }}
               style={styles.image}
             />
           </View>
           <View style={styles.descriptionOuterContainer}>
-            <Text style={styles.description}>{selectedStore.description}</Text>
+            <Text style={styles.description}>{selectedStoreDescription}</Text>
           </View>
           <View style={styles.rating}>
             <Ionicons name="md-star-sharp" size={20} color="black" />

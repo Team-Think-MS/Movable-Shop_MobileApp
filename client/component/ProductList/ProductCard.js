@@ -1,12 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 
-function ProductCard({ picture, title, price, productid }) {
+function ProductCard({ picture, title, price, productid, storeId, description }) {
     const navigation = useNavigation();
 
     function productPressedHandler() {
         navigation.navigate('ProductDetaislScreen', {
-            productID : productid
+            productID : productid,
+            productName : title,
+            storeId: storeId,
+            price: price,
+            picture: picture,
+            description: description
         })
     }
 

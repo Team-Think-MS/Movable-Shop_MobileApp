@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('testfinalDB', 'root', '9811Wggi@', {
+const sequelize = new Sequelize('movableshopDB', 'root', '9811Wggi@', {
   dialect: 'mariadb',
   host: 'localhost'
 });

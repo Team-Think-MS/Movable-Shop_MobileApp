@@ -9,6 +9,7 @@ function StoreList({ stores }) {
         storeName={itemData.item.storeName}
         picture={itemData.item.picture}
         storeid={itemData.item.storeId}
+        description={itemData.item.description}
       />
     );
   }

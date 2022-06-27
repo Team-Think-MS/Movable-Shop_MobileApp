@@ -2,9 +2,6 @@ import { useLayoutEffect, useState } from "react";
 import { Text, Image, View, StyleSheet, Pressable, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
-
-import { PRODUCTS } from "../data/dummy-data";
 import { GlobalStyles } from "../constant/Styles";
 import PrimaryButton from "../component/UI/PrimaryButton";
 import AddDeleteItemToCartButton from "../component/UI/AddDeleteItemToCartButton";
@@ -25,9 +22,11 @@ function ProductDetailsScreen({ navigation, route }) {
   const productsWishlist = useSelector((state) => state.wishList.productIds);
   const productsCartlist = useSelector((state) => state.cartList.cartProduct);
   const selectedProductId = route.params.productID;
-  const selectedProduct = PRODUCTS.find(
-    (product) => product.productId === selectedProductId
-  );
+  const selectedProductName = route.params.productName;
+  const selectedProductDescription = route.params.description;
+  const selectedProductPrice = route.params.price;
+  const selectedProductPicture = route.params.picture;
+  const selectedProductStoreId = route.params.storeId;
 
   const isProductWishList = productsWishlist.includes(selectedProductId);
 
@@ -37,9 +36,9 @@ function ProductDetailsScreen({ navigation, route }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: selectedProduct.productName,
+      title: selectedProductName,
     });
-  }, [navigation, selectedProduct]);
+  }, [navigation]);
 
   function changeProductWishListStatusHandler() {
     if (isProductWishList) {
@@ -54,7 +53,7 @@ function ProductDetailsScreen({ navigation, route }) {
   function addToCartHandler() {
     const isDifferentStore =
       !productsCartlist.filter(
-        (product) => product.storeId === selectedProduct.storeId
+        (product) => product.storeId === selectedProductStoreId
       ).length > 0;
     if (isDifferentStore && productsCartlist.length > 0) {
       Alert.alert("Create a new cart!", "And also add this product to new cart.", [
@@ -70,9 +69,9 @@ function ProductDetailsScreen({ navigation, route }) {
               cartListActions.resetAndAddNewProductCart({
                 id: selectedProductId,
                 qnty: count,
-                pName: selectedProduct.productName,
-                totPrice: selectedProduct.price * count,
-                strId: selectedProduct.storeId,
+                pName: selectedProductName,
+                totPrice: selectedProductPrice * count,
+                strId: selectedProductStoreId,
               })
             );
             navigation.navigate("CartScreen");
@@ -85,7 +84,7 @@ function ProductDetailsScreen({ navigation, route }) {
           cartListActions.updateProductCart({
             id: selectedProductId,
             qnty: count,
-            totPrice: selectedProduct.price * count,
+            totPrice: selectedProductPrice * count,
           })
         );
         navigation.navigate("CartScreen");
@@ -94,9 +93,9 @@ function ProductDetailsScreen({ navigation, route }) {
           cartListActions.addProductCart({
             id: selectedProductId,
             qnty: count,
-            pName: selectedProduct.productName,
-            totPrice: selectedProduct.price * count,
-            strId: selectedProduct.storeId,
+            pName: selectedProductName,
+            totPrice: selectedProductPrice * count,
+            strId: selectedProductStoreId,
           })
         );
         navigation.navigate("CartScreen");
@@ -110,7 +109,7 @@ function ProductDetailsScreen({ navigation, route }) {
       <View>
         <View style={styles.imageContainer}>
           <Image
-            source={{ uri: selectedProduct.picture }}
+            source={{ uri: selectedProductPicture }}
             style={styles.image}
           />
           <Pressable
@@ -128,8 +127,8 @@ function ProductDetailsScreen({ navigation, route }) {
           </Pressable>
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>Rs.{selectedProduct.price}</Text>
-          <Text style={styles.description}>{selectedProduct.description}</Text>
+          <Text style={styles.title}>Rs.{selectedProductPrice}</Text>
+          <Text style={styles.description}>{selectedProductDescription}</Text>
         </View>
       </View>
       <View>
@@ -159,7 +158,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 250,
-    width: "100%",
+    width: 340,
     borderRadius: 20,
   },
   icon: {

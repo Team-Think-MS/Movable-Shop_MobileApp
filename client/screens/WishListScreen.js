@@ -1,12 +1,25 @@
 import { View, FlatList, StyleSheet, Text } from "react-native";
 import { useSelector } from "react-redux";
 import WishListProductCard from "../component/WishListProductCard";
-
-import { PRODUCTS } from "../data/dummy-data";
+import { useState, useEffect } from "react";
+import { fetchProducts } from "../util/http/product";
 
 function WishListScreen() {
+  const [productData, setProductData] = useState([]);
+
+  useEffect(() => {
+    async function getProducts() {
+      try {
+        const pdt = await fetchProducts();
+        setProductData(pdt);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getProducts();
+  }, []);
   const productsIdsWishlist = useSelector((state) => state.wishList.productIds);
-  const productsWishlist = PRODUCTS.filter((product) =>
+  const productsWishlist = productData.filter((product) =>
     productsIdsWishlist.includes(product.productId)
   );
 

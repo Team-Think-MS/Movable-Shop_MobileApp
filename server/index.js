@@ -51,9 +51,8 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-
-
 const sequelize = require('./util/database');
+
 const Product = require('./models/productModel');
 const Store = require('./models/storeModel');
 const Cart = require('./models/cartModel');
@@ -62,7 +61,9 @@ const Order = require('./models/orderModel');
 const Payment = require('./models/paymentModel');
 const Rating = require('./models/ratingModel');
 const SellerBankAccount = require('./models/sellerBankAccountModel');
-const User = require('./models/userModel')
+const User = require('./models/userModel');
+const WishList = require('./models/wishListModel');
+const ProductCart = require('./models/productCartModel');
 
 const app = express();
 
@@ -72,14 +73,18 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
+app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: false }));
 
 
 const productRoutes = require('./routes/product');
+const storeRoutes = require('./routes/store');
+const categoryRoutes = require('./routes/category')
 
-//app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use('/store', storeRoutes);
+app.use('/product', productRoutes);
+app.use('/category', categoryRoutes);
 
-app.use(productRoutes);
 
 Store.hasMany(Product);
 Product.belongsTo(Store);
@@ -101,11 +106,15 @@ Store.hasMany(Rating);
 Rating.belongsTo(Store);
 User.hasMany(Rating);
 Rating.belongsTo(User);
+User.hasOne(WishList);
+WishList.belongsTo(User);
+WishList.hasMany(Product);
+Product.belongsTo(WishList);
+Category.hasMany(Store);
+Store.belongsTo(Category)
 
-Cart.belongsToMany(Product, { through: 'ProductCart' });
-Product.belongsToMany(Cart, { through: 'ProductCart' });
-Store.belongsToMany(Category, { through: 'CategoryStore' });
-Category.belongsToMany(Store, { through: 'CategoryStore' });
+Cart.belongsToMany(Product, { through: ProductCart });
+Product.belongsToMany(Cart, { through: ProductCart });
 
 sequelize
   // .sync({ force: true })

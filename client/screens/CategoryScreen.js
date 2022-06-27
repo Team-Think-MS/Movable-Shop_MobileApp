@@ -1,12 +1,31 @@
 import { FlatList, StyleSheet, View } from "react-native";
 import CategoryGridTile from "../component/CategoryGridTile";
-import { CATEGORIES } from "../data/dummy-data";
+//import { CATEGORIES } from "../data/dummy-data";
+import { fetchCategory } from "../util/http/category";
+import { useEffect } from "react";
+import { useState } from "react";
 
 function CategoryScreen({ navigation }) {
+
+  const [categoryData, setCategoryData] = useState([])
+
+  useEffect(() => {
+    async function getCategories() {
+      try {
+        const cat = await fetchCategory();
+        setCategoryData(cat)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getCategories();
+  }, [navigation]);
+
   function renderCategoryItem(itemData) {
     function categoryPressHandler() {
       navigation.navigate("StoreOverviewScreen", {
-        categoryID: itemData.item.categoryId,
+        categoryName: itemData.item.categoryName,
+        categoryId: itemData.item.categoryId
       });
     }
 
@@ -22,7 +41,7 @@ function CategoryScreen({ navigation }) {
   return (
     <View style={styles.rootContainer}>
       <FlatList
-        data={CATEGORIES}
+        data={categoryData}
         keyExtractor={(item) => item.categoryId}
         renderItem={renderCategoryItem}
         numColumns={3}
