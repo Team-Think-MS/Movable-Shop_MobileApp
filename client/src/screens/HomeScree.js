@@ -2,20 +2,17 @@ import {
     StyleSheet,
     Text,
     View,
-    ScrollView,
-    //FlatList,
     Pressable,
-    Image,
     Dimensions,
-    Alert,
-    TouchableHighlight,
-    TouchableOpacity,
+    
+    
+    
   } from "react-native";
-  import React, { Component, useEffect, useState } from "react";
-  import { Icon, withTheme } from "react-native-elements";
+  import React, { useEffect, useState } from "react";
+  import { Icon } from "react-native-elements";
   import HomeHeader from "../components/HomeHeader";
-  import { colors, parameters } from "../global/styles";
-  import { data } from "../global/data";
+  import { colors } from "../global/styles";
+  //import { data } from "../global/data";
   //import { productData, Stores2,Stores } from "../global/products";
   import SearchComponent from "../components/SearchComponent";
   import Banner from "../components/Banner";

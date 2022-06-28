@@ -20,11 +20,6 @@ import {addToCart} from '../Redux/cartSlice'
 import {Thumbnail} from 'native-base'
 const SingleProduct = (props) => {
   const [item, setItem] = useState(props.route.params.item);
-
-  
-
-  
-
   return (
     <View style={styles.container}>
       <View style={{ marginBottom: 80, padding: 5 }}>

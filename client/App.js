@@ -6,6 +6,8 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { StyleSheet, Text, View } from "react-native";
 
+import 'localstorage-polyfill';
+
 
 //Redux
 import {Provider} from 'react-redux';

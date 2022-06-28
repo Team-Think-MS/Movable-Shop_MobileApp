@@ -35,7 +35,9 @@ function SignIn({ navigation }) {
           elevation: 3,
           width: "50%",
         }}
-        onPress={() => {navigation.navigate("DrawerNavigator")}}
+        onPress={() => {
+          navigation.navigate("DrawerNavigator");
+        }}
       >
         <Text
           style={{

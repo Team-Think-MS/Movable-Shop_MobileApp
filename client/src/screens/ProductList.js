@@ -22,8 +22,8 @@ const ProductList = ({navigation,route}) => {
     },[]);
 
   return (
-    <View>
-      <View>
+    <View style={{backgroundColor:'white',flex:1}}>
+      <View >
         <FlatList
         numColumns={2}
         showsHorizontalScrollIndicator={false}
@@ -51,13 +51,7 @@ const ProductList = ({navigation,route}) => {
                       >
                         {item.productName}
                       </Text>
-                      <Text
-                        style={
-                           { fontSize: 12, color: "#e2e1e1" }
-                        }
-                      >
-                        {item.productName}
-                      </Text>
+                  
                     </View>
                     <View
                       style={{
