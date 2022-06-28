@@ -9,6 +9,7 @@ import { deleteProduct, storeProduct, updateProduct } from "../util/http/product
 const axios = require('axios').default;
 
 function ProductManageScreen({ route, navigation }) {
+  const isAuthState = useSelector((state)=> state.isAuth.authState);
   const dispatch = useDispatch();
   const productsss = useSelector((state) => state.manageProduct.products);
   const editedProductId = route.params?.id;
@@ -28,7 +29,10 @@ function ProductManageScreen({ route, navigation }) {
         manageProductActions.updateProduct({ id: editedProductId , data: productData})
       );
     } else {
-      const id = await storeProduct({productData, lk});
+      const headers = {
+        Authorization: 'Bearer ' + isAuthState.token
+      }
+      const id = await storeProduct({productData, lk, headers});
       dispatch(manageProductActions.addProduct({data : productData , id: id, lk : lk}));
     };
 

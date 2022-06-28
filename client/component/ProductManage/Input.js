@@ -13,8 +13,10 @@ function Input({ label, textInputConfig, style, invalid }) {
 
   return (
     <View style={styles.inputContainer}>
+      <Text style={[styles.label, invalid && styles.invalidLabel]}>
+        {label}
+      </Text>
       <TextInput {...textInputConfig} style={inputStyles} />
-      <Text style={[styles.label, invalid && styles.invalidLabel ]}>{label}</Text>
     </View>
   );
 }
@@ -45,6 +47,6 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.error50,
   },
   invalidLabel: {
-    color: GlobalStyles.colors.error400
-  }
+    color: GlobalStyles.colors.error400,
+  },
 });

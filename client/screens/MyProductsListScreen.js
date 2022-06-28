@@ -6,13 +6,17 @@ import { getProductByStoreId, updateProduct } from "../util/http/product";
 import { manageProductActions } from "../store/Redux/manageProduct-slice";
  
 function MyProductsListScreen() {
+  const isAuthState = useSelector((state)=> state.isAuth.authState);
  const selectedStoreProducts = useSelector((state)=>state.manageProduct.products);
  const dispatch = useDispatch();
 
  useEffect(() => {
    async function getProducts() {
      try {
-       const pdt = await getProductByStoreId();
+      const headers = {
+        Authorization: 'Bearer ' + isAuthState.token
+      }
+       const pdt = await getProductByStoreId({headers});
        dispatch(manageProductActions.setProducts({data : pdt }));
      } catch (error) {
        console.log(error);

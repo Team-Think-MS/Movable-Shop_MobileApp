@@ -21,7 +21,7 @@ export async function fetchProducts() {
   return products;
 }
 
-export async function storeProduct({ productData, lk }) {
+export async function storeProduct({ productData, lk, headers }) {
   const response = await Axios.post(
     "http://localhost:3000/product/createproduct",
     {
@@ -30,16 +30,21 @@ export async function storeProduct({ productData, lk }) {
       picture: lk,
       stockQty: productData.stockQty,
       price: productData.price,
-      storeStoreId: "6",
+    },
+    {
+      headers: headers
     }
   );
   const id = response.data.product.productId;
   return id;
 }
 
-export async function getProductByStoreId() {
+export async function getProductByStoreId({headers}) {
   const response = await Axios.get(
-    "http://localhost:3000/product/getProductByStoreId"
+    "http://localhost:3000/product/getProductByStoreId",
+    {
+      headers: headers,
+    }
   );
 
   const products = [];

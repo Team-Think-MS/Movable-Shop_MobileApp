@@ -5,12 +5,12 @@ exports.createStore = async (req, res, next) => {
   const picture = req.body.picture;
   const description = req.body.description;
   const categoryId = req.body.categoryId;
-  //let creater = req.userId;
+  let creater = req.userId;
   await Store.create({
     storeName: storeName,
     picture: picture,
     description: description,
-    // userId: creater,
+    userUserId: creater,
     categoryCategoryId: categoryId
 
   })
@@ -45,9 +45,10 @@ exports.getAllStores = async (req, res, next) => {
 
 
 exports.getStoreByUserId = async (req, res, next) => {
+  let creater = req.userId;
   await Store.findAll({
     where: {
-      userUserId: "6",
+      userUserId: creater,
     },
   })
     .then((store) => {

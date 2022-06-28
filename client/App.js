@@ -3,6 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
+import { useState } from 'react';
 
 import HomeScreen from "./screens/HomeScreen";
 import StoreOverviewScreen from "./screens/StoreOverviewScreen";
@@ -64,6 +66,7 @@ function MenueDrawerNavigaterHandler() {
 }
 
 export default function App() {
+
   return (
     <>
       <StatusBar style="dark" />

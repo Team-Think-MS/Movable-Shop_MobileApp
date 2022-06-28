@@ -1,14 +1,15 @@
 const Product = require("../models/productModel");
+const Store = require("../models/storeModel");
 
 exports.createProduct = async (req, res, next) => {
-  //const productId = req.body.productId;
+  const store = await Store.findOne({ where: { userUserId: req.userId } });
+
   const productName = req.body.productName;
   const price = req.body.price;
   const picture = req.body.picture;
   const description = req.body.description;
   const stockQty = req.body.stockQty;
-  const storeStoreId = req.body.storeStoreId;
-  // Create post in db
+  const storeStoreId = store.storeId;
   await Product.create({
     productName: productName,
     price: price,
@@ -48,9 +49,10 @@ exports.getAllProducts = async (req, res, next) => {
 };
 
 exports.getProductByStoreId = async (req, res, next) => {
+  const store = await Store.findOne({ where: { userUserId: req.userId } });
   await Product.findAll({
     where: {
-      storeStoreId: "6",
+      storeStoreId: store.storeId,
     },
   })
     .then((prodct) => {
@@ -99,7 +101,8 @@ exports.updateProduct = async (req, res, next) => {
 
 exports.deleteProduct = async (req, res, next) => {
   const product = await Product.findByPk(req.body.id);
-  await product.destroy()
+  await product
+    .destroy()
     .then(() => {
       res.status(201).json({
         message: "selected products deleted",
@@ -112,5 +115,3 @@ exports.deleteProduct = async (req, res, next) => {
       next(err);
     });
 };
-
-

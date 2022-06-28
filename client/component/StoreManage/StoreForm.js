@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -17,9 +17,10 @@ import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import Axios from "axios";
 import { Picker } from "@react-native-picker/picker";
+import { useSelector } from "react-redux";
 
 function StoreForm({ defaultInputData }) {
-  
+  const isAuthState = useSelector((state)=> state.isAuth.authState);
   const navigation = useNavigation();
   const [inputs, setInputs] = useState({
     title: {
@@ -31,8 +32,6 @@ function StoreForm({ defaultInputData }) {
       isValid: true,
     },
   });
-
-
   const [image, setImage] = useState(
     defaultInputData ? defaultInputData.picture : null
   );
@@ -118,12 +117,19 @@ function StoreForm({ defaultInputData }) {
       ).then((reponse) => {
         const lk = reponse["data"]["secure_url"];
         console.log(lk);
+        const headers = {
+          Authorization: 'Bearer ' + isAuthState.token
+        }
         Axios.post("http://localhost:3000/store/createStore", {
           storeName: storeData.storeName,
           description: storeData.description,
           picture: lk,
           categoryId: selectedCategory
-        });
+        },
+        {
+          headers: headers
+        }
+        );
       });
     }
   }
@@ -165,16 +171,16 @@ function StoreForm({ defaultInputData }) {
             }}
           />
           <View style={styles.imagePickerContainer}>
+          <Text style={imagelabelStyles}>Image</Text>
             {!image && (
               <Pressable onPress={pickImage} style={styles.pickerContainer}>
                 <Ionicons name="image-outline" size={70} color="black" />
               </Pressable>
             )}
             {image && <Image source={{ uri: image }} style={styles.image} />}
-
-            <Text style={imagelabelStyles}>Image</Text>
           </View>
           <View style={styles.imagePickerContainer}>
+          <Text style={categorylabelStyles}>Store Category</Text>
             <View style={styles.pickerContainer}>
               <Picker
                 selectedValue={selectedCategory}
@@ -191,7 +197,7 @@ function StoreForm({ defaultInputData }) {
               </Picker>
             </View>
 
-            <Text style={categorylabelStyles}>Store Category</Text>
+            
           </View>
         </View>
         </ScrollView>
@@ -245,7 +251,7 @@ const styles = StyleSheet.create({
     margin: 5,
     fontSize: 16,
   },
-  categorylabelStyles: {
+  categoryPickerLabel: {
     margin: 5,
     fontSize: 16,
   },

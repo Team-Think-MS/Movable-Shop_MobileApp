@@ -1,9 +1,10 @@
 const Order = require('../models/orderModel');
 
 exports.getOrderByUserId = async (req, res, next) => {
+  const userId = req.userId;
     await Order.findAll({
       where: {
-        userUserId: "6",
+        userUserId: userId
       },
     })
       .then((order) => {

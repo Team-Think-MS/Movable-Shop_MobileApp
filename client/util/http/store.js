@@ -18,9 +18,12 @@ export async function fetchStores() {
   return stores;
 }
 
-export async function getStoreByUserId() {
+export async function getStoreByUserId({headers}) {
   const response = await Axios.get(
-    "http://localhost:3000/store/getStoreByUserId"
+    "http://localhost:3000/store/getStoreByUserId", 
+    {
+      headers: headers,
+    }
   );
     const stObj = {
       storeId: response.data.store[0].storeId,
@@ -29,7 +32,6 @@ export async function getStoreByUserId() {
       categoryId: response.data.store[0].categoryCategoryId,
       description: response.data.store[0].description,
     };
-  
   return stObj;
 }
 

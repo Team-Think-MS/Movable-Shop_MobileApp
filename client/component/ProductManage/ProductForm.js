@@ -193,14 +193,13 @@ function ProductForm({ defaultInputData, submitButtonLabel, onSubmit }) {
               }}
             />
             <View style={styles.imagePickerContainer}>
+            <Text style={imagelabelStyles}>Image</Text>
               {!image && (
                 <Pressable onPress={pickImage} style={styles.pickerContainer}>
                   <Ionicons name="image-outline" size={70} color="black" />
                 </Pressable>
               )}
               {image && <Image source={{ uri: image }} style={styles.image} />}
-
-              <Text style={imagelabelStyles}>Image</Text>
             </View>
           </ScrollView>
         </View>
