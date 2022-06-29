@@ -9,5 +9,6 @@ const router = express.Router();
 router.post('/createStore', isAuth, storeController.createStore);
 router.get('/getallstores', storeController.getAllStores);
 router.get('/getStoreByUserId',isAuth, storeController.getStoreByUserId);
+router.put('/updateStore', isAuth, storeController.updateStore)
 
 module.exports = router;

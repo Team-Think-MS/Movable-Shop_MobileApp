@@ -64,3 +64,32 @@ exports.getStoreByUserId = async (req, res, next) => {
       next(err);
     });
 };
+
+
+exports.updateStore = async (req, res, next) => {
+  const storeName = req.body.storeName;
+  const picture = req.body.picture;
+  const description = req.body.description;
+  const categoryId = req.body.categoryId;
+  const store = await Store.findByPk(req.userId);
+  await store.update({
+    storeName: storeName,
+    picture: picture,
+    description: description,
+    categoryCategoryId: categoryId
+  });
+  await store
+    .save()
+    .then((store) => {
+      res.status(201).json({
+        message: "selected store edited",
+        products: store,
+      });
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};

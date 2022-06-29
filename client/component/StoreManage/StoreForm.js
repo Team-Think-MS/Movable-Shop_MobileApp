@@ -20,7 +20,7 @@ import { Picker } from "@react-native-picker/picker";
 import { useSelector } from "react-redux";
 
 function StoreForm({ defaultInputData }) {
-  const isAuthState = useSelector((state)=> state.isAuth.authState);
+  const isAuthState = useSelector((state) => state.isAuth.authState);
   const navigation = useNavigation();
   const [inputs, setInputs] = useState({
     title: {
@@ -77,7 +77,12 @@ function StoreForm({ defaultInputData }) {
     const isPictureValid = !storeData.picture;
     const isSelectedCategoryValid = !selectedCategory;
 
-    if (!isStoreNameValid || !isDescriptionValid || isPictureValid || isSelectedCategoryValid) {
+    if (
+      !isStoreNameValid ||
+      !isDescriptionValid ||
+      isPictureValid ||
+      isSelectedCategoryValid
+    ) {
       setInputs((curInputs) => {
         return {
           title: {
@@ -99,107 +104,146 @@ function StoreForm({ defaultInputData }) {
   }
 
   async function submitData(storeData) {
-    if (image) {
-      const imageFile = {
-        uri: image,
-        type: `test/${image.split(".")[1]}`,
-        name: `test.${image.split(".")[1]}`,
-      };
+    if (!defaultInputData) {
+      if (image) {
+        const imageFile = {
+          uri: image,
+          type: `test/${image.split(".")[1]}`,
+          name: `test.${image.split(".")[1]}`,
+        };
 
-      const formData = new FormData();
-      formData.append("file", imageFile);
-      formData.append("upload_preset", "dyshoper");
-      formData.append("cloud_name", "dj4w8sx0t");
+        const formData = new FormData();
+        formData.append("file", imageFile);
+        formData.append("upload_preset", "dyshoper");
+        formData.append("cloud_name", "dj4w8sx0t");
 
-      await Axios.post(
-        "https://api.cloudinary.com/v1_1/dj4w8sx0t/image/upload",
-        formData
-      ).then((reponse) => {
-        const lk = reponse["data"]["secure_url"];
-        console.log(lk);
-        const headers = {
-          Authorization: 'Bearer ' + isAuthState.token
-        }
-        Axios.post("http://localhost:3000/store/createStore", {
-          storeName: storeData.storeName,
-          description: storeData.description,
-          picture: lk,
-          categoryId: selectedCategory
-        },
-        {
-          headers: headers
-        }
-        );
-      });
+        await Axios.post(
+          "https://api.cloudinary.com/v1_1/dj4w8sx0t/image/upload",
+          formData
+        ).then((reponse) => {
+          const lk = reponse["data"]["secure_url"];
+          console.log(lk);
+          const headers = {
+            Authorization: "Bearer " + isAuthState.token,
+          };
+           Axios.post(
+            "http://localhost:3000/store/createStore",
+            {
+              storeName: storeData.storeName,
+              description: storeData.description,
+              picture: lk,
+              categoryId: selectedCategory,
+            },
+            {
+              headers: headers,
+            }
+          ).then().catch();
+        });
+      }
+    } else {
+      if (image) {
+        const imageFile = {
+          uri: image,
+          type: `test/${image.split(".")[1]}`,
+          name: `test.${image.split(".")[1]}`,
+        };
+
+        const formData = new FormData();
+        formData.append("file", imageFile);
+        formData.append("upload_preset", "dyshoper");
+        formData.append("cloud_name", "dj4w8sx0t");
+
+        await Axios.post(
+          "https://api.cloudinary.com/v1_1/dj4w8sx0t/image/upload",
+          formData
+        ).then((reponse) => {
+          const lk = reponse["data"]["secure_url"];
+          console.log(lk);
+          const headers = {
+            Authorization: "Bearer " + isAuthState.token,
+          };
+          Axios.put(
+            "http://localhost:3000/store/updateStore",
+            {
+              storeName: storeData.storeName,
+              description: storeData.description,
+              picture: lk,
+              categoryId: selectedCategory,
+            },
+            {
+              headers: headers,
+            }
+          ).then().catch();
+        });
+      }
     }
   }
 
   const formIsInvalid =
-    !inputs.title.isValid || !inputs.description.isValid || !imageIsValid || !selectedCategoryIsValid;
+    !inputs.title.isValid ||
+    !inputs.description.isValid ||
+    !imageIsValid ||
+    !selectedCategoryIsValid;
 
-
-    const imagelabelStyles = [styles.imagePickerLabel];
-    const categorylabelStyles = [styles.categoryPickerLabel];
-    if(!imageIsValid) {
-      imagelabelStyles.push(styles.invaildLabel);
-    }
-    if(!selectedCategoryIsValid) {
-        categorylabelStyles.push(styles.invaildLabel);
-    }
+  const imagelabelStyles = [styles.imagePickerLabel];
+  const categorylabelStyles = [styles.categoryPickerLabel];
+  if (!imageIsValid) {
+    imagelabelStyles.push(styles.invaildLabel);
+  }
+  if (!selectedCategoryIsValid) {
+    categorylabelStyles.push(styles.invaildLabel);
+  }
 
   return (
-    
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.rootContainer}>
-      <ScrollView>
-        <View>
-          <Input
-            label={"Store Name"}
-            invalid={!inputs.title.isValid}
-            textInputConfig={{
-              onChangeText: inputChangeHandler.bind(this, "title"),
-              value: inputs.title.value,
-            }}
-          />
-          <Input
-            label={"Description"}
-            invalid={!inputs.description.isValid}
-            textInputConfig={{
-              multiline: true,
-              onChangeText: inputChangeHandler.bind(this, "description"),
-              value: inputs.description.value,
-            }}
-          />
-          <View style={styles.imagePickerContainer}>
-          <Text style={imagelabelStyles}>Image</Text>
-            {!image && (
-              <Pressable onPress={pickImage} style={styles.pickerContainer}>
-                <Ionicons name="image-outline" size={70} color="black" />
-              </Pressable>
-            )}
-            {image && <Image source={{ uri: image }} style={styles.image} />}
-          </View>
-          <View style={styles.imagePickerContainer}>
-          <Text style={categorylabelStyles}>Store Category</Text>
-            <View style={styles.pickerContainer}>
-              <Picker
-                selectedValue={selectedCategory}
-                onValueChange={(itemValue, itemIndex) =>
-                  setSelectedCategory(itemValue)
-                }
-              >
-                <Picker.Item label="Vegetables" value="1" />
-                <Picker.Item label="Bakery" value="2" />
-                <Picker.Item label="Ice Cream" value="3" />
-                <Picker.Item label="Sweet" value="4" />
-                <Picker.Item label="Fruit" value="5" />
-                <Picker.Item label="Bun" value="6" />
-              </Picker>
+        <ScrollView>
+          <View>
+            <Input
+              label={"Store Name"}
+              invalid={!inputs.title.isValid}
+              textInputConfig={{
+                onChangeText: inputChangeHandler.bind(this, "title"),
+                value: inputs.title.value,
+              }}
+            />
+            <Input
+              label={"Description"}
+              invalid={!inputs.description.isValid}
+              textInputConfig={{
+                multiline: true,
+                onChangeText: inputChangeHandler.bind(this, "description"),
+                value: inputs.description.value,
+              }}
+            />
+            <View style={styles.imagePickerContainer}>
+              <Text style={imagelabelStyles}>Image</Text>
+              {!image && (
+                <Pressable onPress={pickImage} style={styles.pickerContainer}>
+                  <Ionicons name="image-outline" size={70} color="black" />
+                </Pressable>
+              )}
+              {image && <Image source={{ uri: image }} style={styles.image} />}
             </View>
-
-            
+            <View style={styles.imagePickerContainer}>
+              <Text style={categorylabelStyles}>Store Category</Text>
+              <View style={styles.pickerContainer}>
+                <Picker
+                  selectedValue={selectedCategory}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setSelectedCategory(itemValue)
+                  }
+                >
+                  <Picker.Item label="Vegetables" value="1" />
+                  <Picker.Item label="Bakery" value="2" />
+                  <Picker.Item label="Ice Cream" value="3" />
+                  <Picker.Item label="Sweet" value="4" />
+                  <Picker.Item label="Fruit" value="5" />
+                  <Picker.Item label="Bun" value="6" />
+                </Picker>
+              </View>
+            </View>
           </View>
-        </View>
         </ScrollView>
         <View style={styles.button}>
           {formIsInvalid && (
@@ -208,13 +252,12 @@ function StoreForm({ defaultInputData }) {
             </Text>
           )}
           <PrimaryButton
-            children={"Publish my store"}
+            children={defaultInputData ? "Save" : "Publish my store"}
             onPress={publishPressedHandler}
           />
         </View>
       </View>
     </TouchableWithoutFeedback>
-
   );
 }
 
@@ -245,7 +288,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     borderWidth: 1,
     borderRadius: 8,
-    borderColor: GlobalStyles.colors.gray200
+    borderColor: GlobalStyles.colors.gray200,
   },
   imagePickerLabel: {
     margin: 5,
@@ -256,12 +299,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   invaildLabel: {
-    color: GlobalStyles.colors.error400
+    color: GlobalStyles.colors.error400,
   },
   pickerContainer: {
     margin: 4,
     borderWidth: 1,
     borderRadius: 8,
-    borderColor: GlobalStyles.colors.gray200
-  }
+    borderColor: GlobalStyles.colors.gray200,
+  },
 });
