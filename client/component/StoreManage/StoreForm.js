@@ -103,56 +103,99 @@ function StoreForm({ defaultInputData }) {
     navigation.navigate("Selling Managment");
   }
 
+
+  function updatePressedHandler() {
+    const storeData = {
+      storeName: inputs.title.value,
+      description: inputs.description.value,
+      picture: image,
+      categoryId: selectedCategory,
+    };
+
+    const isStoreNameValid = storeData.storeName.trim().length > 0;
+    const isDescriptionValid = storeData.description.trim().length > 0;
+    const isPictureValid = !storeData.picture;
+    const isSelectedCategoryValid = !selectedCategory;
+
+    if (
+      !isStoreNameValid ||
+      !isDescriptionValid ||
+      isPictureValid ||
+      isSelectedCategoryValid
+    ) {
+      setInputs((curInputs) => {
+        return {
+          title: {
+            value: curInputs.title.value,
+            isValid: isStoreNameValid,
+          },
+          description: {
+            value: curInputs.description.value,
+            isValid: isDescriptionValid,
+          },
+        };
+      });
+      setImageIsValid(!isPictureValid);
+      setSelectedCategoryIsValid(!isSelectedCategoryValid);
+      return;
+    }
+    updateData(storeData);
+    navigation.navigate("Selling Managment");
+  }
+
   async function submitData(storeData) {
-    if (!defaultInputData) {
+    if (image) {
+      const imageFile = {
+        uri: image,
+        type: `test/${image.split(".")[1]}`,
+        name: `test.${image.split(".")[1]}`,
+      };
+
+      const formData = new FormData();
+      formData.append("file", imageFile);
+      formData.append("upload_preset", "dyshoper");
+      formData.append("cloud_name", "dj4w8sx0t");
+
+      await Axios.post(
+        "https://api.cloudinary.com/v1_1/dj4w8sx0t/image/upload",
+        formData
+      ).then((reponse) => {
+        const lk = reponse["data"]["secure_url"];
+        console.log(lk);
+        const headers = {
+          Authorization: "Bearer " + isAuthState.token,
+        };
+        Axios.post(
+          "http://localhost:3000/store/createStore",
+          {
+            storeName: storeData.storeName,
+            description: storeData.description,
+            picture: lk,
+            categoryId: selectedCategory,
+          },
+          {
+            headers: headers,
+          }
+        )
+          .then()
+          .catch();
+      });
+    }
+  }
+
+    async function updateData(storeData) {
       if (image) {
         const imageFile = {
           uri: image,
           type: `test/${image.split(".")[1]}`,
           name: `test.${image.split(".")[1]}`,
         };
-
+  
         const formData = new FormData();
         formData.append("file", imageFile);
         formData.append("upload_preset", "dyshoper");
         formData.append("cloud_name", "dj4w8sx0t");
-
-        await Axios.post(
-          "https://api.cloudinary.com/v1_1/dj4w8sx0t/image/upload",
-          formData
-        ).then((reponse) => {
-          const lk = reponse["data"]["secure_url"];
-          console.log(lk);
-          const headers = {
-            Authorization: "Bearer " + isAuthState.token,
-          };
-           Axios.post(
-            "http://localhost:3000/store/createStore",
-            {
-              storeName: storeData.storeName,
-              description: storeData.description,
-              picture: lk,
-              categoryId: selectedCategory,
-            },
-            {
-              headers: headers,
-            }
-          ).then().catch();
-        });
-      }
-    } else {
-      if (image) {
-        const imageFile = {
-          uri: image,
-          type: `test/${image.split(".")[1]}`,
-          name: `test.${image.split(".")[1]}`,
-        };
-
-        const formData = new FormData();
-        formData.append("file", imageFile);
-        formData.append("upload_preset", "dyshoper");
-        formData.append("cloud_name", "dj4w8sx0t");
-
+  
         await Axios.post(
           "https://api.cloudinary.com/v1_1/dj4w8sx0t/image/upload",
           formData
@@ -176,8 +219,13 @@ function StoreForm({ defaultInputData }) {
           ).then().catch();
         });
       }
-    }
   }
+
+  const isDefaultInputData = !(
+    defaultInputData &&
+    Object.keys(defaultInputData).length === 0 &&
+    Object.getPrototypeOf(defaultInputData) === Object.prototype
+  );
 
   const formIsInvalid =
     !inputs.title.isValid ||
@@ -251,10 +299,16 @@ function StoreForm({ defaultInputData }) {
               Invalid input values - please check your entered data!
             </Text>
           )}
-          <PrimaryButton
-            children={defaultInputData ? "Save" : "Publish my store"}
-            onPress={publishPressedHandler}
-          />
+          {!isDefaultInputData && (
+            <PrimaryButton
+              children={"Publish my store"}
+              onPress={publishPressedHandler}
+            />
+          )}
+
+          {isDefaultInputData && (
+            <PrimaryButton children={"save"}  onPress={updatePressedHandler}/>
+          )}
         </View>
       </View>
     </TouchableWithoutFeedback>

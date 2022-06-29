@@ -4,7 +4,9 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
-import { useState } from 'react';
+import { useState } from "react";
+
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 import HomeScreen from "./screens/HomeScreen";
 import StoreOverviewScreen from "./screens/StoreOverviewScreen";
@@ -66,114 +68,118 @@ function MenueDrawerNavigaterHandler() {
 }
 
 export default function App() {
-
   return (
     <>
       <StatusBar style="dark" />
-      <Provider store={store}>
-        <NavigationContainer>
-          <stack.Navigator
-            screenOptions={({ navigation }) => ({
-              headerRight: () => (
-                <Pressable
-                  style={({ pressed }) => [
-                    { marginRight: "10%" },
-                    pressed ? { opacity: 0.35 } : false,
-                  ]}
-                  onPress={() => {
-                    navigation.navigate("CartScreen");
-                  }}
-                >
-                  <Ionicons name="cart-outline" size={24} color="black" />
-                </Pressable>
-              ),
-            })}
-          >
-            <stack.Screen
-              name="HomeScrenn"
-              component={MenueDrawerNavigaterHandler}
-              options={{
-                title: "Home",
-                headerShown: false,
-              }}
-            />
-            <stack.Screen
-              name="StoreOverviewScreen"
-              component={StoreOverviewScreen}
-            />
-            <stack.Screen
-              name="StoreDetailsScreen"
-              component={StoreDetailsScreen}
-            />
-            <stack.Screen
-              name="ProductDetaislScreen"
-              component={ProductDetailsScreen}
-            />
-            <stack.Screen
-              name="ProductManageScreen"
-              component={ProductManageScreen}
-              options={{
-                title: "List Your Item",
-              }}
-            />
-            <stack.Screen
-              name="MyProducts"
-              component={MyProductsListScreen}
-              options={{
-                title: "My Products",
-                headerRight: false,
-              }}
-            />
-            <stack.Screen
-              name="CartScreen"
-              component={CartScreen}
-              options={{
-                title: "Cart",
-              }}
-            />
-            <stack.Screen
-              name="SignInScreen"
-              component={SignInScreen}
-              options={{
-                title: "Sign In",
-                headerRight: false,
-              }}
-            />
-            <stack.Screen
-              name="SignUpAsaCustomerScreen"
-              component={SignUpAsaCustomerScreen}
-              options={{
-                title: "Register",
-                headerRight: false,
-              }}
-            />
-            <stack.Screen
-              name="SignUpAsaSellerScreen"
-              component={SignUpAsaSellerScreen}
-              options={{
-                title: "Register",
-                headerRight: false,
-              }}
-            />
-            <stack.Screen 
-              name="StoreCreateScreen"
-              component={StoreCreateScreen}
-              options={{
-                title: "Create Your Store",
-                headerRight: false,
-              }}
-            />
-            <stack.Screen
-            name="CheckoutScreen"
-            component={CheckoutScreen}
-            options={{
-              title: "Checkout",
-              headerRight: false,
-            }}
-            />
-          </stack.Navigator>
-        </NavigationContainer>
-      </Provider>
+      <StripeProvider
+        publishableKey="pk_test_51LFsXEHuBCP0GX8HXlJaM0pUBqJtINlrfhpC3q9WnDes3yrT2fxKjtLRLdmK4J5HPJb5HbKFIfR5lq5kv14szkiq00x7g5Ardb"
+        merchantIdentifier="merchant.identifier"
+      >
+        <Provider store={store}>
+          <NavigationContainer>
+            <stack.Navigator
+              screenOptions={({ navigation }) => ({
+                headerRight: () => (
+                  <Pressable
+                    style={({ pressed }) => [
+                      { marginRight: "10%" },
+                      pressed ? { opacity: 0.35 } : false,
+                    ]}
+                    onPress={() => {
+                      navigation.navigate("CartScreen");
+                    }}
+                  >
+                    <Ionicons name="cart-outline" size={24} color="black" />
+                  </Pressable>
+                ),
+              })}
+            >
+              <stack.Screen
+                name="HomeScrenn"
+                component={MenueDrawerNavigaterHandler}
+                options={{
+                  title: "Home",
+                  headerShown: false,
+                }}
+              />
+              <stack.Screen
+                name="StoreOverviewScreen"
+                component={StoreOverviewScreen}
+              />
+              <stack.Screen
+                name="StoreDetailsScreen"
+                component={StoreDetailsScreen}
+              />
+              <stack.Screen
+                name="ProductDetaislScreen"
+                component={ProductDetailsScreen}
+              />
+              <stack.Screen
+                name="ProductManageScreen"
+                component={ProductManageScreen}
+                options={{
+                  title: "List Your Item",
+                }}
+              />
+              <stack.Screen
+                name="MyProducts"
+                component={MyProductsListScreen}
+                options={{
+                  title: "My Products",
+                  headerRight: false,
+                }}
+              />
+              <stack.Screen
+                name="CartScreen"
+                component={CartScreen}
+                options={{
+                  title: "Cart",
+                }}
+              />
+              <stack.Screen
+                name="SignInScreen"
+                component={SignInScreen}
+                options={{
+                  title: "Sign In",
+                  headerRight: false,
+                }}
+              />
+              <stack.Screen
+                name="SignUpAsaCustomerScreen"
+                component={SignUpAsaCustomerScreen}
+                options={{
+                  title: "Register",
+                  headerRight: false,
+                }}
+              />
+              <stack.Screen
+                name="SignUpAsaSellerScreen"
+                component={SignUpAsaSellerScreen}
+                options={{
+                  title: "Register",
+                  headerRight: false,
+                }}
+              />
+              <stack.Screen
+                name="StoreCreateScreen"
+                component={StoreCreateScreen}
+                options={{
+                  title: "Create Your Store",
+                  headerRight: false,
+                }}
+              />
+              <stack.Screen
+                name="CheckoutScreen"
+                component={CheckoutScreen}
+                options={{
+                  title: "Checkout",
+                  headerRight: false,
+                }}
+              />
+            </stack.Navigator>
+          </NavigationContainer>
+        </Provider>
+      </StripeProvider>
     </>
   );
 }

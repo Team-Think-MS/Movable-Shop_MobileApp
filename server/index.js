@@ -32,12 +32,29 @@ const categoryRoutes = require('./routes/category');
 const orderRoutes = require('./routes/order');
 const authRoutes = require('./routes/auth');
 
+
 app.use('/store', storeRoutes);
 app.use('/product', productRoutes);
 app.use('/category', categoryRoutes);
 app.use('/order', orderRoutes);
 app.use('/auth', authRoutes);
 
+const Stripe = require('stripe');
+
+const stripe = new Stripe('sk_test_51LFsXEHuBCP0GX8HohuPJXzfF39wMYEfyMe0THaRYzL9sYeiGHkRs2me1u27sA0kVvRU3Op9bw2uOZAFjfSzwX4p00WyPNnAA5', {
+  apiVersion: '2020-08-27',
+  typescript: true,
+});
+
+app.post('/create-payment-intent', async (req, res) => {
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: 4000,
+    currency: 'usd',
+  });
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  });
+});
 
 app.use((error, req, res, next) => {
   console.log(error);

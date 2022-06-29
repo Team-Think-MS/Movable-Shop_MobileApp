@@ -71,7 +71,8 @@ exports.updateStore = async (req, res, next) => {
   const picture = req.body.picture;
   const description = req.body.description;
   const categoryId = req.body.categoryId;
-  const store = await Store.findByPk(req.userId);
+  const userId = req.userId
+  const store = await Store.findOne({ where: { userUserId: userId } });
   await store.update({
     storeName: storeName,
     picture: picture,
