@@ -83,7 +83,7 @@ function SignInScreen() {
         <View style={styles.signContainer}>
         {!isValidInput && <Text style={styles.errorText}>Invalid login details! Please re-enter.</Text>}
           <PrimaryButton children={"Sign In"} onPress={submitHandler} />
-          <Button title="Frogot the password?" onPress={testHandler}/>
+   
         </View>
         <View style={styles.footerCOntainer}>
           <View style={styles.otherSignInCOntainer}>

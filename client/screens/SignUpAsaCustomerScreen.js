@@ -14,6 +14,7 @@ import { useState } from "react";
 import { GlobalStyles } from "../constant/Styles";
 import { isAuthActions } from "../store/Redux/isAuth-slice";
 import { useDispatch } from "react-redux";
+import Axios from "axios";
 
 
 function SignUpAsaCustomerScreen() {

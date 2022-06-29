@@ -1,5 +1,5 @@
 import { useLayoutEffect } from "react";
-import { Text, View, StyleSheet, Pressable, FlatList } from "react-native";
+import { Text, View, StyleSheet, Alert, FlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CartCard from "../component/CartCard";
 import PrimaryButton from "../component/UI/PrimaryButton";
@@ -55,10 +55,33 @@ function CartScreen({ navigation }) {
     navigation.navigate("HomeScrenn");
   }
 
+  const isAuthState = useSelector((state) => state.isAuth.authState);
+  const isAuthUser = !(
+    isAuthState &&
+    Object.keys(isAuthState).length === 0 &&
+    Object.getPrototypeOf(isAuthState) === Object.prototype
+  );
+
   function checkoutPressedHandler() {
-    navigation.navigate("CheckoutScreen", {
-      subtot: subTotalPrice,
-    });
+    if (isAuthUser) {
+      navigation.navigate("CheckoutScreen", {
+        subtot: subTotalPrice,
+      });
+    } else {
+      Alert.alert("You are not user!", "Plase sign in your account", [
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel",
+        },
+        {
+          text: "Sign in",
+          onPress: () => {
+            navigation.navigate("SignInScreen");
+          },
+        },
+      ]);
+    }
   }
 
   return (

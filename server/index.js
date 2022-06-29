@@ -48,7 +48,7 @@ const stripe = new Stripe('sk_test_51LFsXEHuBCP0GX8HohuPJXzfF39wMYEfyMe0THaRYzL9
 
 app.post('/create-payment-intent', async (req, res) => {
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: 4000,
+    amount: 2000,
     currency: 'usd',
   });
   res.send({

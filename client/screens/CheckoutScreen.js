@@ -8,8 +8,10 @@ function CheckoutScreen({ navigation, route }) {
   const { confirmPayment } = useStripe();
 
   const [key, setKey] = useState("");
+  const [cardinfo , setCardInfo] = useState('')
 
   const handleConfirmation = async () => {
+    
     fetch("http://localhost:3000/create-payment-intent", {
       method: "POST",
     })
@@ -56,6 +58,7 @@ function CheckoutScreen({ navigation, route }) {
             marginVertical: 30,
           }}
           onCardChange={(cardDetails) => {
+            setCardInfo(cardDetails)
             console.log("cardDetails", cardDetails);
           }}
           onFocus={(focusedField) => {
@@ -69,7 +72,7 @@ function CheckoutScreen({ navigation, route }) {
         <Text style={styles.text}>Rs.{subTotal}.00</Text>
       </View>
       <View style={styles.button}>
-             <PrimaryButton children={"Complete payment"} />
+             <PrimaryButton children={"Complete payment"} onPress={handleConfirmation} />
         </View>
     </View>
   );
